@@ -1,0 +1,117 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Chi tiết sản phẩm</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Details</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <!-- Default box -->
+    <div class="card card-solid">
+      <div class="card-body">
+        <a routerLink="/admin/product" class="btn btn-outline-success btn-rounded mt-2">Back</a> <br>
+        <div class="row">
+
+          <h3 class="my-3">Mã sản phẩm: {{product.code}}</h3>
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-6">
+
+            <h3 class="d-inline-block d-sm-none">{{product.name}}</h3>
+            <div class="col-12">
+
+              <img src="{{product.avatarUrl}}" class="product-image" alt="Product Image">
+            </div>
+            <!-- <div class="col-12 product-image-thumbs">
+              <div class="product-image-thumb active"><img src="assets/dist/img/prod-1.jpg" alt="Product Image"></div>
+              <div class="product-image-thumb" ><img src="assets/dist/img/prod-2.jpg" alt="Product Image"></div>
+              <div class="product-image-thumb" ><img src="assets/dist/img/prod-3.jpg" alt="Product Image"></div>
+              <div class="product-image-thumb" ><img src="assets/dist/img/prod-4.jpg" alt="Product Image"></div>
+              <div class="product-image-thumb" ><img src="assets/dist/img/prod-5.jpg" alt="Product Image"></div>
+            </div> -->
+          </div>
+          <div class="col-12 col-sm-6">
+
+            <h3 class="my-3">{{product.name}}</h3>
+            <p class="card-text"><small class="text-muted">Last updated {{product.modifiedDate | date :'short'}}</small>
+            </p>
+
+            <hr>
+
+            <h4>Thuộc tính sản phẩm</h4>
+            <div class="btn-group btn-group-toggle w-100"  data-toggle="buttons">
+              <table class="table" width="100%">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Thuộc tính</th>
+                    <th>Nội dung</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of product.listInformation">
+                    <td>{{item.key}}</td>
+                    <td>{{item.value}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h4><small>Số lượng trong kho: </small> {{product.quantity}}</h4>
+            <div class="bg-gray py-2 px-3 mt-4">
+              <h2 class="mb-0">
+                {{product.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+              </h2>
+              <h4 class="mt-0">
+                <small>Ex Tax: ${{(product.price * 1.2).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}} </small>
+              </h4>
+            </div>
+
+            <!-- <div class="mt-4">
+              <div class="btn btn-primary btn-lg btn-flat">
+                <i class="fas fa-cart-plus fa-lg mr-2"></i>
+                Add to Cart
+              </div>
+
+              <div class="btn btn-default btn-lg btn-flat">
+                <i class="fas fa-heart fa-lg mr-2"></i>
+                Add to Wishlist
+              </div>
+            </div> -->
+
+
+          </div>
+        </div>
+        <div class="row mt-4">
+          <nav class="w-100">
+            <div class="nav nav-tabs" id="product-tab" role="tablist">
+              <a class="nav-item nav-link active" id="product-desc-tab" data-toggle="tab" href="#product-desc" role="tab" aria-controls="product-desc" aria-selected="true">Description</a>
+            </div>
+          </nav>
+          <div class="tab-content p-3" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab"
+            [innerHTML]="product.description"
+            >
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+  </section>
+  <!-- /.content -->
+</div>

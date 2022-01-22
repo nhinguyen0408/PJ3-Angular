@@ -1,0 +1,65 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="content-body">
+      <div class="row">
+        <div class="col-12 m-b-30">
+          <div class="d-flex justify-content-between mt-3">
+            <div class="">
+              <h4 class="d-inline ">Product List</h4>
+            </div>
+
+            <div class="">
+              <button class="btn btn-primary mr-5" routerLink="/admin/product/create">Thêm sản phẩm</button>
+            </div>
+          </div>
+            <p class="text-muted"></p>
+            <div class="row">
+                <div class="col-md-6 col-lg-3" *ngFor="let item of productList">
+                    <div class="card border shadow">
+                        <img class="img-fluid card-img-top product-image" src="{{item.avatarUrl}}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title product-name">{{item.name}}</h5> <br>
+                            <h6 class="card-title text-primary">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</h6> <br>
+                            <h6 class="my-3">Mã sản phẩm: {{item.code}}</h6>
+                            <p class="card-text"><small class="text-muted">Last updated {{item.modifiedDate | date :'medium'}}</small>
+                            </p>
+                            <p class="card-text d-flex justify-content-center">
+                              <a routerLink="details/{{item.id}}" class="btn mb-1 btn-primary mr-2">View</a>
+                              <a routerLink="edit/{{item.id}}" class="btn mb-1 btn-warning mr-2 text-white " >Edit</a>
+                              <a class="btn mb-1 btn-danger text-white " (click)="delete(item.id)">Delete</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- End Col -->
+            </div>
+        </div>
+        <!-- Pagination -->
+        <div class="col-lg-12">
+          <!-- <div class="card-body">
+              <div class="bootstrap-pagination">
+                  <nav>
+                      <ul class="pagination justify-content-center">
+                          <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">1</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">2</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">3</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">Next</a>
+                          </li>
+                      </ul>
+                  </nav>
+              </div>
+          </div> -->
+    </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

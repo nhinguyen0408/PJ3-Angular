@@ -1,0 +1,261 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <a routerLink="/admin/product" class="btn btn-outline-success mt-2">Back</a>
+          <!-- general form elements -->
+          <div class="card card-success">
+            <div class="card-header">
+              <h3 class="card-title">Sửa sản phẩm</h3>
+            </div>
+
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form">
+              <div class="card-body" id="bg-crete-pr">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Tên sản phẩm</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" name="name" [(ngModel)]="product.name"
+                  placeholder="Nhập tên sản phẩm..." required minlength="4" #name="ngModel">
+                  <div *ngIf="name.invalid"
+                    class="alert"
+                    style="background: rgb(248, 131, 131); border-radius: 0%;"
+                    >
+
+                    <div *ngIf="name.errors?.['required']">
+                      Tên không được để trống !!!
+                    </div>
+
+                    <div *ngIf="name.errors?.['minlength']">
+                      Tên phải dài hơn 4 ký tự !!!
+                    </div>
+                  </div>
+
+                  <div *ngIf="name.valid"
+                  class="alert" style="background: rgb(139, 216, 158); border-radius: 0%;">
+                  <small>OK</small>
+                 </div>
+                </div>
+                <!-- editor -->
+
+                  <label for="textareaInput">Mô tả sản phẩm</label>
+                  <div class="col-md-12">
+                    <div class="card card-outline">
+                      <div class="card-header bg-primary">
+
+                        <!-- tools box -->
+                        <div class="card-tools ">
+                          <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse" data-toggle="tooltip"
+                                  title="Collapse">
+                            <i class="fas fa-minus"></i></button>
+                        </div>
+                        <!-- /. tools -->
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body pad">
+                        <ckeditor
+                          #editor
+                          [(ngModel)]="product.description"
+                          id="description"
+                          name="description"
+                          type="divarea">
+                        </ckeditor>
+                        <div class="mb-3">
+                          <textarea class="textarea inline-editor" name="description" id="textareaInput"
+                          [(ngModel)]="product.description"
+                                    style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd;">
+                                  <!-- <p>{{product.description}}</p> -->
+                              <!-- <div [innerHTML]="product.description"></div> -->
+                          </textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.col-->
+
+                <!-- end-editor -->
+                <div class="form-group">
+                  <label for="category">Thể loại</label>
+                      <select class="form-control select2bs4" id="category" name="categoryId" [(ngModel)]="product.categoryId" style="width: 100%;" required>
+                        <option value="0" disabled>Chọn</option>
+                        <option *ngFor="let cat of categoryList" value="{{cat.id}}" >{{cat.name}}</option>
+                      </select>
+                </div>
+                <div class="form-group">
+                  <label for="production">Hãng</label>
+                  <select class="form-control select2bs4" id="production" name="productionId" [(ngModel)]="product.productionId" style="width: 100%;" required>
+                    <option [value]="0" disabled>Chọn</option>
+                    <option class="option-value" *ngFor="let production of productionList" value="{{production.id}}">{{production.name}}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Giá</label>
+                  <input type="text" class="form-control" [(ngModel)]="product.price" name="price" id="exampleInputPassword1"
+                   placeholder="Giá..." required [pattern]="numberValidate" #price="ngModel" >
+                   <div *ngIf="price.invalid"
+                    class="alert"
+                    style="background: rgb(248, 131, 131); border-radius: 0%;"
+                    >
+
+                    <div *ngIf="price.errors?.['required']">
+                      Giá không được để trống !!!!
+                    </div>
+
+                    <div *ngIf="price.errors?.['pattern']">
+                      Giá phải là số !!!!
+                    </div>
+                  </div>
+                  <div *ngIf="price.valid"
+                    class="alert" style="background: rgb(139, 216, 158); border-radius: 0%;">
+                    <small>OK</small>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Số lượng</label>
+                  <input type="text" class="form-control" [(ngModel)]="product.quantity" name="quantity"
+                   id="exampleInputPassword1" placeholder="Số lượng..." required [pattern]="numberValidate" #quantity="ngModel">
+                   <div *ngIf="quantity.invalid"
+                   class="alert"
+                   style="background: rgb(248, 131, 131); border-radius: 0%;"
+                   >
+
+                   <div *ngIf="quantity.errors?.['required']">
+                     Số lượng không được để trống !!!!
+                   </div>
+
+                   <div *ngIf="quantity.errors?.['pattern']">
+                     Số lượng phải là số !!!!
+                   </div>
+                 </div>
+                 <div *ngIf="quantity.valid"
+                   class="alert" style="background: rgb(139, 216, 158); border-radius: 0%;">
+                   <small>OK</small>
+                 </div>
+                </div>
+                <!-- asda -->
+                <div class="form-group" *ngIf="avtUrl== true">
+                  <label for="exampleInputPassword1">URL Ảnh đại diện</label>
+                  <input type="text" class="form-control" id="exampleInputPassword1" name="avatarUrl" [(ngModel)]="product.avatarUrl"
+                  placeholder="Avatar..." required #avatar="ngModel" >
+                  <div *ngIf="avatar.invalid"
+                   class="alert"
+                   style="background: rgb(248, 131, 131); border-radius: 0%;"
+                   >
+
+                   <div *ngIf="avatar.errors?.['required']">
+                     Avatar lượng không được để trống !!!!
+                   </div>
+                 </div>
+                 <div *ngIf="avatar.valid"
+                   class="alert" style="background: rgb(139, 216, 158); border-radius: 0%;">
+                   <small>OK</small>
+                 </div>
+                 <div class="card border shadow">
+                  Xem Trước:
+                  <img class="img-fluid card-img-top product-image" src="{{product.avatarUrl}}" alt="">
+                 </div>
+                 <button class="btn btn-warning mb-3" (click)="setNewAvatarOpen()">Or set new Avatar</button>
+                </div>
+                <!-- Set new Avatar -->
+                <div class="form-group" *ngIf="avtUrl== false">
+                  <label for="exampleInputFile">Ảnh đại diện</label>
+                  <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="exampleInputFile" (change)="selectFile($event)">
+                      <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
+
+                  </div>
+                  <div class="card border shadow d-flex justify-content-center align-items-center" *ngIf="fileNamePreView">
+                    <p>Preview</p>
+                    <img class="img-fluid card-img-top product-image" src="{{fileNamePreView}}"/>
+                  </div>
+                  <button class="btn btn-warning mb-3" (click)="setNewAvatarClose()">Huy</button>
+                </div>
+
+                <div class="form-group shadow pt-2 pb-3 pl-2">
+                  <label for="exampleInputPassword1">Đặc điểm</label>
+                  <div class="aliases">
+                    <button class="btn btn-outline-success shadow mb-4" (click)="addAlias()" type="button">+ Thêm đặc điểm</button>
+
+                    <div *ngFor="let alias of aliases; let i=index">
+                      <!-- The repeated alias template -->
+                      <label for="alias-{{ i }}">Đặc tính {{ i+1 }}:</label>
+                      <div class="row">
+                        <div class="col-md-4">
+                          Tên: <input type="text" class="form-control" name="key{{i}}" [(ngModel)]="alias.key" required #key="ngModel">
+                          <div *ngIf="key.invalid"
+                            class="alert"
+                            style="background: rgb(248, 131, 131); border-radius: 0%;"
+                            >
+
+                            <div *ngIf="key.errors?.['required']">
+                              Không được để trống !!!!
+                            </div>
+                          </div>
+                          <div *ngIf="key.valid"
+                            class="alert" style="background: rgb(139, 216, 158); border-radius: 0%;">
+                            <small>OK</small>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          Chi tiết: <input  type="text" class="form-control" name="value{{i}}" [(ngModel)]="alias.value" required #value="ngModel">
+                          <div *ngIf="value.invalid"
+                            class="alert"
+                            style="background: rgb(248, 131, 131); border-radius: 0%;"
+                            >
+
+                            <div *ngIf="value.errors?.['required']">
+                              Không được để trống !!!!
+                            </div>
+                          </div>
+                          <div *ngIf="value.valid"
+                            class="alert" style="background: rgb(139, 216, 158); border-radius: 0%;">
+                            <small>OK</small>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <i class="fas fa-times" title="Xóa đặc điểm" (click)="deleteAlias(i)"></i>
+                        </div>
+
+                      </div>
+
+
+
+
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="form-group">
+                  <label for="exampleInputFile">File input</label>
+                  <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="exampleInputFile">
+                      <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="">Upload</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                  <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div> -->
+              </div>
+              <!-- /.card-body -->
+
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

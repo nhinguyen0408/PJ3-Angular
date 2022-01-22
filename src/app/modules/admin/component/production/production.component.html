@@ -1,0 +1,68 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Quản lý Hãng</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <button class="btn mb-1 btn-success mr-2" routerLink="/admin/production/create">Thêm Hãng</button>
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Id</th>
+                  <th>Tên hãng</th>
+                  <th>Công ty</th>
+                  <th>Trạng thái</th>
+                  <th>Ngày tạo lập</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let production of productionList; index as i">
+                  <td>{{i + 1}}</td>
+                  <td>{{production.id}}</td>
+                  <td>{{production.name}}</td>
+                  <td>{{production.company}}</td>
+                  <td>
+                    <div *ngIf="production.status == 'ENABLE'">
+                      <span class="badge badge-primary px-2">Active</span>
+                    </div>
+                    <div *ngIf="production.status == 'DISABLE'">
+                      <span class="badge badge-danger px-2">Inactive</span>
+                    </div>
+                  </td>
+                  <td>{{production.createdDate  | date:'medium'}}</td>
+                  <td>
+                    <button class="btn mb-1 btn-warning mr-2" routerLink="/admin/production/edit/{{production.id}}">Edit</button>
+                    <button class="btn mb-1 btn-danger" (click)="delete(production.id)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Id</th>
+                  <th>Tên hãng</th>
+                  <th>Công ty</th>
+                  <th>Trạng thái</th>
+                  <th>Ngày tạo lập</th>
+                  <th>Thao tác</th>
+                </tr>
+              </tfoot>
+            </table>
+            <br>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+        <!-- /.card -->
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</div>
+

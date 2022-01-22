@@ -1,0 +1,8 @@
+#bg-crete-pr{
+  background: rgb(217, 235, 232);
+}
+.product-image{
+  height: 250px;
+  width: 400px;
+  object-fit: cover;
+}

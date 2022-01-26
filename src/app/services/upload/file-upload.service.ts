@@ -35,6 +35,14 @@ export class FileUploadService {
     resolve(fileUpload);
     })
   }
+  pushFiles(files: FileUpload []){
+    let arrayUrl: string [] = []
+    for(let i = 0 ; i < files.length; i ++){
+      let results = this.pushFileToStorage(files[i]);
+      console.log("results", results)
+    }
+
+  }
 
   private saveFileData(fileUpload: FileUpload): void {
     this.db.list(this.basePath).push(fileUpload);

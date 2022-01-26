@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Image } from 'src/app/models/Image.model';
 import { ProductInformation } from 'src/app/models/ProductInformation.model';
 import { FileUpload } from 'src/app/models/upload/FileUpload.model';
 import { ApiCategoryService } from 'src/app/services/category/api-category.service';
@@ -89,7 +90,24 @@ export class EditProductComponent implements OnInit {
 
     }
 }
+selectedFilesArray: File[] = [];
+imgNamePreview: string [] = []
+  onFileChange(event:any) {
+    if (event.target.files && event.target.files[0]) {
+        var filesAmount = event.target.files.length;
+        for (let i = 0; i < filesAmount; i++) {
+                this.selectedFilesArray?.push(event.target.files[i]);
+                var reader = new FileReader();
 
+                reader.onload = (event:any) => {
+                   this.imgNamePreview.push(event.target.result);
+                }
+
+                reader.readAsDataURL(event.target.files[i]);
+        }
+        console.log(" this.selectedFilesArray ====", this.selectedFilesArray)
+    }
+  }
   setNewAvatarOpen(){
     console.log("avtURL:::", this.avtUrl)
     this.avtUrl = false
@@ -98,6 +116,49 @@ export class EditProductComponent implements OnInit {
   setNewAvatarClose(){
     console.log("avtURL:::", this.avtUrl)
     this.avtUrl = true
+  }
+  setOpenUploadFormToMoreImage = false;
+  buttonName = "Thêm ảnh";
+  uploadNewImage(){
+    if(this.setOpenUploadFormToMoreImage == false){
+      this.setOpenUploadFormToMoreImage = true;
+      this.buttonName = "Hủy"
+    } else {
+      this.setOpenUploadFormToMoreImage = false;
+      this.buttonName = "Thêm ảnh";
+      this.selectedFilesArray= [];
+      this.imgNamePreview = []
+    }
+
+  }
+  resultMul: any [] = [];
+  async uploadMultiple(){
+    if(this.selectedFilesArray.length > 0){
+      for(let i = 0; i < this.selectedFilesArray.length; i++){
+        const files: File | null = this.selectedFilesArray[i];
+        if(files){
+          let newFileUpload = new FileUpload(files);
+          console.log('newFileUpload=====================', newFileUpload)
+          const fileName = (Math.random() * new Date().getTime()).toString(36).replace(/\./g, '');
+          newFileUpload.name = fileName;
+          // const resultOfUpload = null;
+          // this.resultMul = await this.uploadService.pushFileToStorage(newFileUpload)
+          this.resultMul[i] = await this.uploadService.pushFileToStorage(newFileUpload)
+        }
+      }
+      setTimeout(()=>{
+        for(let i = 0; i < this.resultMul.length; i++){
+          const image = new Image();
+          image.imageUrl = this.resultMul[i].url;
+          console.log('this.image' + i ,image)
+          this.product.listImage.push(image);
+          console.log('this.listImage:::',this.product.listImage)
+          console.log('this.product.avatarUrl upload:::' + i ,this.resultMul[i].url)
+        }
+        // this.resultMul = {};
+      },4000)
+
+    }
   }
 
   getById(){
@@ -171,7 +232,7 @@ export class EditProductComponent implements OnInit {
       this.product.productionId = Number(productionId);
       this.product.listInformation = this.aliases
       if(this.product.name == ''
-      || this.product.categoryId == 0 || this.product.productionId == 0 || this.product.quantity == 0  || this.product.avatarUrl == '' ){
+      || this.product.categoryId == 0 || this.product.productionId == 0 || this.product.quantity == 0 ){
         alert("Vui lòng điền đầy đủ các trường thông tin")
       }else {
         if(this.aliases.length > 0){
@@ -187,18 +248,32 @@ export class EditProductComponent implements OnInit {
         if(this.avtUrl == false){
           this.product.avatarUrl = "";
           this.upload()
+          if(this.selectedFilesArray.length > 0){
+            this.uploadMultiple()
+          }
           setTimeout(()=>{
-            console.log(this.product);
+            console.log(" new avatar",this.product);
             this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
               this.route.navigate(['/admin/product/details/'+ this.product.id])
             })
           }, 4100)
 
         } else {
-          console.log(this.product);
-          this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
+          if(this.selectedFilesArray.length > 0){
+            this.uploadMultiple()
+            setTimeout(()=>{
+              console.log(" new more image",this.product);
+              this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
+                this.route.navigate(['/admin/product/details/'+ this.product.id])
+              })
+            }, 4100)
+          } else {
+            console.log("default",this.product);
+            this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
             this.route.navigate(['/admin/product/details/'+ this.product.id])
           })
+          }
+
         }
 
       }

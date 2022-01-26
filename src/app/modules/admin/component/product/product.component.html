@@ -13,13 +13,16 @@
             </div>
           </div>
             <p class="text-muted"></p>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-6 col-lg-3" *ngFor="let item of productList">
                     <div class="card border shadow">
                         <img class="img-fluid card-img-top product-image" src="{{item.avatarUrl}}" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title product-name">{{item.name}}</h5> <br>
-                            <h6 class="card-title text-primary">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</h6> <br>
+                            <h6 class="card-title text-primary">
+                              {{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+
+                            </h6> <br>
                             <h6 class="my-3">Mã sản phẩm: {{item.code}}</h6>
                             <p class="card-text"><small class="text-muted">Last updated {{item.modifiedDate | date :'medium'}}</small>
                             </p>
@@ -31,9 +34,70 @@
                         </div>
                     </div>
                 </div>
+              </div> -->
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <!-- <th>ID</th> -->
+                  <th>Image</th>
+                  <th>Tên</th>
+                  <th>Code</th>
+                  <th>Trạng thái</th>
+                  <th>Thể loại</th>
+                  <th>Hãng</th>
+                  <th>Giá nhập</th>
+                  <th>Giá bán</th>
+                  <th>Số lượng</th>
+                  <th>Ngày tạo lập</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of productList; index as i">
+                  <td>{{i + 1}}</td>
+                  <!-- <td><p class="font-weight-bold text-primary">{{item.id}}</p></td> -->
+                  <td><img class="img-fluid card-img-top product-image" src="{{item.avatarUrl}}" alt="Card image cap"></td>
+                  <td><p class="text-primary">{{item.name}}</p>
+                    <a routerLink="details/{{item.id}}" class="btn mb-1 btn-primary mr-2">View</a>
+                    <a routerLink="edit/{{item.id}}" class="btn mb-1 btn-warning mr-2 text-white ">Edit</a>
+                    <button class="btn mb-1 btn-danger text-white" (click)="delete(item.id)" >Delete</button>
+                  </td>
+                  <td><p class="font-weight-bold text-info">{{item.code}}</p></td>
+                  <td>
+                    <div *ngIf="item.status == 'ACTIVE'">
+                      <span class="badge badge-success px-2">Active</span>
+                    </div>
+                    <div *ngIf="item.status == 'INACTIVE'">
+                      <span class="badge badge-danger px-2">Inactive</span>
+                    </div>
+                  </td>
+                  <td>{{item.category}}</td>
+                  <td>{{item.production}}</td>
+                  <!-- <td>{{category.sortName}}</td> -->
+                  <td>{{item.importPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
+                  <td>{{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
+                  <td>{{item.quantity}}</td>
+                  <td>{{item.createdDate | date:'medium'}}</td>
 
-                <!-- End Col -->
-            </div>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <!-- <th>ID</th> -->
+                  <th>Image</th>
+                  <th>Tên</th>
+                  <th>Code</th>
+                  <th>Trạng thái</th>
+                  <th>Thể loại</th>
+                  <th>Hãng</th>
+                  <th>Giá nhập</th>
+                  <th>Giá bán</th>
+                  <th>Số lượng</th>
+                  <th>Ngày tạo lập</th>
+                </tr>
+              </tfoot>
+            </table>
         </div>
         <!-- Pagination -->
         <div class="col-lg-12">

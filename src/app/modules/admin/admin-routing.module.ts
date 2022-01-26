@@ -15,6 +15,7 @@ import { CreateProductionComponent } from './component/production/create-product
 import { EditProductionComponent } from './component/production/edit-production/edit-production.component';
 import { ProductionComponent } from './component/production/production.component';
 import { ProfileComponent } from './component/profile/profile.component';
+import { SaleComponent } from './component/sale/sale.component';
 import { UploadExampleComponent } from './component/upload-example/upload-example.component';
 import { WarehouseComponent } from './component/warehouse/warehouse.component';
 
@@ -29,6 +30,7 @@ const routes: Routes = [
       {path: 'product/details/:id', component: DetailsProductComponent},
       {path: 'product/create', component: CreateProductComponent},
       {path: 'product/edit/:id', component: EditProductComponent},
+      {path: 'sale', component: SaleComponent},
       {path: 'category', component: CategoryComponent},
       {path: 'category/create', component: CreateCategoryComponent},
       {path: 'category/edit/:id', component: EditCategoryComponent},

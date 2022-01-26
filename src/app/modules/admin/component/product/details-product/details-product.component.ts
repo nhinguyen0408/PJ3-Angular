@@ -17,7 +17,11 @@ export class DetailsProductComponent implements OnInit {
     this.getDetailsPr();
     // (function ($) {
     //   $(document).ready(function(){
-    //     $('.summernote').summernote('destroy');;
+    //     $('.product-image-thumb').click(function() {
+    //       alert("asdaf");
+    //       $('.product-image-thumb').removeClass('active');
+    //       $().addClass('active')
+    //     });
     //   });
     // })(jQuery);
   }

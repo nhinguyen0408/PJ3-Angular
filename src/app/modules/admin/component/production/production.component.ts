@@ -14,14 +14,9 @@ export class ProductionComponent implements OnInit {
   constructor(private api: ApiProductionService) { }
 
   ngAfterViewInit(): void {
-    // (function ($) {
-    //   $(document).ready(function(){
-    //     $("#example1").DataTable({
-    //       "responsive": true,
-    //       "autoWidth": false,
-    //     });
-    //   });
-    // })(jQuery);
+    setTimeout(()=>{
+      this.setDataTable()
+    },200)
   }
   ngOnInit(): void {
     this.getAll();
@@ -59,5 +54,13 @@ export class ProductionComponent implements OnInit {
         this.getAll()
       })
     }
+  }
+  setDataTable(){
+    (function ($) {
+        $("#example1").DataTable({
+          "responsive": true,
+          "autoWidth": false,
+        });
+    })(jQuery);
   }
 }

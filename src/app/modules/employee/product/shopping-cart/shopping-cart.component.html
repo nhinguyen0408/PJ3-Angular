@@ -1,0 +1,74 @@
+<div class="">
+  <h4 class="m-2">Giỏ hàng</h4>
+  <div class="row">
+      <aside class="col-lg-9">
+          <div class="card">
+
+              <div class="table-responsive">
+                  <table class="table table-borderless table-shopping-cart">
+                      <thead class="text-muted">
+                          <tr class="small text-uppercase">
+                              <th scope="col">Product</th>
+                              <th scope="col" width="120">Quantity</th>
+                              <th scope="col" width="120">Price</th>
+                              <th scope="col" class="text-right d-none d-md-block" width="200"></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let item of shopping_Cart">
+                              <td>
+                                  <figure class="itemside align-items-center">
+                                      <div class="aside"><img src="{{item.product.avatarUrl}}" class="img-sm"></div>
+                                      <figcaption class="info product-name"> <a href="#" class="title text-dark" data-abc="true">{{item.product.name}}</a>
+
+                                      </figcaption>
+                                  </figure>
+                              </td>
+                              <td>
+                                <input type="text" value="{{item.quantity}}" disabled>
+                              </td>
+                              <td>
+                                  <div class="price-wrap"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
+                              </td>
+                              <td class="text-right d-none d-md-block"> <a class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> Remove</a> </td>
+                          </tr>
+
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </aside>
+      <aside class="col-lg-3">
+          <div class="card mb-3">
+              <div class="card-body">
+                  <form>
+                      <div class="form-group"> <label>Have coupon?</label>
+                          <div class="input-group"> <input type="text" class="form-control coupon" name="" placeholder="Coupon code"> <span class="input-group-append"> <button class="btn btn-primary btn-apply coupon">Apply</button> </span> </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+          <div class="card">
+              <div class="card-body">
+                <dl class="dlist-align">
+                  <dt>Tổng sản phẩm</dt>
+                  <dd class="text-right ml-3">{{totalItem}}</dd>
+              </dl>
+                  <dl class="dlist-align">
+                      <dt>Tổng cộng:</dt>
+                      <dd class="text-right ml-3">{{totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</dd>
+                  </dl>
+                  <dl class="dlist-align">
+                      <dt>Chiết khấu:</dt>
+                      <dd class="text-right text-danger ml-3">0</dd>
+                  </dl>
+                  <dl class="dlist-align">
+                      <dt>Tổng tahnh toán:</dt>
+                      <dd class="text-right text-dark b ml-3"><strong>{{totalPay.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></dd>
+                  </dl>
+                  <hr> <button class="add-to-cart btn btn-default" type="button" (click)="payment()">Thanh toán <i class="far fa-credit-card"></i></button>
+              </div>
+          </div>
+      </aside>
+  </div>
+</div>

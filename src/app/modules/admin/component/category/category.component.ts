@@ -11,16 +11,11 @@ declare var jQuery: any;
 export class CategoryComponent implements OnInit {
 
   constructor(private api: ApiCategoryService) { }
-  // ngAfterViewInit(): void {
-  //   (function ($) {
-  //     $(document).ready(function(){
-  //       $("#example1").DataTable({
-  //         "responsive": true,
-  //         "autoWidth": false,
-  //       });
-  //     });
-  //   })(jQuery);
-  // }
+  ngAfterViewInit(): void {
+    setTimeout(()=>{
+      this.setDataTable()
+    },200)
+  }
 
   ngOnInit(): void {
     this.getAll();
@@ -47,6 +42,14 @@ export class CategoryComponent implements OnInit {
         this.getAll()
       })
     }
+  }
+  setDataTable(){
+    (function ($) {
+        $("#example1").DataTable({
+          "responsive": true,
+          "autoWidth": false,
+        });
+    })(jQuery);
   }
 
 }

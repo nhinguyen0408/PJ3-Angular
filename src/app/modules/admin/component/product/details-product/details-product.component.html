@@ -35,13 +35,9 @@
 
               <img src="{{product.avatarUrl}}" class="product-image" alt="Product Image">
             </div>
-            <!-- <div class="col-12 product-image-thumbs">
-              <div class="product-image-thumb active"><img src="assets/dist/img/prod-1.jpg" alt="Product Image"></div>
-              <div class="product-image-thumb" ><img src="assets/dist/img/prod-2.jpg" alt="Product Image"></div>
-              <div class="product-image-thumb" ><img src="assets/dist/img/prod-3.jpg" alt="Product Image"></div>
-              <div class="product-image-thumb" ><img src="assets/dist/img/prod-4.jpg" alt="Product Image"></div>
-              <div class="product-image-thumb" ><img src="assets/dist/img/prod-5.jpg" alt="Product Image"></div>
-            </div> -->
+            <div class="col-12 product-image-thumbs" >
+              <div class="product-image-thumb" *ngFor="let item of product.listImage"><img src="{{item.imageUrl}}" alt="Product Image"></div>
+            </div>
           </div>
           <div class="col-12 col-sm-6">
 
@@ -71,10 +67,12 @@
             <h4><small>Số lượng trong kho: </small> {{product.quantity}}</h4>
             <div class="bg-gray py-2 px-3 mt-4">
               <h2 class="mb-0">
-                {{product.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                {{product.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                <!-- {{product.salePrice}} -->
               </h2>
               <h4 class="mt-0">
-                <small>Ex Tax: ${{(product.price * 1.2).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}} </small>
+                <!-- <small>Ex Tax: ${{(product.salePrice * 1.2)}} </small> -->
+                <small>Ex Tax: ${{(product.salePrice * 1.2).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}} </small>
               </h4>
             </div>
 

@@ -2,8 +2,29 @@
   <div class="container-fluid">
     <div class="card-body">
       <div class="row">
-        <div class="col-md-12">
-          <a routerLink="/admin/product" class="btn btn-outline-success mt-2">View All</a>
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">Thêm sản phẩm</h3><br>
+              <a routerLink="/admin/product" class="btn btn-outline-success mt-2">View All</a>
+              <p></p>
+              <div class="mt-5">
+                <h6>Hướng đẫn upload:</h6>
+                <small class="text-small">
+                  - Tên sản phẩm: dài hơn 4 ký tự <br>
+                  - Mô tả sản phẩm có thể gồm ảnh và video <br>
+                  - Ảnh đại diện là hình ảnh chính được hiển thị cho sản phẩm ở trang chủ; <br>
+                  - Ảnh sản phẩm là ảnh mô tả chi tiết cho sản phẩm  <br>
+                  - Sản phẩm bắt buộc phải gồm giá nhập, giá bán, thể loại và hãng <br>
+                  - Không bắt buộc có đặc điểm <br>
+                </small>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-9">
+
           <!-- general form elements -->
           <div class="card card-success">
             <div class="card-header">
@@ -31,11 +52,6 @@
                       Tên phải dài hơn 4 ký tự !!!
                     </div>
                   </div>
-
-                  <div *ngIf="name.valid"
-                  class="alert" style="background: rgb(139, 216, 158); border-radius: 0%;">
-                  <small>OK</small>
-                 </div>
                 </div>
                 <!-- editor -->
 
@@ -80,25 +96,39 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Giá</label>
-                  <input type="text" class="form-control" [(ngModel)]="product.price" name="price" id="exampleInputPassword1"
-                   placeholder="Giá..." required [pattern]="numberValidate" #price="ngModel" >
-                   <div *ngIf="price.invalid && (price.dirty || price.touched)"
+                  <label for="exampleInputPassword1">Giá nhập</label>
+                  <input type="text" class="form-control" [(ngModel)]="product.importPrice" name="importPrice" id="exampleInputPassword1"
+                   placeholder="Giá..." required [pattern]="numberValidate" #importPrice="ngModel" >
+                   <div *ngIf="importPrice.invalid && (importPrice.dirty || importPrice.touched)"
                     class="alert"
                     style="background: rgb(248, 131, 131); border-radius: 0%;"
                     >
 
-                    <div *ngIf="price.errors?.['required']">
-                      Giá không được để trống !!!!
+                    <div *ngIf="importPrice.errors?.['required']">
+                      Giá nhập không được để trống !!!!
                     </div>
 
-                    <div *ngIf="price.errors?.['pattern']">
-                      Giá phải là số !!!!
+                    <div *ngIf="importPrice.errors?.['pattern']">
+                      Giá nhập phải là số !!!!
                     </div>
                   </div>
-                  <div *ngIf="price.valid"
-                    class="alert" style="background: rgb(139, 216, 158); border-radius: 0%;">
-                    <small>OK</small>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Giá bán</label>
+                  <input type="text" class="form-control" [(ngModel)]="product.salePrice" name="salePrice" id="exampleInputPassword1"
+                   placeholder="Giá..." required [pattern]="numberValidate" #salePrice="ngModel" >
+                   <div *ngIf="salePrice.invalid && (salePrice.dirty || salePrice.touched)"
+                    class="alert"
+                    style="background: rgb(248, 131, 131); border-radius: 0%;"
+                    >
+
+                    <div *ngIf="salePrice.errors?.['required']">
+                      Giá bán không được để trống !!!!
+                    </div>
+
+                    <div *ngIf="salePrice.errors?.['pattern']">
+                      Giá bán phải là số !!!!
+                    </div>
                   </div>
                 </div>
 
@@ -107,22 +137,18 @@
                   <input type="text" class="form-control" [(ngModel)]="product.quantity" name="quantity"
                    id="exampleInputPassword1" placeholder="Số lượng..." required [pattern]="numberValidate" #quantity="ngModel">
                    <div *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)"
-                   class="alert"
-                   style="background: rgb(248, 131, 131); border-radius: 0%;"
-                   >
+                    class="alert"
+                    style="background: rgb(248, 131, 131); border-radius: 0%;"
+                    >
 
-                   <div *ngIf="quantity.errors?.['required']">
-                     Số lượng không được để trống !!!!
-                   </div>
+                    <div *ngIf="quantity.errors?.['required']">
+                      Số lượng không được để trống !!!!
+                    </div>
 
-                   <div *ngIf="quantity.errors?.['pattern']">
-                     Số lượng phải là số !!!!
-                   </div>
-                 </div>
-                 <div *ngIf="quantity.valid"
-                   class="alert" style="background: rgb(139, 216, 158); border-radius: 0%;">
-                   <small>OK</small>
-                 </div>
+                    <div *ngIf="quantity.errors?.['pattern']">
+                      Số lượng phải là số !!!!
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputFile">Ảnh đại diện</label>
@@ -136,6 +162,23 @@
                   <div class="card border shadow d-flex justify-content-center align-items-center" *ngIf="fileNamePreView">
                     <p>Preview</p>
                     <img class="img-fluid card-img-top product-image" src="{{fileNamePreView}}"/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputFile">Ảnh sản phẩm</label>
+                  <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="exampleInputFile" multiple (change)="onFileChange($event)">
+                      <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
+
+                  </div>
+                  <div class="card border shadow d-flex justify-content-center align-items-center" *ngIf="imgNamePreview.length > 0">
+                    <p>Preview</p>
+                    <div class="d-flex">
+                      <img *ngFor='let url of imgNamePreview'  [src]="url" height="150" width="200px" style="margin: 3px;"> <br/>
+                    </div>
+
                   </div>
                 </div>
                 <!-- <div class="form-group">
@@ -168,10 +211,6 @@
                               Không được để trống !!!!
                             </div>
                           </div>
-                          <div *ngIf="key.valid"
-                            class="alert" style="background: rgb(139, 216, 158); border-radius: 0%;">
-                            <small>OK</small>
-                          </div>
                         </div>
                         <div class="col-md-6">
                           Chi tiết: <input  type="text" class="form-control" name="value{{i}}" [(ngModel)]="aliases[i].value" required #value="ngModel">
@@ -183,10 +222,6 @@
                             <div *ngIf="value.errors?.['required']">
                               Không được để trống !!!!
                             </div>
-                          </div>
-                          <div *ngIf="value.valid"
-                            class="alert" style="background: rgb(139, 216, 158); border-radius: 0%;">
-                            <small>OK</small>
                           </div>
                         </div>
                         <div class="col-md-2">

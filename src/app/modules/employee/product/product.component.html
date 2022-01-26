@@ -1,0 +1,82 @@
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="content-body">
+      <div class="row">
+        <div class="col-12 m-b-30">
+          <div class="d-flex justify-content-between mt-3">
+
+          </div>
+        </div>
+        <!-- Pagination -->
+      </div>
+      <div class="row">
+        <div class="col-12 m-b-30">
+          <div class="card">
+            <app-shopping-cart
+            [shopping_Cart]="shoppingCart"
+            [totalPrice]="totalPrice"
+            [discount]="discount"
+            [totalItem]="totalItem"
+            [totalPay]="totalPay"
+            (remove)="removeProduct($event)"
+            ></app-shopping-cart>
+          </div>
+        </div>
+
+      </div>
+      <div class="row product-table shadow">
+        <div class="col-12 m-b-30">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width: 10px">#</th>
+                <!-- <th>ID</th> -->
+                <th></th>
+                <th>Tên</th>
+                <th>Code</th>
+                <th>Giá</th>
+                <th>Số lượng trong kho</th>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of productList; index as i">
+                <td>{{i + 1}}</td>
+                <!-- <td><p class="font-weight-bold text-primary">{{item.id}}</p></td> -->
+                <td><img class="img-fluid card-img-top product-image" src="{{item.avatarUrl}}" alt="Card image cap"></td>
+                <td><p class="text-primary">{{item.name}}</p>
+
+                </td>
+                <td><p class="font-weight-bold text-info">{{item.code}}</p></td>
+
+                <td>{{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
+                <td>{{item.quantity}}</td>
+                <td>
+                  <a class="btn mb-1 btn-success text-white mr-2" (click)="addShoppingCart(item.id)">Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i></a>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th style="width: 10px">#</th>
+                <!-- <th>ID</th> -->
+                <th></th>
+                <th>Tên</th>
+                <th>Code</th>
+                <th>Giá</th>
+                <th>Số lượng trong kho</th>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+

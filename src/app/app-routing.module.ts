@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './guards/auth.guard';
+import { EmployeeGuardGuard } from './guards/employee/employee-guard.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -13,6 +14,10 @@ const routes: Routes = [
   { path: 'admin',
     canActivate: [AuthGuard],
     loadChildren: () => import ('./modules/admin/admin.module').then(m => m.AdminModule)
+  },
+  { path: 'employee',
+    canActivate: [EmployeeGuardGuard],
+    loadChildren: () => import ('./modules/employee/employee.module').then(m => m.EmployeeModule)
   },
 
 

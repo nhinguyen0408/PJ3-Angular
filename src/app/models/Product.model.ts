@@ -1,3 +1,4 @@
+import { Image } from "./Image.model";
 import { ProductInformation } from "./ProductInformation.model";
 
 export class Product{
@@ -7,13 +8,16 @@ export class Product{
   description: string = "";
   categoryId: number = 0;
   productionId: number = 0;
-  price: number = 0;
+  salePrice: number = 0;
+  importPrice: number = 0;
+  discount: number = 0;
   quantity: number = 0;
   status: string = "";
   avatarUrl: string = "";
   category: string = "";
   production: string = "";
   listInformation: ProductInformation [] = []  ;
+  listImage: Image [] = [];
   createdDate: Date = new Date();
   modifiedDate: Date = new Date();
 }

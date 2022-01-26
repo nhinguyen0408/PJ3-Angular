@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, retry } from 'rxjs';
+import { Image } from 'src/app/models/Image.model';
 import { Product } from 'src/app/models/Product.model';
 import { ProductInformation } from 'src/app/models/ProductInformation.model';
 import { Production } from 'src/app/models/Production.model';
@@ -48,10 +49,16 @@ export class CreateProductComponent implements OnInit {
   }
   //UPLAOD FILE
   selectedFiles?: FileList;
+  selectedFilesArray: File[] = [];
   currentFileUpload?: FileUpload;
+  currentFileUploadArray: FileUpload[] = [];
   percentage = 0;
   result : any;
+  resultMul : any [] = [];
   fileNamePreView: string = '';
+  imgNamePreview: string [] = []
+  listImage: Image [] = []
+  image: Image = new Image();
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
       const reader = new FileReader();
@@ -67,7 +74,50 @@ export class CreateProductComponent implements OnInit {
       }
 
   }
+  onFileChange(event:any) {
+    if (event.target.files && event.target.files[0]) {
+        var filesAmount = event.target.files.length;
+        for (let i = 0; i < filesAmount; i++) {
+                this.selectedFilesArray?.push(event.target.files[i]);
+                var reader = new FileReader();
 
+                reader.onload = (event:any) => {
+                   this.imgNamePreview.push(event.target.result);
+                }
+
+                reader.readAsDataURL(event.target.files[i]);
+        }
+        console.log(" this.selectedFilesArray ====", this.selectedFilesArray)
+    }
+  }
+  async uploadMultiple(){
+    if(this.selectedFilesArray.length > 0){
+      for(let i = 0; i < this.selectedFilesArray.length; i++){
+        const files: File | null = this.selectedFilesArray[i];
+        if(files){
+          let newFileUpload = new FileUpload(files);
+          console.log('newFileUpload=====================', newFileUpload)
+          const fileName = (Math.random() * new Date().getTime()).toString(36).replace(/\./g, '');
+          newFileUpload.name = fileName;
+          // const resultOfUpload = null;
+          // this.resultMul = await this.uploadService.pushFileToStorage(newFileUpload)
+          this.resultMul[i] = await this.uploadService.pushFileToStorage(newFileUpload)
+        }
+      }
+      setTimeout(()=>{
+        for(let i = 0; i < this.resultMul.length; i++){
+          const image = new Image();
+          image.imageUrl = this.resultMul[i].url;
+          console.log('this.image' + i ,image)
+          this.listImage.push(image);
+          console.log('this.listImage:::',this.listImage)
+          console.log('this.product.avatarUrl upload:::' + i ,this.resultMul[i].url)
+        }
+        // this.resultMul = {};
+      },4000)
+
+    }
+  }
   async upload() {
       if (this.selectedFiles) {
         const file: File | null = this.selectedFiles.item(0);
@@ -79,26 +129,15 @@ export class CreateProductComponent implements OnInit {
           this.currentFileUpload.name = fileName;
           this.fileNamePreView = this.currentFileUpload.url;
           this.result = await this.uploadService.pushFileToStorage(this.currentFileUpload)
-          // .subscribe(
-          //   percentage => {
-          //     this.percentage = Math.round(percentage ? percentage : 0);
-
-          //   },
-          //   error => {
-          //     console.log(error);
-          //   }
-          // );
-          // this.product.avatarUrl = this.currentFileUpload.url;
-          console.log('result:::',this.result)
+          // console.log('result:::',this.result)
           setTimeout(()=>{
             this.product.avatarUrl = this.result.url;
             console.log('this.product.avatarUrl upload:::',this.product.avatarUrl)
-            // console.log('this.currentFileUpload upload:::',this.currentFileUpload)
           },4000)
 
         }
-
       }
+
   }
   addAlias() {
     this.product.listInformation = this.aliases
@@ -127,29 +166,29 @@ export class CreateProductComponent implements OnInit {
   onSubmit(){
     let categoryId = (function ($) {
       let se = $('#category').select2('data')[0]
-      console.log("selected category: ", se.id)
+      // console.log("selected category: ", se.id)
       return se.id
     })(jQuery);
     let productionId = (function ($) {
         let se = $('#production').select2('data')[0]
-        console.log("selected category: ", se.id)
+        // console.log("selected category: ", se.id)
         return se.id
     })(jQuery);
 
     let data = (function ($){
         let data = $('#textareaInput').summernote('code').toString();
-        console.log("selected: ", data)
+        // console.log("selected: ", data)
 
         return data
     })(jQuery);
-    console.log("data: ", data)
+    // console.log("data: ", data)
 
     this.product.description = data ;
     this.product.categoryId = Number(categoryId);
     this.product.productionId = Number(productionId);
     this.product.listInformation = this.aliases
     if(this.product.name == '' || this.product.description == '<p><br></p>'
-    || this.product.categoryId == 0  || this.product.quantity == 0  ){
+    || this.product.categoryId == 0|| this.product.productionId == 0  || this.product.quantity == 0  ){
       alert("Vui lòng điền đầy đủ các trường thông tin")
     }else {
       if(this.aliases.length > 0){
@@ -158,17 +197,16 @@ export class CreateProductComponent implements OnInit {
           alert("Vui lòng điền đủ trường thông tin Đặc điểm!!!")
         }
       });
-
       this.upload()
-
-
-      console.log(this.product);
+      this.uploadMultiple()
+      // console.log(this.product);
       setTimeout(()=>{
+        this.product.listImage = this.listImage;
         this.apiProduct.createProduct(this.product).subscribe((data:{})=>{
         console.log(this.product)
         this.route.navigate(['/admin/product'])
       })
-      },4100)
+      },4300)
 
       }
     }

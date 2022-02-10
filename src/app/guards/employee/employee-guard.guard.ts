@@ -16,7 +16,7 @@ export class EmployeeGuardGuard implements CanActivate {
         this.router.navigate(['login']);
       }
         // true : cho phep router duoc kich hoat
-      return this.auth.isLogedin() && this.auth.getRole() === "ADMIN";
+      return this.auth.isLogedin() && (this.auth.getRole() === "ADMIN" || this.auth.getRole() === "EMPLOYEE");
   }
 
 }

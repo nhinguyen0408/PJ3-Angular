@@ -1,131 +1,124 @@
 <div class="content-wrapper">
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12 m-b-30">
-        <div class="d-flex justify-content-between mt-3">
-          <div class="">
-            <h4 class="d-inline mb-5">Sửa thông tin</h4>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3">
-
-        <!-- Profile Image -->
-        <div class="card card-primary card-outline">
-          <div class="card-body box-profile">
-            <div class="text-center">
-              <img class="profile-user-img img-fluid img-circle"
-                   src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg"
-                   alt="User profile picture">
+    <div class="content-body">
+      <div class="row card">
+        <div class="col-12 m-b-30">
+          <div class="d-flex justify-content-between mt-3">
+            <div class="card-header">
+              <h4 class="d-inline ">Danh sách Nhân viên</h4>
             </div>
 
-            <h3 class="profile-username text-center">Nina Mcintire</h3>
-
-            <p class="text-muted text-center">Software Engineer</p>
-
-            <ul class="list-group list-group-unbordered mb-3">
-              <li class="list-group-item">
-                <b>ID</b> <a class="float-right">1</a>
-              </li>
-              <li class="list-group-item">
-                <b>Quyền hạn</b> <a class="float-right">SuperAdmin</a>
-              </li>
-              <li class="list-group-item">
-                <b>Friends</b> <a class="float-right">13,287</a>
-              </li>
-            </ul>
+            <div class="">
+              <br>
+              <button class="btn btn-primary mr-5" routerLink="/admin/employee-manager/create">Thêm nhân viên</button>
+            </div>
           </div>
-          <!-- /.card-body -->
-        </div>
-
-      </div>
-      <!-- /.col -->
-      <div class="col-md-9">
-        <div class="card">
-          <div class="card-header p-2">
-            <ul class="nav nav-pills">
-              <li class="nav-item"><a class="nav-link active" data-toggle="tab">Activity</a></li>
-            </ul>
-          </div><!-- /.card-header -->
           <div class="card-body">
-            <div class="tab-content">
+            <table id="table-employee" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <!-- <th>ID</th> -->
+                  <th>Avatar</th>
+                  <th>Tên</th>
+                  <th>Giới tính</th>
+                  <th>Số điện thoại</th>
+                  <th>Email</th>
+                  <th>Quyền</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listProfile; index as i">
+                  <td class="align-middle">{{i + 1}}</td>
+                  <td class="align-middle">
+                    <div class="text-center">
+                      <img class="profile-user-img img-fluid img-circle" *ngIf="item.imageUrl=== null || item.imageUrl ===''"
+                           src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg"
+                           alt="User profile picture">
+                      <img class="profile-user-img img-fluid img-circle" *ngIf="item.imageUrl"
+                           src="{{item.imageUrl}}"
+                           alt="User profile picture">
 
+                    </div>
+                  </td>
+                  <td class="align-middle">{{item.fistName + item.lastName }}</td>
+                  <td class="align-middle">{{item.gender}}</td>
+                  <td class="align-middle">{{item.phone}}</td>
+                  <td class="align-middle">{{item.email}}</td>
+                  <td class="align-middle">{{item.role}}</td>
+                  <td class="align-middle">
+                    <div *ngIf="item.block == false">
+                      <span class="badge badge-primary px-2">Active</span>
+                    </div>
+                    <div *ngIf="item.block == true">
+                      <span class="badge badge-danger px-2">Inactive</span>
+                    </div>
+                  </td>
+                  <td class="align-middle justify-content-center">
+                    <a *ngIf="item.role != 'SUPERADMIN' && item.block == false " class="btn shadow text-danger btn-outline-danger mr-2"
+                    (click)="blockUser(item.id)"
+                    >
+                      <i class="fas fa-ban"> Block</i>
+                    </a>
+                    <a *ngIf="item.role != 'SUPERADMIN' && item.block == true " class="btn shadow text-success btn-outline-success mr-2"
+                    (click)="unBlockUser(item.id)"
+                    >
+                      <i class="fas fa-ban"> Unblock</i>
+                    </a>
+                    <a *ngIf="item.role != 'SUPERADMIN' " class="btn shadow text-danger btn-outline-danger"
+                    (click)="resetPass('SUPERADMIN',item.id)"
+                    >
+                      <i class="fas fa-clock">Reset Password</i>
+                    </a>
+                  </td>
+                </tr>
 
-              <!-- /.tab-pane -->
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <!-- <th>ID</th> -->
+                  <th>Avatar</th>
+                  <th>Tên</th>
+                  <th>Giới tính</th>
+                  <th>Số điện thoại</th>
+                  <th>Email</th>
+                  <th>Quyền</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
 
-              <div class="tab-pane active" id="settings">
-                <form class="form-horizontal">
-                  <div class="form-group row">
-                    <label for="inputName" class="col-sm-2 col-form-label">Tên</label>
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputName" placeholder="Name">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputName" class="col-sm-2 col-form-label">Số điện thoại</label>
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputName" placeholder="Name">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputName2" class="col-sm-2 col-form-label">Ngày sinh</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputName2" placeholder="Name">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label  class="col-sm-2 col-form-label">Giới tính</label>
-                    <div class="col-sm-10">
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radio1">
-                        <label class="form-check-label">Nam</label>
-                        &nbsp; &nbsp; &nbsp;
-                        <input class="form-check-input" type="radio" name="radio1">
-                        <label class="form-check-label">Nữ</label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputName2" class="col-sm-2 col-form-label">Địa chỉ</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputName2" placeholder="Name">
-                    </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <div class="offset-sm-2 col-sm-10">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="offset-sm-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger">Submit</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <!-- /.tab-pane -->
-            </div>
-            <!-- /.tab-content -->
-          </div><!-- /.card-body -->
         </div>
-        <!-- /.nav-tabs-custom -->
-      </div>
-      <!-- /.col -->
+        <!-- Pagination -->
+        <div class="col-lg-12">
+          <!-- <div class="card-body">
+              <div class="bootstrap-pagination">
+                  <nav>
+                      <ul class="pagination justify-content-center">
+                          <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">1</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">2</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">3</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">Next</a>
+                          </li>
+                      </ul>
+                  </nav>
+              </div>
+          </div> -->
     </div>
-    <!-- /.row -->
-  </div><!-- /.container-fluid -->
+      </div>
+
+    </div>
+  </div>
 </div>
+
 

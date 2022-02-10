@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  name: string| null = localStorage.getItem("name");
   logOut(){
     this.auth.logout();
   }

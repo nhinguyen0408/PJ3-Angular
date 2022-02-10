@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
@@ -19,27 +19,49 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['employee']);
     }
   }
+  phoneValidate = "^(84|0[3|5|7|8|9])+([0-9]{8})$"
   loginForm = new FormGroup({
-    phone: new FormControl(''),
-    password: new FormControl('')
+    phone: new FormControl('',[Validators.required,Validators.pattern(this.phoneValidate)]),
+    password: new FormControl('',[Validators.required])
   })
   results: any;
+
   onSubmit(){
     if(this.loginForm.valid){
+      if(this.auth.getToken != null){
+        localStorage.removeItem('token')
+      }
       this.auth.login(this.loginForm.value).subscribe(
         (result) => {
-          this.results = result;
-          console.log(result);
-          console.log(this.loginForm.value);
-          if(result.role == "ADMIN"){
-            this.router.navigate(['employee']);
-          } else if (result.role == "SUPERADMIN"){
-            this.router.navigate(['admin/home']);
+          if(result.responseMessage ==="SUCCESS"){
+            this.auth.setRole(result.responseData.role);
+            this.auth.setToken(result.responseData.token);
+            localStorage.setItem("name", result.responseData.profile.fistName + result.responseData.profile.lastName );
+            localStorage.setItem('avatar', result.responseData.profile.imageUrl)
+            if(result.responseData.role == "EMPLOYEE"){
+              this.router.navigate(['employee']);
+              console.log("employee", result)
+            } else if (result.responseData.role == "SUPERADMIN"){
+              localStorage.setItem("adminId", result.responseData.profile.id)
+              console.log("super admin", result)
+              console.log("adminId",localStorage.getItem("adminId"))
+              this.router.navigate(['admin/home']);
+            } else if (result.responseData.role == "ADMIN"){
+              this.router.navigate(['employee']);
+              console.log("admin", result)
+            }
           }
-
         },
-        (err:Error) => {
-          alert(err.message)
+        (err:ErrorEvent) => {
+          console.log(err)
+          let errorMessage = "";
+          if(err.error instanceof ErrorEvent){
+            errorMessage = err.error.error.message;
+          }
+          else {
+            errorMessage = `Message : ${err.error.responseMessage}`
+          }
+          alert(errorMessage)
         }
       )
     }

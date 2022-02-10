@@ -44,8 +44,20 @@ export class EditProductComponent implements OnInit {
         $('.textarea').summernote({focus: true});
         $('.select2bs4').select2({
           theme: 'bootstrap4'
-        })
+        });
+        $('.toastsDefaultInfo').click(function() {
+          $(document).Toasts('create', {
+            class: 'bg-info',
+            title: 'Đang tiến hành vui lòng đợi',
+            subtitle: '',
+            body: 'Updating...',
+            autohide: true,
+            delay: 2000
+          })
+
+        });
       });
+
     })(jQuery);
   }
   selectedFiles?: FileList;
@@ -164,13 +176,28 @@ imgNamePreview: string [] = []
   getById(){
     this.apiProduct.getById(this.id).subscribe((res: any) => {
       this.product = res;
+      this.listImg = this.product.listImage
       this.aliases = res.listInformation;
       this.dataEditor = res.description;
       console.log("aliases:::", this.aliases)
       console.log("dataEditor:::", this.dataEditor)
       this.editEditor(this.dataEditor);
+      // console.log(this.product);
     })
-    console.log(this.product);
+
+
+  }
+  listImg: Image[] = []
+  deleteImageInformation(id: number | null){
+    console.log("id:::",id)
+    if(id){
+      if(window.confirm("Bạn có chắc muốn xóa hình ảnh này !!!!! \nSau khi xóa sẽ không thể hoàn tác lại !!!")){
+        this.apiProduct.deleteImageInformation(id).subscribe(res => {})
+        const index = this.listImg.findIndex(x => x.id === id)
+        this.listImg.splice(index,1);
+        console.log("product listImg", this.listImg)
+      }
+    }
 
   }
 
@@ -178,24 +205,35 @@ imgNamePreview: string [] = []
     this.product.listInformation = this.aliases
     console.log("this.product.listInformation::::", this.product.listInformation)
     let productInfor = { productId: 0, key:'', value:''};
-    productInfor.productId = this.aliases[0].productId;
+    // console.log("this.prduct", this.product)
+    // console.log("this.aliases[0].productId", this.aliases[0].productId)
+    productInfor.productId = this.product.id;
     this.aliases.push(productInfor);
   }
   deleteAlias(index: number){
-    this.aliases.splice(index,1)
+    if(window.confirm("Bạn có chắc chắn muốn xóa đặc tính này !!!!! \nSau khi thay đổi sẽ không thể hoàn tác !!!")){
+      // console.log(this.aliases[index])
+      // console.log(index)
+      if(this.aliases[index].id){
+        console.log(this.aliases[index].id);
+        this.apiProduct.deleteProductInformation(this.aliases[index].id).subscribe(res => {});
+      }
+      this.aliases.splice(index,1);
+    }
+
   }
 
   //Get data Production
   productionList : any;
   getAllProduction(){
-    this.apiProduction.getProduction().subscribe((res: any) => {
+    this.apiProduction.getProductionEnable().subscribe((res: any) => {
       this.productionList = res
     })
   }
   //Get data Category
   categoryList : any;
   getAllCategory(){
-    this.apiCategory.getCategory().subscribe((res: any) => {
+    this.apiCategory.getCategoryEnable().subscribe((res: any) => {
       this.categoryList = res
     })
   }
@@ -230,7 +268,8 @@ imgNamePreview: string [] = []
       this.product.description = data ;
       this.product.categoryId = Number(categoryId);
       this.product.productionId = Number(productionId);
-      this.product.listInformation = this.aliases
+      this.product.listInformation = this.aliases;
+      this.product.modifiedBy = Number(localStorage.getItem("adminId"));
       if(this.product.name == ''
       || this.product.categoryId == 0 || this.product.productionId == 0 || this.product.quantity == 0 ){
         alert("Vui lòng điền đầy đủ các trường thông tin")

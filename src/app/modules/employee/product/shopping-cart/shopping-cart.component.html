@@ -30,7 +30,7 @@
                               <td>
                                   <div class="price-wrap"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
                               </td>
-                              <td class="text-right d-none d-md-block"> <a class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> Remove</a> </td>
+                              <td class="text-right d-none d-md-block"> <a class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> <i class="fas fa-trash"></i></a> </td>
                           </tr>
 
                       </tbody>
@@ -66,7 +66,7 @@
                       <dt>Tổng tahnh toán:</dt>
                       <dd class="text-right text-dark b ml-3"><strong>{{totalPay.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></dd>
                   </dl>
-                  <hr> <button class="add-to-cart btn btn-default" type="button" (click)="payment()">Thanh toán <i class="far fa-credit-card"></i></button>
+                  <hr> <button class="add-to-cart btn btn-default" type="button" (click)="paymentCart()">Thanh toán <i class="far fa-credit-card"></i></button>
               </div>
           </div>
       </aside>

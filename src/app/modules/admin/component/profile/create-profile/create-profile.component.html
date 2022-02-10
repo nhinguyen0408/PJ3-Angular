@@ -1,0 +1,182 @@
+
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4 col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Thêm Nhân viên</h3><br>
+                  <a routerLink="/admin/employee-manager" class="btn btn-success mt-2">Back</a>
+                  <p></p>
+                  <div class="mt-5">
+                    <h6>Chú ý:</h6>
+                    <small class="text-small">
+                      - Nhân viên sử dụng số điện thoại để đăng nhập <br>
+                      - Mật khẩu mặc định khi tạo tài khoản nhân viên là 123123
+                    </small>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-xl-8">
+            <div class="card">
+
+                <div class="card-body">
+                    <h3 class="card-title">Thông tin Nhân viên</h3> <br> <br>
+                    <div class="tab-pane" id="activity">
+                      <form class="form-horizontal">
+                        <div class="form-group row">
+                          <label for="firstName" class="col-sm-2 col-form-label">Họ</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="firstName"
+                            [(ngModel)]="newProfile.fistName"
+                            name="firstName" placeholder="Firstname"
+                            required #firstName="ngModel"
+                            >
+                            <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+                              class="alert"
+                              style="background: rgb(248, 131, 131); border-radius: 0%;"
+                              >
+
+                              <div *ngIf="firstName.errors?.['required']">
+                                Họ không được để trống !!!
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="lastName" class="col-sm-2 col-form-label">Tên</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="lastName"
+                            [(ngModel)]="newProfile.lastName"
+                            required #lastName="ngModel"
+                            name="lastName"  placeholder="Lastname">
+                            <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+                              class="alert"
+                              style="background: rgb(248, 131, 131); border-radius: 0%;"
+                              >
+
+                              <div *ngIf="lastName.errors?.['required']">
+                                Tên không được để trống !!!
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control"
+                            [(ngModel)]="newProfile.phone"
+                            required [pattern]="phoneValidate" #phone="ngModel"
+                            name="phone" id="phone" placeholder="Phone">
+
+                            <div *ngIf="phone.invalid && (phone.dirty || phone.touched)"
+                              class="alert"
+                              style="background: rgb(248, 131, 131); border-radius: 0%;"
+                              >
+
+                              <div *ngIf="phone.errors?.['required']">
+                                Số điện thoại không được để trống !!!!
+                              </div>
+
+                              <div *ngIf="phone.errors?.['pattern']">
+                                Số điện thoại không phù hợp !!!!
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                          <div class="col-sm-10">
+                            <input type="email" class="form-control" id="inputEmail"
+                            [(ngModel)]="newProfile.email"
+                            required email="true" #email="ngModel"
+                            name="email"  placeholder="Email">
+
+                            <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                              class="alert"
+                              style="background: rgb(248, 131, 131); border-radius: 0%;"
+                              >
+
+                              <div *ngIf="email.errors?.['required']">
+                                Email không được để trống !!!!
+                              </div>
+
+                              <div *ngIf="email.errors?.['email']">
+                                Email không phù hợp !!!!
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="birthday" class="col-sm-2 col-form-label">Ngày sinh</label>
+                          <div class="col-sm-10">
+
+                            <input type="date" class="form-control" id="birthday" [(ngModel)]="newProfile.dateBirth" name="dateBirth"
+
+                                  min="1995-01-01" max="2005-12-31">
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label  class="col-sm-2 col-form-label">Giới tính</label>
+                          <div class="col-sm-10">
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" [(ngModel)]="newProfile.gender" name="gender" value="MALE">
+                              <label class="form-check-label">Nam</label>
+                              &nbsp; &nbsp; &nbsp;
+                              <input class="form-check-input" type="radio" [(ngModel)]="newProfile.gender" name="gender" value="FEMALE">
+                              <label class="form-check-label">Nữ</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputName2" class="col-sm-2 col-form-label">Địa chỉ</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputName2"
+                            [(ngModel)]="newProfile.address"
+                            required #address="ngModel"
+                            name="address"  placeholder="Address">
+
+                            <div *ngIf="address.invalid && (address.dirty || address.touched)"
+                              class="alert"
+                              style="background: rgb(248, 131, 131); border-radius: 0%;"
+                              >
+
+                              <div *ngIf="address.errors?.['required']">
+                                Địa chỉ không được để trống !!!!
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-sm-2 col-form-label">Chức vụ</label>
+                          <div class="col-sm-10">
+                            <select class="form-control" [(ngModel)]="newProfile.role" name="role">
+                              <option value="" selected>Chọn</option>
+                              <option value="ADMIN">Quản trị viên</option>
+                              <option value="EMPLOYEE">Nhân viên bán hàng</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <div class="offset-sm-2 col-sm-10">
+                            <button type="submit" class="btn btn-danger" (click)="onCreate()" >Submit</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="card">
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+

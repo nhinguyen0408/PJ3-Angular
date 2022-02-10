@@ -1,4 +1,5 @@
 export class Image{
+  id: number | null = null;
   imageUrl: string = '';
   title: string = '';
   type: string = '';

@@ -18,6 +18,8 @@ export class Product{
   production: string = "";
   listInformation: ProductInformation [] = []  ;
   listImage: Image [] = [];
+  createdBy: number = 0;
+  modifiedBy: number = 0;
   createdDate: Date = new Date();
   modifiedDate: Date = new Date();
 }

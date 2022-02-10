@@ -43,7 +43,17 @@ export class CreateProductComponent implements OnInit {
 
         $('.select2bs4').select2({
           theme: 'bootstrap4'
-        })
+        });
+        $('.toastsDefaultInfo').click(function() {
+          $(document).Toasts('create', {
+            class: 'bg-info',
+            title: 'Đang tiến hành vui lòng đợi',
+            subtitle: '',
+            body: 'Updating...',
+            autohide: true,
+            delay: 2500
+          })
+        });
       });
     })(jQuery);
   }
@@ -151,14 +161,14 @@ export class CreateProductComponent implements OnInit {
   //Get data Production
   productionList : any;
   getAllProduction(){
-    this.apiProduction.getProduction().subscribe((res: any) => {
+    this.apiProduction.getProductionEnable().subscribe((res: any) => {
       this.productionList = res
     })
   }
   //Get data Category
   categoryList : any;
   getAllCategory(){
-    this.apiCategory.getCategory().subscribe((res: any) => {
+    this.apiCategory.getCategoryEnable().subscribe((res: any) => {
       this.categoryList = res
     })
   }
@@ -186,7 +196,9 @@ export class CreateProductComponent implements OnInit {
     this.product.description = data ;
     this.product.categoryId = Number(categoryId);
     this.product.productionId = Number(productionId);
-    this.product.listInformation = this.aliases
+    this.product.listInformation = this.aliases;
+    this.product.createdBy = Number(localStorage.getItem("adminId"));
+    this.product.modifiedBy = Number(localStorage.getItem("adminId"));
     if(this.product.name == '' || this.product.description == '<p><br></p>'
     || this.product.categoryId == 0|| this.product.productionId == 0  || this.product.quantity == 0  ){
       alert("Vui lòng điền đầy đủ các trường thông tin")
@@ -206,7 +218,7 @@ export class CreateProductComponent implements OnInit {
         console.log(this.product)
         this.route.navigate(['/admin/product'])
       })
-      },4300)
+      },4500)
 
       }
     }

@@ -10,9 +10,17 @@ export class NavBarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    (function ($) {
+    this.getDataUser()
+    // (function ($) {
 
-    })(jQuery);
+    // })(jQuery);
+  }
+
+  username: string | null = '';
+  userAvt: string | null = '';
+  getDataUser(){
+    this.username = localStorage.getItem('name');
+    this.userAvt =  localStorage.getItem('avatar');
   }
 
 }

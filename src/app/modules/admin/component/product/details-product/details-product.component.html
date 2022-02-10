@@ -38,11 +38,14 @@
             <div class="col-12 product-image-thumbs" >
               <div class="product-image-thumb" *ngFor="let item of product.listImage"><img src="{{item.imageUrl}}" alt="Product Image"></div>
             </div>
+
           </div>
           <div class="col-12 col-sm-6">
 
             <h3 class="my-3">{{product.name}}</h3>
-            <p class="card-text"><small class="text-muted">Last updated {{product.modifiedDate | date :'short'}}</small>
+            <p class="card-text">
+              <small class="text-muted">Created by: {{product.createdByName}}</small> <br>
+              <small class="text-muted">Last updated {{product.modifiedDate | date :'short'}} By: {{product.modifiedByName}}</small>
             </p>
 
             <hr>
@@ -65,7 +68,7 @@
               </table>
             </div>
             <h4><small>Số lượng trong kho: </small> {{product.quantity}}</h4>
-            <div class="bg-gray py-2 px-3 mt-4">
+            <div class="bg-dark py-2 px-3 mt-4">
               <h2 class="mb-0">
                 {{product.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                 <!-- {{product.salePrice}} -->
@@ -98,11 +101,14 @@
             </div>
           </nav>
           <div class="tab-content p-3" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab"
+            <!-- <div class="tab-pane fade show active" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab"
             [innerHTML]="product.description"
             >
 
-            </div>
+            </div> -->
+            <div class="textarea inline-editor" name="description" id="textareaInput">
+
+                          </div>
           </div>
         </div>
       </div>

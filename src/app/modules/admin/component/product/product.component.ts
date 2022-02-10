@@ -3,6 +3,7 @@ import { Product } from 'src/app/models/Product.model';
 import { ApiProductService } from 'src/app/services/product/api-product.service';
 
 declare var jQuery: any;
+declare var Swal: any;
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -20,6 +21,23 @@ export class ProductComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getAll();
+    (function ($) {
+      $(document).ready(function(){
+        $('.toastsDefaultInfo').click(function() {
+          $(document).Toasts('create', {
+            class: 'bg-info',
+            title: 'Đang tiến hành vui lòng đợi',
+            subtitle: '',
+            body: 'Updating...',
+            autohide: true,
+            delay: 4000
+          })
+
+        });
+
+      });
+
+    })(jQuery);
 
   }
   productList: Product[] = [];

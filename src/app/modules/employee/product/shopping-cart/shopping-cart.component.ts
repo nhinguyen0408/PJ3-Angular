@@ -14,6 +14,7 @@ export class ShoppingCartComponent implements OnInit {
   @Input() discount: number;
   @Input() totalPay: number;
   @Output()remove = new EventEmitter();
+  @Output()payment = new EventEmitter();
   constructor() {
     this.shopping_Cart = [];
     this.totalItem = 0;
@@ -30,7 +31,8 @@ export class ShoppingCartComponent implements OnInit {
     this.remove.emit(productId);
   }
 
-  payment(){
+  paymentCart(){
     // localStorage.removeItem("shopping-cart")
+    this.payment.emit()
   }
 }

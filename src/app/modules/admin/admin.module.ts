@@ -30,6 +30,8 @@ import { EditProductComponent } from './component/product/edit-product/edit-prod
 import { DetailsProductComponent } from './component/product/details-product/details-product.component';
 import { UploadExampleComponent } from './component/upload-example/upload-example.component';
 import { SaleComponent } from './component/sale/sale.component';
+import { MyProfileComponent } from './component/profile/my-profile/my-profile.component';
+import { CreateProfileComponent } from './component/profile/create-profile/create-profile.component';
 
 
 
@@ -59,7 +61,9 @@ import { SaleComponent } from './component/sale/sale.component';
     EditProductComponent,
     DetailsProductComponent,
     UploadExampleComponent,
-    SaleComponent
+    SaleComponent,
+    MyProfileComponent,
+    CreateProfileComponent,
   ],
   imports: [
     CommonModule,

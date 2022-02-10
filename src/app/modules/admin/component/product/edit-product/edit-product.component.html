@@ -199,12 +199,14 @@
                 <!-- Ảnh mô tả sản phẩm -->
                 <div class="form-group">
                   <label for="exampleInputPassword1">Ảnh chi tiết sản phẩm</label>
-                  <div *ngFor="let item of product.listImage, let i =index">
+                  <div *ngFor="let item of listImg, let i =index">
                     <input type="text" class="form-control" id="exampleInputPassword1" name="avatarUrl{{i}}" [(ngModel)]="item.imageUrl"
                   placeholder="Avatar..." required #avatar="ngModel" >
                   <div class="card border shadow">
                     Xem Trước:
                     <img class="img-fluid card-img-top product-image-2" src="{{item.imageUrl}}" alt="">
+                    <a class="btn shadow text-danger" (click)="deleteImageInformation(item.id)" ><i class="fas fa-eraser"></i></a>
+
                    </div>
                   </div>
                   <button class="btn btn-outline-warning mb-3" (click)="uploadNewImage()">{{buttonName}}</button>
@@ -233,8 +235,6 @@
                 <div class="form-group shadow pt-2 pb-3 pl-2">
                   <label for="exampleInputPassword1">Đặc điểm</label>
                   <div class="aliases">
-                    <button class="btn btn-outline-success shadow mb-4" (click)="addAlias()" type="button">+ Thêm đặc điểm</button>
-
                     <div *ngFor="let alias of aliases; let i=index">
                       <!-- The repeated alias template -->
                       <label for="alias-{{ i }}">Đặc tính {{ i+1 }}:</label>
@@ -266,13 +266,10 @@
                         <div class="col-md-2">
                           <i class="fas fa-times" title="Xóa đặc điểm" (click)="deleteAlias(i)"></i>
                         </div>
-
                       </div>
-
-
-
-
                     </div>
+
+                    <button class="btn btn-outline-success shadow mt-4" (click)="addAlias()" type="button">+ Thêm đặc điểm</button>
                   </div>
                 </div>
                 <!-- <div class="form-group">
@@ -295,7 +292,7 @@
               <!-- /.card-body -->
 
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+                <button type="submit" class="btn btn-primary toastsDefaultInfo" (click)="onSubmit()">Submit</button>
               </div>
             </form>
           </div>

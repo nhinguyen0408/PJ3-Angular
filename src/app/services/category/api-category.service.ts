@@ -26,13 +26,19 @@ export class ApiCategoryService {
       errorMessage = err.error.message;
     }
     else {
-      errorMessage = `Error code : ${err} \n Message :${err.message}`
+      errorMessage = `Message : ${err.error.responseMessage}`
     }
     window.alert(errorMessage);
     return throwError(errorMessage);
   }
   getCategory():Observable<Category>{
     return this.http.get<Category>(this.url+"/category/getall").pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+  getCategoryEnable():Observable<Category>{
+    return this.http.get<Category>(this.url+"/category/getall?status=ENABLE").pipe(
       retry(1),
       catchError(this.handleError)
     )

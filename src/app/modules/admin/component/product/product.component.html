@@ -1,18 +1,19 @@
 <div class="content-wrapper">
   <div class="container-fluid">
     <div class="content-body">
-      <div class="row">
-        <div class="col-12 m-b-30">
-          <div class="d-flex justify-content-between mt-3">
-            <div class="">
+      <div class="row card">
+        <div class="col-12 m-b-30 ">
+          <div class="d-flex justify-content-between mt-3 ">
+            <div class="card-header">
               <h4 class="d-inline ">Product List</h4>
             </div>
 
             <div class="">
+              <br>
               <button class="btn btn-primary mr-5" routerLink="/admin/product/create">Thêm sản phẩm</button>
             </div>
           </div>
-            <p class="text-muted"></p>
+          <div class="card-body">
             <!-- <div class="row">
                 <div class="col-md-6 col-lg-3" *ngFor="let item of productList">
                     <div class="card border shadow">
@@ -58,9 +59,9 @@
                   <!-- <td><p class="font-weight-bold text-primary">{{item.id}}</p></td> -->
                   <td><img class="img-fluid card-img-top product-image" src="{{item.avatarUrl}}" alt="Card image cap"></td>
                   <td><p class="text-primary">{{item.name}}</p>
-                    <a routerLink="details/{{item.id}}" class="btn mb-1 btn-primary mr-2">View</a>
-                    <a routerLink="edit/{{item.id}}" class="btn mb-1 btn-warning mr-2 text-white ">Edit</a>
-                    <button class="btn mb-1 btn-danger text-white" (click)="delete(item.id)" >Delete</button>
+                    <a routerLink="details/{{item.id}}" class="btn mr-2 shadow text-primary"><i class="far fa-eye"></i></a>
+                    <a routerLink="edit/{{item.id}}" class="btn mr-2 shadow text-warning"><i class="fas fa-pen"></i></a>
+                    <a class="btn shadow text-danger" (click)="delete(item.id)" ><i class="fas fa-eraser"></i></a>
                   </td>
                   <td><p class="font-weight-bold text-info">{{item.code}}</p></td>
                   <td>
@@ -98,6 +99,8 @@
                 </tr>
               </tfoot>
             </table>
+          </div>
+
         </div>
         <!-- Pagination -->
         <div class="col-lg-12">

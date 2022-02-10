@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, of, retry, throwError } from 'rxjs';
+import { Login } from 'src/app/models/Login.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +19,11 @@ export class AuthService {
       'withCredentials': 'true'
     })
   }
-  result: any;
+
   setToken(token: string){
-    localStorage.setItem('token', token);
+    if(this.getToken() == null){
+      localStorage.setItem('token', token);
+    }
   }
   setRole(role: string){
     localStorage.setItem('role', role);
@@ -42,34 +45,38 @@ export class AuthService {
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('adminId');
+    console.log("this.result",this.result)
     this.router.navigate(['login']);
   }
-
-  login({phone,password}:any):Observable<any>{
-    const response= this.http.post<any>(this.url+"/profile/signin", {phone,password}, this.httpOptions).pipe(
-      retry(0)
+  result: any;
+  login(dataLogin:Login):Observable<any>{
+    return  this.http.post<Login>(this.url+"/profile/signin", dataLogin).pipe(
+      retry(1)
     )
-    response.subscribe((res: any) => {
-      this.result = res
-    })
-    // console.log('LOGIN RESULTS::::::::::', this.result)
-    if(this.result != undefined && this.result != null){
-      // console.log('LOGIN RESULT SUCCESS::::::::::', this.result)
-      // console.log("this.result.token", this.result.responseData.token)
-      // console.log("this.result.role", this.result.responseData.role)
-      this.setToken(this.result.responseData.token);
-      this.setRole(this.result.responseData.role);
-      return of({name: 'Nhi Nguyen', email:'admin@gmail.com', role: this.result.responseData.role});
-    }
-    return of({error: 'Tên đăng nhập hoặc mật khẩu không đúng'});
+    // response.subscribe((res: any) => {
+    //   console.log(" this.result",res)
+    //   if(res.responseMessage === "SUCCESS"){
+    //     this.setToken(res.responseData.token);
+    //     this.setRole(res.responseData.role);
+    //   }
+    // })
+    // if(this.result.responseMessage === "SUCCESS"){
+    //   // console.log('LOGIN RESULT SUCCESS::::::::::', this.result)
+    //   console.log("this.result.token", this.result.responseData.token)
+    //   // console.log("this.result.role", this.result.responseData.role)
+
+    //   return of(this.result.responseData.profile);
+    // }
+    // return of({error: 'Tên đăng nhập hoặc mật khẩu không đúng'});
   }
   handleError(err: ErrorEvent) {
     let errorMessage = "";
     if(err.error instanceof ErrorEvent){
-      errorMessage = err.error.message;
+      errorMessage = err.error.error.message;
     }
     else {
-      errorMessage = `Error code : ${err} \n Message :${err.message}`
+      errorMessage = `Message : ${err.error.responseMessage}`
     }
     window.alert(errorMessage);
     return throwError(errorMessage);

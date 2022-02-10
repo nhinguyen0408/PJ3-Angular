@@ -26,7 +26,7 @@ export class ApiProductService {
       errorMessage = err.error.message;
     }
     else {
-      errorMessage = `Error code : ${err} \n Message :${err.message}`
+      errorMessage = `Message : ${err.error.responseMessage}`
     }
     window.alert(errorMessage);
     return throwError(errorMessage);
@@ -60,6 +60,17 @@ export class ApiProductService {
   deleteProduct(id: number):Observable<Product>{
     return this.http.delete<Product>(this.url+"/product/delete?id=" + id, this.httpOptions).pipe(
       retry(1),
+      catchError(this.handleError)
+    )
+  }
+  deleteImageInformation(id: number):Observable<any>{
+    return this.http.delete<Product>(this.url+"/image/delete?id=" + id, this.httpOptions).pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+  deleteProductInformation(id: number):Observable<any>{
+    return this.http.delete<Product>(this.url+"/product_information/delete?inforId=" + id, this.httpOptions).pipe(
       catchError(this.handleError)
     )
   }

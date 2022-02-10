@@ -29,11 +29,17 @@ export class DetailsProductComponent implements OnInit {
   $: any;
   getDetailsPr(){
     this.api.getById(this.id).subscribe((res: any) => {
-      this.product = res
+      this.product = res;
+      this.editEditor(this.product.description)
     })
     console.log(this.product);
 
   }
-
+  editEditor(dataa: string){
+    (function ($) {
+      let se = $('#textareaInput').summernote('pasteHTML',dataa)
+      $('#textareaInput').summernote('destroy')
+    })(jQuery);
+  }
   //product-desc
 }

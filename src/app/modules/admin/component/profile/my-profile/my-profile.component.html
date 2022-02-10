@@ -1,0 +1,193 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 m-b-30">
+        <div class="d-flex justify-content-between mt-3">
+          <div class="">
+            <h4 class="d-inline mb-5">Sửa thông tin</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+
+        <!-- Profile Image -->
+        <div class="card card-primary card-outline">
+          <div class="card-body box-profile">
+            <div class="text-center">
+              <img class="profile-user-img img-fluid img-circle" *ngIf="myProfile.imageUrl=== null"
+                   src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg"
+                   alt="User profile picture">
+              <img class="profile-user-img img-fluid img-circle" *ngIf="myProfile.imageUrl != null"
+                   src="{{myProfile.imageUrl}}"
+                   alt="User profile picture">
+
+            </div>
+
+            <h3 class="profile-username text-center">{{myProfile.fistName + myProfile.lastName}}</h3>
+
+            <!-- <p class="text-muted text-center">Software Engineer</p> -->
+
+            <ul class="list-group list-group-unbordered mb-3">
+              <li class="list-group-item">
+                <b>ID</b> <a class="float-right">{{myProfile.id}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Quyền hạn</b> <a class="float-right " *ngIf="myProfile.role=== 'SUPERADMIN'"> Quản lý</a>
+                <a class="float-right " *ngIf="myProfile.role=== 'ADMIN'">Nhân viên</a>
+              </li>
+              <li class="list-group-item">
+                <b>Số điện thoại</b> <a class="float-right">{{myProfile.phone}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Ngày sinh</b> <a class="float-right">{{myProfile.dateBirth}}</a>
+              </li>
+            </ul>
+          </div>
+          <!-- /.card-body -->
+        </div>
+
+      </div>
+      <!-- /.col -->
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header p-2">
+            <ul class="nav nav-pills">
+              <li class="nav-item"><a class="nav-link" id="changeProfile">Sửa tài khoản</a></li>
+              <li class="nav-item"><a class="nav-link" id="changePass">Đổi mật khẩu</a></li>
+              <li class="nav-item"><a class="nav-link" id="close">Đóng</a></li>
+            </ul>
+          </div><!-- /.card-header -->
+          <div class="card-body">
+            <div class="tab-content">
+
+
+              <!-- /.tab-pane -->
+
+              <div class="tab-pane" id="activity">
+                <form class="form-horizontal">
+                  <div class="form-group row">
+                    <label for="firstName" class="col-sm-2 col-form-label">Họ</label>
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="firstName" name="firstName" [(ngModel)]="myProfile.fistName" placeholder="Name">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="lastName" class="col-sm-2 col-form-label">Tên</label>
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="lastName" name="lastName" [(ngModel)]="myProfile.lastName" placeholder="Name">
+                    </div>
+                  </div>
+                  <!-- <div class="form-group row">
+                    <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="phone" placeholder="Name">
+                    </div>
+                  </div> -->
+                  <div class="form-group row">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="inputEmail" name="email" [(ngModel)]="myProfile.email" placeholder="Email">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="birthday" class="col-sm-2 col-form-label">Ngày sinh</label>
+                    <div class="col-sm-10">
+
+                      <input type="date" class="form-control" id="birthday" name="birthday"
+                      [(ngModel)]="myProfile.dateBirth"
+                            min="1995-01-01" max="2005-12-31">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Giới tính</label>
+                    <div class="col-sm-10">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" [(ngModel)]="myProfile.gender" name="gender" value="MALE">
+                        <label class="form-check-label">Nam</label>
+                        &nbsp; &nbsp; &nbsp;
+                        <input class="form-check-input" type="radio" [(ngModel)]="myProfile.gender" name="gender" value="FEMALE">
+                        <label class="form-check-label">Nữ</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputName2" class="col-sm-2 col-form-label">Địa chỉ</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputName2"  name="address" [(ngModel)]="myProfile.address" placeholder="Address">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Ảnh đại diện</label>
+                    <div class="col-sm-10">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="exampleInputFile" (change)="selectFile($event)">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
+                      <div class="card border shadow d-flex justify-content-center align-items-center" *ngIf="fileNamePreView">
+                        <p>Preview</p>
+                        <img class="img-fluid card-img-top product-image " src="{{fileNamePreView}}"/>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="form-group row">
+                    <div class="offset-sm-2 col-sm-10">
+                      <button type="submit" class="btn btn-danger" (click)="onSubmitUpdate()">Submit</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <div class="tab-pane" id="settings">
+                <form class="form-horizontal" [formGroup]="changePassForm" (ngSubmit)="onChangePassword()">
+                  <div class="form-group row">
+                    <label for="old-pass" class="col-sm-2 col-form-label">Mật khẩu cũ</label>
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control" formControlName="oldPass" id="old-pass" placeholder="Old password">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="new-pass" class="col-sm-2 col-form-label">Mật khẩu mới</label>
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control" formControlName="newPass" id="new-pass" placeholder="New password">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="conf-pass" class="col-sm-2 col-form-label">Nhập lại mật khẩu</label>
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control" id="conf-pass" formControlName="reNewPass" placeholder="Confirm password">
+                    </div>
+                  </div>
+
+                  <!-- <div class="form-group row">
+                    <div class="offset-sm-2 col-sm-10">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> Xác nhận
+                        </label>
+                      </div>
+                    </div>
+                  </div> -->
+                  <div class="form-group row">
+                    <div class="offset-sm-2 col-sm-10">
+                      <button type="submit" class="btn btn-danger">Submit</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div><!-- /.card-body -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+

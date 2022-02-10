@@ -26,13 +26,19 @@ export class ApiProductionService {
       errorMessage = err.error.message;
     }
     else {
-      errorMessage = `Error code : ${err} \n Message :${err.message}`
+      errorMessage = `Message : ${err.error.responseMessage}`
     }
     window.alert(errorMessage);
     return throwError(errorMessage);
   }
   getProduction():Observable<Production>{
     return this.http.get<Production>(this.url+"/production/getall").pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+  getProductionEnable():Observable<Production>{
+    return this.http.get<Production>(this.url+"/production/getall?status=ENABLE").pipe(
       retry(1),
       catchError(this.handleError)
     )

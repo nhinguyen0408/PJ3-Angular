@@ -93,5 +93,14 @@ export class ProductComponent implements OnInit {
 
     console.log("asdlaksldk")
   }
+  payment(){
+    if(window.confirm("Xác nhận thanh toán !!!!!!!")){
+      this.shoppingCart = []
+      this.totalItem = 0; 
+      this.totalPay = 0;
+      this.totalPrice = 0;
+    }
+
+  }
 
 }

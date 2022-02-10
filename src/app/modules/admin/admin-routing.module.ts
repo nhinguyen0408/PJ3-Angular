@@ -14,6 +14,8 @@ import { ProductComponent } from './component/product/product.component';
 import { CreateProductionComponent } from './component/production/create-production/create-production.component';
 import { EditProductionComponent } from './component/production/edit-production/edit-production.component';
 import { ProductionComponent } from './component/production/production.component';
+import { CreateProfileComponent } from './component/profile/create-profile/create-profile.component';
+import { MyProfileComponent } from './component/profile/my-profile/my-profile.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { SaleComponent } from './component/sale/sale.component';
 import { UploadExampleComponent } from './component/upload-example/upload-example.component';
@@ -24,8 +26,9 @@ const routes: Routes = [
     children: [
       {path: 'home', component: DashboardComponent},
       {path: 'warehouse', component: WarehouseComponent},
-      {path: 'employee-manager', component: EmployeeManagerComponent},
-      {path: 'profile', component: ProfileComponent},
+      {path: 'employee-manager', component: ProfileComponent},
+      {path: 'employee-manager/create', component: CreateProfileComponent},
+      {path: 'profile/my-profile', component: MyProfileComponent},
       {path: 'product', component: ProductComponent},
       {path: 'product/details/:id', component: DetailsProductComponent},
       {path: 'product/create', component: CreateProductComponent},

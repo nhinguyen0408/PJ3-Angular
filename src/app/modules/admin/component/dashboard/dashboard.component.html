@@ -42,9 +42,9 @@
         <div class="col-12 col-sm-6 col-md-3">
           <div class="small-box bg-purple">
             <div class="inner">
-              <h3>250 <small>Sản phẩm đã bán</small></h3>
+              <h3>{{countProductSold}} <small>Sản phẩm đã bán</small></h3>
 
-              <p>Sản phẩm trong kho: 6500</p>
+              <p>Tổng sản phẩm trong kho: {{sumPr}}</p>
             </div>
             <div class="icon">
               <i class="fas fa-chart-pie"></i>
@@ -63,9 +63,10 @@
         <div class="col-12 col-sm-6 col-md-3">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>53%</h3>
+              <h3>{{((turnOver.turnover / turnOver.importPrice) *100).toFixed()}}%</h3>
 
-              <p>Doanh thu: {{turnOver.turnover.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</p>
+              <p><small>Thu: {{turnOver.turnover.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                | Nhập: {{turnOver.importPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</small></p>
             </div>
             <div class="icon">
               <i class="fab fa-accusoft"></i>
@@ -80,7 +81,7 @@
         <div class="col-12 col-sm-6 col-md-3">
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3>{{countNewProfile.count}}</h3>
+              <h3>{{countNewProfile.count - 2}}</h3>
 
               <p>Nhân viên đăng ký mới</p>
             </div>
@@ -107,7 +108,7 @@
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
                 </button>
-                <div class="btn-group">
+                <!-- <div class="btn-group">
                   <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
                     <i class="fas fa-wrench"></i>
                   </button>
@@ -118,7 +119,7 @@
                     <a class="dropdown-divider"></a>
                     <a href="#" class="dropdown-item">Separated link</a>
                   </div>
-                </div>
+                </div> -->
                 <button type="button" class="btn btn-tool" data-card-widget="remove">
                   <i class="fas fa-times"></i>
                 </button>
@@ -127,19 +128,22 @@
             <!-- /.card-header -->
             <div class="card-body">
               <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                   <p class="text-center">
-                    <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
+                    <strong>Tổng quan bán hàng Năm 2022</strong>
                   </p>
 
                   <div class="chart">
                     <!-- Sales Chart Canvas -->
-                    <canvas id="salesChart" height="180" style="height: 180px;"></canvas>
+                    <canvas
+                    id="sales-chart"
+                    height="250"></canvas>
+
                   </div>
                   <!-- /.chart-responsive -->
                 </div>
                 <!-- /.col -->
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                   <p class="text-center">
                     <strong>Goal Completion</strong>
                   </p>
@@ -151,7 +155,7 @@
                       <div class="progress-bar bg-primary" style="width: 80%"></div>
                     </div>
                   </div>
-                  <!-- /.progress-group -->
+
 
                   <div class="progress-group">
                     Complete Purchase
@@ -161,7 +165,7 @@
                     </div>
                   </div>
 
-                  <!-- /.progress-group -->
+
                   <div class="progress-group">
                     <span class="progress-text">Visit Premium Page</span>
                     <span class="float-right"><b>480</b>/800</span>
@@ -170,7 +174,7 @@
                     </div>
                   </div>
 
-                  <!-- /.progress-group -->
+
                   <div class="progress-group">
                     Send Inquiries
                     <span class="float-right"><b>250</b>/500</span>
@@ -178,8 +182,8 @@
                       <div class="progress-bar bg-warning" style="width: 50%"></div>
                     </div>
                   </div>
-                  <!-- /.progress-group -->
-                </div>
+
+                </div> -->
                 <!-- /.col -->
               </div>
               <!-- /.row -->
@@ -246,7 +250,7 @@
           <div class="card-body p-0">
             <ul class="products-list product-list-in-card pl-2 pr-2">
               <li class="item" *ngFor="let item of productSold ; index as i">
-                <div *ngIf="i < 5">
+                <div *ngIf="i < 4">
 
                   <div class="product-img">
                     <img src="{{item.avatarUrl}}" alt="Product Image" class="img-size-50">
@@ -257,7 +261,6 @@
                     <span class="badge badge-success float-right">Đã bán: {{item.sold}}</span>&nbsp;
                   </div>
                 </div>
-
               </li>
               <!-- /.item -->
 

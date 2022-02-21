@@ -60,4 +60,15 @@ export class ApiDashboardService {
       catchError(this.handleError)
     )
   }
+  countProdSold():Observable<any>{
+    return this.http.get<any>(this.url+"/ProductSold/countProdSold").pipe(
+      catchError(this.handleError)
+    )
+  }
+  getChart():Observable<any>{
+    return this.http.get<any>(this.url+"/chart/line").pipe(
+      catchError(this.handleError)
+    )
+  }
+
 }

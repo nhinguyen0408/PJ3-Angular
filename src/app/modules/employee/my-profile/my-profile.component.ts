@@ -126,7 +126,7 @@ export class MyProfileComponent implements OnInit {
       if(this.changePassForm.value.newPass === this.changePassForm.value.reNewPass && this.changePassForm.value.newPass != this.changePassForm.value.oldPass) {
         const oldPass = this.changePassForm.value.oldPass;
         const newPass = this.changePassForm.value.newPass;
-        const myId = localStorage.getItem("adminId");
+        const myId = localStorage.getItem("employeeId");
         const objChangePass = {oldPass,newPass,myId}
         console.log("objChangePass===== ", objChangePass)
         this.api.updatePassword(objChangePass).subscribe(data =>{

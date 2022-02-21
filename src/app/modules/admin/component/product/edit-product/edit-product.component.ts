@@ -168,7 +168,7 @@ imgNamePreview: string [] = []
           console.log('this.product.avatarUrl upload:::' + i ,this.resultMul[i].url)
         }
         // this.resultMul = {};
-      },4000)
+      },4900)
 
     }
   }
@@ -284,6 +284,7 @@ imgNamePreview: string [] = []
 
 
         }
+        console.log("this.avtUrl===",this.avtUrl)
         if(this.avtUrl == false){
           this.product.avatarUrl = "";
           this.upload()
@@ -295,17 +296,18 @@ imgNamePreview: string [] = []
             this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
               this.route.navigate(['/admin/product/details/'+ this.product.id])
             })
-          }, 4100)
+          }, 5000)
 
         } else {
           if(this.selectedFilesArray.length > 0){
+            console.log("this.product.listImage", this.product.listImage)
             this.uploadMultiple()
             setTimeout(()=>{
               console.log(" new more image",this.product);
               this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
                 this.route.navigate(['/admin/product/details/'+ this.product.id])
               })
-            }, 4100)
+            }, 5000)
           } else {
             console.log("default",this.product);
             this.apiProduct.editProduct(this.product).subscribe((data: {})=>{

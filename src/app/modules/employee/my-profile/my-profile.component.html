@@ -17,10 +17,10 @@
         <div class="card card-primary card-outline">
           <div class="card-body box-profile">
             <div class="text-center">
-              <img class="profile-user-img img-fluid img-circle" *ngIf="myProfile.imageUrl=== null"
+              <img class="profile-user-img img-fluid img-circle" *ngIf="myProfile.imageUrl=== null || myProfile.imageUrl=== ''"
                    src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg"
                    alt="User profile picture">
-              <img class="profile-user-img img-fluid img-circle" *ngIf="myProfile.imageUrl != null"
+              <img class="profile-user-img img-fluid img-circle" *ngIf="myProfile.imageUrl"
                    src="{{myProfile.imageUrl}}"
                    alt="User profile picture">
 

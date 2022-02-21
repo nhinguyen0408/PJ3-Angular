@@ -38,7 +38,7 @@ export class ApiProductService {
     )
   }
   getProductEnable():Observable<Product>{
-    return this.http.get<Product>(this.url+"/product/getall?status=ACTIVE").pipe(
+    return this.http.get<Product>(this.url+"/product/getall?getall=false").pipe(
       retry(1),
       catchError(this.handleError)
     )

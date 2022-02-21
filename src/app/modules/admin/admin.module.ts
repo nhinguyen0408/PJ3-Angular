@@ -35,7 +35,7 @@ import { CreateProfileComponent } from './component/profile/create-profile/creat
 import { VoucherComponent } from './component/voucher/voucher.component';
 import { VoucherEditComponent } from './component/voucher/voucher-edit/voucher-edit.component';
 import { VoucherCreateComponent } from './component/voucher/voucher-create/voucher-create.component';
-
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -75,7 +75,8 @@ import { VoucherCreateComponent } from './component/voucher/voucher-create/vouch
     CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgChartsModule
 
   ],
   bootstrap: [AdminModule]

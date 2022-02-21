@@ -220,7 +220,7 @@ export class CreateProductComponent implements OnInit {
         console.log(this.product)
         this.route.navigate(['/admin/product'])
       })
-      },4100)
+      },4500)
 
       }
     }

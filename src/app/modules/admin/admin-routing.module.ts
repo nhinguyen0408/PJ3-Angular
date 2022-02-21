@@ -19,6 +19,9 @@ import { MyProfileComponent } from './component/profile/my-profile/my-profile.co
 import { ProfileComponent } from './component/profile/profile.component';
 import { SaleComponent } from './component/sale/sale.component';
 import { UploadExampleComponent } from './component/upload-example/upload-example.component';
+import { VoucherCreateComponent } from './component/voucher/voucher-create/voucher-create.component';
+import { VoucherEditComponent } from './component/voucher/voucher-edit/voucher-edit.component';
+import { VoucherComponent } from './component/voucher/voucher.component';
 import { WarehouseComponent } from './component/warehouse/warehouse.component';
 
 const routes: Routes = [
@@ -42,6 +45,9 @@ const routes: Routes = [
       {path: 'production/edit/:id', component: EditProductionComponent},
       {path: 'order', component: OrderComponent},
       {path: 'upload', component: UploadExampleComponent},
+      {path: 'voucher', component: VoucherComponent},
+      {path: 'voucher/create', component: VoucherCreateComponent},
+      {path: 'voucher/edit/:id', component: VoucherEditComponent},
       // {path: 'order-confirmation', component: OrderConfirmationComponent},
       // {path: 'order/details', component: OrderDetailsComponent},
       // {path: 'order/confirmed', component: OrderConfirmedComponent},

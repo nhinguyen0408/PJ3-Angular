@@ -32,6 +32,9 @@ import { UploadExampleComponent } from './component/upload-example/upload-exampl
 import { SaleComponent } from './component/sale/sale.component';
 import { MyProfileComponent } from './component/profile/my-profile/my-profile.component';
 import { CreateProfileComponent } from './component/profile/create-profile/create-profile.component';
+import { VoucherComponent } from './component/voucher/voucher.component';
+import { VoucherEditComponent } from './component/voucher/voucher-edit/voucher-edit.component';
+import { VoucherCreateComponent } from './component/voucher/voucher-create/voucher-create.component';
 
 
 
@@ -64,6 +67,9 @@ import { CreateProfileComponent } from './component/profile/create-profile/creat
     SaleComponent,
     MyProfileComponent,
     CreateProfileComponent,
+    VoucherComponent,
+    VoucherEditComponent,
+    VoucherCreateComponent,
   ],
   imports: [
     CommonModule,

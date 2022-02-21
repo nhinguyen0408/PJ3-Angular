@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiProfileService } from 'src/app/services/profile/api-profile.service';
 declare var jQuery: any;
 @Component({
   selector: 'app-nav-bar',
@@ -7,7 +8,9 @@ declare var jQuery: any;
 })
 export class NavBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private api: ApiProfileService
+  ) { }
 
   ngOnInit(): void {
     this.getDataUser()
@@ -18,9 +21,15 @@ export class NavBarComponent implements OnInit {
 
   username: string | null = '';
   userAvt: string | null = '';
+  profile: any
   getDataUser(){
     this.username = localStorage.getItem('name');
-    this.userAvt =  localStorage.getItem('avatar');
+    const id = localStorage.getItem('adminId');
+    this.api.getProfileById(Number(id)).subscribe((res:any)=>{
+      this.profile = res;
+      this.userAvt = this.profile.imageUrl
+      console.log("userAvt====",this.userAvt)
+    })
   }
 
 }

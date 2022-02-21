@@ -50,7 +50,6 @@
                   <th>Giá nhập</th>
                   <th>Giá bán</th>
                   <th>Số lượng</th>
-                  <th>Ngày tạo lập</th>
                 </tr>
               </thead>
               <tbody>
@@ -59,6 +58,7 @@
                   <!-- <td><p class="font-weight-bold text-primary">{{item.id}}</p></td> -->
                   <td><img class="img-fluid card-img-top product-image" src="{{item.avatarUrl}}" alt="Card image cap"></td>
                   <td><p class="text-primary">{{item.name}}</p>
+                    <small>Ngày tạo lập: {{item.createdDate | date:'medium'}}</small> <br>
                     <a routerLink="details/{{item.id}}" class="btn mr-2 shadow text-primary"><i class="far fa-eye"></i></a>
                     <a routerLink="edit/{{item.id}}" class="btn mr-2 shadow text-warning"><i class="fas fa-pen"></i></a>
                     <a class="btn shadow text-danger" (click)="delete(item.id)" ><i class="fas fa-eraser"></i></a>
@@ -78,7 +78,6 @@
                   <td>{{item.importPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
                   <td>{{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
                   <td>{{item.quantity}}</td>
-                  <td>{{item.createdDate | date:'medium'}}</td>
 
                 </tr>
               </tbody>
@@ -95,7 +94,6 @@
                   <th>Giá nhập</th>
                   <th>Giá bán</th>
                   <th>Số lượng</th>
-                  <th>Ngày tạo lập</th>
                 </tr>
               </tfoot>
             </table>

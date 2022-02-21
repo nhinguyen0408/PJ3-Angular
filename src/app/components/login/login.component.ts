@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("name", result.responseData.profile.fistName + result.responseData.profile.lastName );
             localStorage.setItem('avatar', result.responseData.profile.imageUrl)
             if(result.responseData.role == "EMPLOYEE"){
+              localStorage.setItem("employeeId", result.responseData.profile.id)
               this.router.navigate(['employee']);
               console.log("employee", result)
             } else if (result.responseData.role == "SUPERADMIN"){
@@ -48,6 +49,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['admin/home']);
             } else if (result.responseData.role == "ADMIN"){
               this.router.navigate(['employee']);
+              localStorage.setItem("employeeId", result.responseData.profile.id)
               console.log("admin", result)
             }
           }
@@ -59,7 +61,7 @@ export class LoginComponent implements OnInit {
             errorMessage = err.error.error.message;
           }
           else {
-            errorMessage = `Message : ${err.error.responseMessage}`
+            errorMessage = `Message : Sai tên đăng nhập hoặc mật khẩu`
           }
           alert(errorMessage)
         }

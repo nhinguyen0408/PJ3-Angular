@@ -15,7 +15,7 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr *ngFor="let item of shopping_Cart">
+                          <tr *ngFor="let item of shopping_Cart; index as i">
                               <td>
                                   <figure class="itemside align-items-center">
                                       <div class="aside"><img src="{{item.product.avatarUrl}}" class="img-sm"></div>
@@ -25,7 +25,11 @@
                                   </figure>
                               </td>
                               <td>
-                                <input type="text" value="{{item.quantity}}" disabled>
+                                <input type="number"
+                                min="1" max="{{item.product.quantity}}"
+                                value="{{item.quantity}}"
+                                (input)="onChangeQuantity($event, item.quantity, i, item.product.id)"
+                                name="quantity">
                               </td>
                               <td>
                                   <div class="price-wrap"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
@@ -42,8 +46,8 @@
           <div class="card mb-3">
               <div class="card-body">
                   <form>
-                      <div class="form-group"> <label>Have coupon?</label>
-                          <div class="input-group"> <input type="text" class="form-control coupon" name="" placeholder="Coupon code"> <span class="input-group-append"> <button class="btn btn-primary btn-apply coupon">Apply</button> </span> </div>
+                      <div class="form-group"> <label>Nhập mã giảm giá:</label>
+                          <div class="input-group"> <input type="text" class="form-control coupon" value="{{voucherName}}" (input)="onChangeVoucher($event)" name="voucherName" placeholder="Coupon code"> <span class="input-group-append"> <button class="btn btn-primary btn-apply coupon" (click)="applyVoucher()">Apply</button> </span> </div>
                       </div>
                   </form>
               </div>
@@ -60,15 +64,170 @@
                   </dl>
                   <dl class="dlist-align">
                       <dt>Chiết khấu:</dt>
-                      <dd class="text-right text-danger ml-3">0</dd>
+                      <dd class="text-right text-danger ml-3">
+                        {{discount.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}} <p *ngIf="voucherData && voucherData.isPercent === true">(Giảm giá {{voucherData.percentage}}%)</p>
+                      </dd>
                   </dl>
                   <dl class="dlist-align">
-                      <dt>Tổng tahnh toán:</dt>
+                      <dt>Tổng Thanh toán:</dt>
                       <dd class="text-right text-dark b ml-3"><strong>{{totalPay.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></dd>
                   </dl>
-                  <hr> <button class="add-to-cart btn btn-default" type="button" (click)="paymentCart()">Thanh toán <i class="far fa-credit-card"></i></button>
+                  <hr>
+                  <button class="add-to-cart btn btn-default"
+                  type="button"
+                  (click)="checkPaymentCart()"
+                  data-toggle="modal" data-target="#modal-lg"
+                  >Thanh toán <i class="far fa-credit-card"></i></button>
               </div>
           </div>
       </aside>
   </div>
+</div>
+<!-- model -->
+<div class="modal fade" id="modal-lg" *ngIf="shopping_Cart.length > 0">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Hóa đơn thanh toán</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5 class="mb-3">Thông tin Khách hàng:</h5>
+        <div class="tab-pane" id="activity">
+          <form class="form-horizontal">
+            <div class="form-group row">
+              <label for="firstName" class="col-sm-2 col-form-label">Họ tên</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="firstName"
+                [(ngModel)]="bill.ownerName"
+                required #lastName="ngModel"
+                name="ownerName" placeholder="Name">
+                <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+                  class="alert"
+                  style="background: rgb(248, 131, 131); border-radius: 0%;"
+                  >
+
+                  <div *ngIf="lastName.errors?.['required']">
+                    Tên không được để trống !!!
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="lastName" class="col-sm-2 col-form-label">Số điện thoại</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="lastName"
+                [(ngModel)]="bill.phone" name="phone"
+                required [pattern]="phoneValidate" #phone="ngModel"
+                placeholder="Phone number">
+                <div *ngIf="phone.invalid && (phone.dirty || phone.touched)"
+                  class="alert"
+                  style="background: rgb(248, 131, 131); border-radius: 0%;"
+                  >
+
+                  <div *ngIf="phone.errors?.['required']">
+                    Số điện thoại không được để trống !!!!
+                  </div>
+
+                  <div *ngIf="phone.errors?.['pattern']">
+                    Số điện thoại không phù hợp !!!!
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="form-group row">
+              <label for="lastName" class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="lastName" [(ngModel)]="bill.phone" name="phone" placeholder="Phone number">
+              </div>
+            </div> -->
+            <!-- <div class="form-group row">
+              <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="phone" placeholder="Name">
+              </div>
+            </div> -->
+            <div class="form-group row">
+              <label for="inputName2" class="col-sm-2 col-form-label">Địa chỉ</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputName2"
+                [(ngModel)]="bill.address" name="address"
+                required #address="ngModel"
+                placeholder="Address">
+                <div *ngIf="address.invalid && (address.dirty || address.touched)"
+                  class="alert"
+                  style="background: rgb(248, 131, 131); border-radius: 0%;"
+                  >
+
+                  <div *ngIf="address.errors?.['required']">
+                    Địa chỉ không được để trống !!!!
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Thông tin sản phẩm -->
+            <div class="card-title">
+              <h5 class="mb-3">Thông tin sản phẩm:</h5>
+
+            </div>
+            <div class="btn-group btn-group-toggle w-100"  data-toggle="buttons">
+              <table class="table" width="100%">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>STT</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Mã</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of shopping_Cart; index as i">
+                    <td>{{i + 1}}</td>
+                    <td>
+                        <figure class="itemside align-items-center">
+                            <figcaption class="info product-name"> <a href="#" class="title text-dark" data-abc="true">{{item.product.name}}</a>
+
+                            </figcaption>
+                        </figure>
+                    </td>
+                    <td>{{item.product.code}}</td>
+                    <td>
+                     {{item.quantity}}
+                    </td>
+                    <td>
+                        <div class="price-wrap"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
+                    </td>
+                    <!-- <td class="text-right d-none d-md-block"> <a class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> <i class="fas fa-trash"></i></a> </td> -->
+                </tr>
+                <tr>
+                  <th colspan="4">Tổng tiền hàng: </th>
+                  <td><strong>{{totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                </tr>
+                <tr>
+                  <th colspan="4">Chiết khấu: </th>
+                  <td>{{discount.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
+                </tr>
+                <tr>
+                  <th colspan="4">Tổng Thanh toán: </th>
+                  <td><strong class="text-danger">{{totalPay.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- End thông tin sản phẩm -->
+
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn  add-to-cart" (click)="paymentCart()" data-dismiss="modal">Check Out</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
 </div>

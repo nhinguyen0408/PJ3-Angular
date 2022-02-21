@@ -5,6 +5,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './guards/auth.guard';
 import { EmployeeGuardGuard } from './guards/employee/employee-guard.guard';
+import { ManagerGuard } from './guards/manager.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,6 +19,10 @@ const routes: Routes = [
   { path: 'employee',
     canActivate: [EmployeeGuardGuard],
     loadChildren: () => import ('./modules/employee/employee.module').then(m => m.EmployeeModule)
+  },
+  { path: 'manager',
+    canActivate: [ManagerGuard],
+    loadChildren: () => import ('./modules/manager/manager.module').then(m => m.ManagerModule)
   },
 
 

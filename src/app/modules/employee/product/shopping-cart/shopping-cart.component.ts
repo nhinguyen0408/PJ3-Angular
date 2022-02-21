@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Bill } from 'src/app/models/Bill.model';
 import { ShoppingCart } from 'src/app/models/ShoppingCart.model';
+import { ApiVoucherService } from 'src/app/services/voucher/api-voucher.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -15,24 +17,110 @@ export class ShoppingCartComponent implements OnInit {
   @Input() totalPay: number;
   @Output()remove = new EventEmitter();
   @Output()payment = new EventEmitter();
-  constructor() {
+  @Output()onCheckPayment = new EventEmitter();
+  @Output()onUpdateQuantity = new EventEmitter();
+  constructor(private api: ApiVoucherService) {
     this.shopping_Cart = [];
     this.totalItem = 0;
     this.totalPrice = 0;
     this.discount = 0;
     this.totalPay = 0;
-   }
+  }
 
+  phoneValidate: string = '^(84|0[3|5|7|8|9])+([0-9]{8})$'
   ngOnInit(): void {
 
   }
+  bill = new Bill();
+  billDetail: {'productId': number, 'quantity': number, 'price': number}[] = [];
+  voucherName: string | null = null;
+  isVoucher: boolean = false;
+  voucherData: any;
+  onChangeVoucher(event: any){
+    this.voucherName = event.target.value;
+    console.log(' event.target.value', event.target.value)
+  }
+  applyVoucher(){
+    if(this.voucherName != null && this.shopping_Cart.length > 0){
+      this.api.getVoucherByKey(this.voucherName).subscribe(res =>{
+          this.voucherData = res;
+          this.isVoucher = true;
+          alert("Áp dụng mã Voucher: " + this.voucherData.name)
+          let now = new Date();
+          let startDate = new Date(this.voucherData.startDate);
+          let endDate = new Date( this.voucherData.endDate);
+          if(now.getTime() > startDate.getTime() && now.getTime() < endDate.getTime()){
+            // console.log(this.voucherData.startDate < this.voucherData.endDate)
+            // console.log(now)
+            // console.log(startDate)
+            // console.log(endDate)
+            this.bill.voucherId = this.voucherData.id
+            console.log(this.voucherData);
+            if(this.voucherData.isPercent){
+              this.discount = this.totalPrice * (this.voucherData.percentage/100);
+            } else {
+              this.discount = this.voucherData.discountPrice;
+            }
+            this.totalPay = this.totalPrice - this.discount;
+            this.bill.discountPrice = this.discount;
+          } else {
+            alert("Voucher đã hết hoặc chưa đến hạn áp dụng !!!!")
+          }
+      },(err:ErrorEvent) =>{
+        alert('Không tồn tại Mã giảm giá này !!!!!');
+        this.voucherData = null;
+        this.totalPay = this.totalPrice;
+        this.discount = 0;
+        this.bill.discountPrice = 0;
+      })
 
+      // if(this.isVoucher === false){
+      //   alert('Không tồn tại Mã giảm giá này !!!!!')
+      // }
+    } else {
+      alert('Vui lòng chọn sản phẩm hoặc nhập mã giảm giá !!!!!')
+    }
+  }
   removeProduct(productId:number){
     this.remove.emit(productId);
   }
 
   paymentCart(){
     // localStorage.removeItem("shopping-cart")
-    this.payment.emit()
+    if(this.bill.ownerName != "" && this.bill.phone != "" && this.bill.address != ""){
+      this.billDetail = []
+      this.shopping_Cart.forEach(x => {
+        const data =  {'productId': x.product.id, 'quantity': x.quantity, 'price': x.price}
+        this.billDetail.push(data)
+      })
+      this.bill.billDetail = this.billDetail;
+      this.bill.totalPrice = this.totalPrice;
+      this.bill.profileId = Number(localStorage.getItem('employeeId'));
+      console.log("localStorage.getItem('employeeId')",localStorage.getItem('employeeId'))
+      this.payment.emit(this.bill);
+      this.discount = 0;
+      this.voucherData = null;
+      this.voucherName = "";
+      this.bill = new Bill()
+    } else {
+      alert("Vui lòng điền đầy đủ thông tin khách hàng !!!!")
+    }
+
+  }
+  checkPaymentCart(){
+    // localStorage.removeItem("shopping-cart")
+    this.onCheckPayment.emit()
+  }
+  onChangeQuantity(e: any, quantityOld: number, index: number, productId: number){
+    console.log(e.target.value);
+    console.log('shopping_Cart=== ',this.shopping_Cart);
+    const newQuantity = e.target.value;
+    const quantityUpdate = newQuantity - quantityOld;
+    if(quantityUpdate > 0){
+      this.onUpdateQuantity.emit({'newQuantity': newQuantity, 'quantityUpdate': quantityUpdate, 'action': '-' , 'shoppingCartIndex': index, 'productId': productId})
+    } else {
+      this.onUpdateQuantity.emit({'newQuantity': newQuantity, 'quantityUpdate': - quantityUpdate, 'action': '+' , 'shoppingCartIndex': index, 'productId': productId})
+    }
+
   }
 }

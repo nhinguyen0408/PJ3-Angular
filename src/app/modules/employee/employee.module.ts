@@ -10,6 +10,9 @@ import { NavComponent } from './nav/nav.component';
 import { ProductComponent } from './product/product.component';
 import { ShoppingCartComponent } from './product/shopping-cart/shopping-cart.component';
 
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule }   from '@angular/forms';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 
 @NgModule({
   declarations: [
@@ -20,10 +23,13 @@ import { ShoppingCartComponent } from './product/shopping-cart/shopping-cart.com
     NavComponent,
     ProductComponent,
     ShoppingCartComponent,
+    MyProfileComponent,
   ],
   imports: [
     CommonModule,
-    EmployeeRoutingModule
+    EmployeeRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class EmployeeModule { }

@@ -20,7 +20,9 @@
             [totalItem]="totalItem"
             [totalPay]="totalPay"
             (remove)="removeProduct($event)"
-            (payment)="payment()"
+            (payment)="payment($event)"
+            (onCheckPayment)="checkPayment()"
+            (onUpdateQuantity) ="updateQuantityCart($event)"
             ></app-shopping-cart>
           </div>
         </div>

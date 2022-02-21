@@ -114,7 +114,7 @@ export class MyProfileComponent implements OnInit {
         },4300)
       } else {
         this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
-          this.getMydata()
+          window.location.reload
         });
       }
     }

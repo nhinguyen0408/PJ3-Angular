@@ -210,7 +210,9 @@ export class CreateProductComponent implements OnInit {
         }
       });
       this.upload()
+
       this.uploadMultiple()
+
       // console.log(this.product);
       setTimeout(()=>{
         this.product.listImage = this.listImage;
@@ -218,7 +220,7 @@ export class CreateProductComponent implements OnInit {
         console.log(this.product)
         this.route.navigate(['/admin/product'])
       })
-      },4500)
+      },4100)
 
       }
     }

@@ -1,0 +1,176 @@
+
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4 col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Tạo Voucher</h3><br>
+                  <a routerLink="/admin/voucher" class="btn btn-success mt-2">Back</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-xl-8">
+            <div class="card">
+
+                <div class="card-body">
+                    <h3 class="card-title">Thông tin Voucher</h3> <br>
+                    <!-- <form action="#" class="form-profile" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+                        <div class="form-group">
+                          <input type="text" class="form-control input-default" formControlName='name' placeholder="Tên thể loại">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control input-default" formControlName='title' placeholder="Tiêu đề">
+                        </div>
+
+                        <div class="d-flex align-items-center">
+
+                            <button class="btn btn-primary px-3">Submit</button>
+                        </div>
+                    </form> -->
+                    <form class="form-horizontal">
+                      <div class="form-group row">
+                        <label for="lastName" class="col-sm-2 col-form-label">Tên Voucher</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="lastName"
+                          [(ngModel)]="voucher.name"
+                          required #name="ngModel"
+                          name="lastName"  placeholder="Nhập tên Voucher">
+                          <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                            class="alert"
+                            style="background: rgb(248, 131, 131); border-radius: 0%;"
+                            >
+
+                            <div *ngIf="name.errors?.['required']">
+                              Tên không được để trống !!!
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="phone" class="col-sm-2 col-form-label">Mã giảm giá</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control"
+                          [(ngModel)]="voucher.key"
+                          required  #key="ngModel"
+                          name="phone" id="phone" placeholder="Nhập mã giảm giá" disabled >
+
+                          <div *ngIf="key.invalid && (key.dirty || key.touched)"
+                            class="alert"
+                            style="background: rgb(248, 131, 131); border-radius: 0%;"
+                            >
+
+                            <div *ngIf="key.errors?.['required']">
+                             Mã giảm giá không được để trống !!!!
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Hình thức giảm giá</label>
+                        <div class="col-sm-10">
+                          <select class="form-control" (change)="onChange($event)" name="role">
+                            <option value="" selected>Chọn</option>
+                            <option value="TRUE" >Giảm giá phần trăm hóa đơn (%)</option>
+                            <option value="FALSE">Giảm giá hóa đơn trực tiếp (VND)</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row" *ngIf="onshow == true">
+                        <label for="voucher" class="col-sm-2 col-form-label">Phần trăm giảm giá hóa đơn</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control"
+                          [(ngModel)]="voucher.percentage"
+                          required
+                          [pattern]="numberValidate"
+                          #percentage="ngModel"
+
+                          name="percentage" id="voucher" placeholder="Nhập Phần trăm giảm giá">
+
+                          <div *ngIf="percentage.invalid && (percentage.dirty || percentage.touched)"
+                            class="alert"
+                            style="background: rgb(248, 131, 131); border-radius: 0%;"
+                            >
+
+                            <div *ngIf="percentage.errors?.['required']">
+                              Phần trăm giảm giá không được để trống !!!!
+                            </div>
+                            <div *ngIf="percentage.errors?.['pattern']">
+                              Phần trăm giảm giá phải là số !!!!
+                            </div>
+                            <div *ngIf="voucher.percentage != null && voucher.percentage > 50 ">
+                              Phần trăm giảm giá phải tối đa là 50% !!!!
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="form-group row" *ngIf="onshow == false">
+                        <label for="phone" class="col-sm-2 col-form-label">Số tiền giảm giá hóa đơn</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control"
+                          [(ngModel)]="voucher.discountPrice"
+                          required
+                          [pattern]="numberValidate"
+                          #discountPrice="ngModel"
+
+                          name="discountPrice" id="phone" placeholder="Nhập Số tiền giảm giá hóa đơn">
+
+                          <div *ngIf="discountPrice.invalid && (discountPrice.dirty || discountPrice.touched)"
+                            class="alert"
+                            style="background: rgb(248, 131, 131); border-radius: 0%;"
+                            >
+
+                            <div *ngIf="discountPrice.errors?.['required']">
+                              Số tiền giảm giá hóa đơn không được để trống !!!!
+                            </div>
+                            <div *ngIf="discountPrice.errors?.['pattern']">
+                              Số tiền giảm giá hóa đơn phải là số !!!!
+                            </div>
+
+                            <div *ngIf="voucher.percentage != null && voucher.percentage <= 0 ">
+                              Số tiền giảm giá hóa đơn phải lớn hơn 0 !!!!
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="form-group row">
+                        <label for="birthday" class="col-sm-2 col-form-label">Ngày Bắt đầu</label>
+                        <div class="col-sm-10">
+
+                          <input type="date" class="form-control" id="birthday" [(ngModel)]="voucher.startDate" name="startDate"
+
+                                min="1995-01-01" max="2005-12-31">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="birthday" class="col-sm-2 col-form-label">Ngày Kết thúc</label>
+                        <div class="col-sm-10">
+
+                          <input type="date" class="form-control" id="birthday" [(ngModel)]="voucher.endDate" name="endDate"
+
+                                min="1995-01-01" max="2005-12-31">
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="offset-sm-2 col-sm-10">
+                          <button type="submit" class="btn btn-danger" (click)="onSubmit()">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+
+
+            </div>
+
+            <div class="card">
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+

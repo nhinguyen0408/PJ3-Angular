@@ -37,6 +37,12 @@ export class ApiProductService {
       catchError(this.handleError)
     )
   }
+  getProductEnable():Observable<Product>{
+    return this.http.get<Product>(this.url+"/product/getall?status=ACTIVE").pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
   getById(id: number):Observable<Product>{
     return this.http.get<Product>(this.url+"/product/getdetail?id=" + id).pipe(
       retry(1),
@@ -75,5 +81,10 @@ export class ApiProductService {
     )
   }
 
+  updateQuantity({productId, action, number} : any): Observable<any>{
+    return this.http.put<any>(this.url + "/product/updateQuantity", {productId, action, number}, this.httpOptions).pipe(
+      catchError(this.handleError)
+    )
+  }
 
 }

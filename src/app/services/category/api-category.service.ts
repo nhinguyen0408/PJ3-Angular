@@ -29,7 +29,7 @@ export class ApiCategoryService {
       errorMessage = `Message : ${err.error.responseMessage}`
     }
     window.alert(errorMessage);
-    return throwError(errorMessage);
+    return throwError(err);
   }
   getCategory():Observable<Category>{
     return this.http.get<Category>(this.url+"/category/getall").pipe(

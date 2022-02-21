@@ -76,17 +76,29 @@
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-chart-pie"></i>
             <p>
-              Quản lý Sản phẩm
+              Quản lý Hàng Hóa
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
+              <a routerLink="/admin/production" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Hãng</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/admin/category" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Thể Loại</p>
+              </a>
+            </li>
+            <!-- <li class="nav-item">
               <a routerLink="/admin/product/create"  class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Thêm sản phẩm</p>
               </a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a routerLink="/admin/product" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
@@ -101,7 +113,7 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item has-treeview">
+        <!-- <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-tree"></i>
             <p>
@@ -123,7 +135,7 @@
               </a>
             </li>
           </ul>
-        </li>
+        </li> -->
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-edit"></i>
@@ -169,13 +181,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="pages/tables/simple.html" class="nav-link">
+              <a [routerLink]="['voucher/create']" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Tạo Voucher</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/tables/data.html" class="nav-link">
+              <a [routerLink]="['voucher']" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Danh sách Voucher</p>
               </a>

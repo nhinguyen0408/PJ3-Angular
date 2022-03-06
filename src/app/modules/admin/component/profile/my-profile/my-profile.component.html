@@ -10,9 +10,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-3">
-
-        <!-- Profile Image -->
+      <!-- <div class="col-md-3">
         <div class="card card-primary card-outline">
           <div class="card-body box-profile">
             <div class="text-center">
@@ -26,8 +24,6 @@
             </div>
 
             <h3 class="profile-username text-center">{{myProfile.fistName + myProfile.lastName}}</h3>
-
-            <!-- <p class="text-muted text-center">Software Engineer</p> -->
 
             <ul class="list-group list-group-unbordered mb-3">
               <li class="list-group-item">
@@ -45,12 +41,46 @@
               </li>
             </ul>
           </div>
-          <!-- /.card-body -->
         </div>
 
+      </div> -->
+      <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+        <div class="card bg-light">
+          <div class="card-header text-muted border-bottom-0">
+            <a class="" *ngIf="myProfile.role=== 'SUPERADMIN'"> Quản lý</a>
+            <a class="" *ngIf="myProfile.role=== 'ADMIN'">Quản lý Kho</a>
+            <a class="" *ngIf="myProfile.role=== 'EMPLOYEE'">Nhân viên bán hàng</a>
+          </div>
+          <div class="card-body pt-0">
+            <div class="row">
+              <div class="col-7">
+                <p></p>
+                <h2 class="lead"><b>{{myProfile.fistName + myProfile.lastName}}</b></h2>
+                <p class="text-muted text-sm"><b>About: </b>
+                  <a class="" *ngIf="myProfile.role=== 'SUPERADMIN'"> Quản lý Nhân viên | Quản trị viên ứng dụng</a>
+                  <a class="" *ngIf="myProfile.role=== 'ADMIN'">Quản lý hàng hóa | Khuyến mại | Theo dõi đơn hàng</a>
+                  <a class="" *ngIf="myProfile.role=== 'EMPLOYEE'">Nghiệp vụ bán hàng</a>
+                </p>
+                <ul class="ml-4 mb-0 fa-ul text-muted">
+                  <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: {{myProfile.address}}</li>
+                  <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: {{myProfile.phone}}</li>
+                </ul>
+              </div>
+              <div class="col-5 text-center">
+                <!-- <img src="../../dist/img/user1-128x128.jpg" alt="" class="img-circle img-fluid"> -->
+                <img class="img-circle img-fluid" *ngIf="myProfile.imageUrl=== null"
+                   src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg"
+                   alt="User profile picture">
+              <img class="img-circle img-fluid" *ngIf="myProfile.imageUrl != null"
+                   src="{{myProfile.imageUrl}}"
+                   alt="User profile picture">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- /.col -->
-      <div class="col-md-9">
+      <div class="col-12 col-sm-6 col-md-8">
         <div class="card">
           <div class="card-header p-2">
             <ul class="nav nav-pills">

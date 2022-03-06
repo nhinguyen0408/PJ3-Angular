@@ -27,9 +27,13 @@ export class VoucherCreateComponent implements OnInit {
     if(this.voucher.isPercent == true){
       if(this.voucher.name != "" && this.voucher.key != "" && this.voucher.percentage!= null ){
         this.voucher.key.toUpperCase();
-        this.api.createVoucher(this.voucher).subscribe(res => {
-          this.route.navigate(["admin/voucher"])
-        })
+        if(this.voucher.startDate > this.voucher.endDate){
+          alert("Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!")
+        } else {
+          this.api.createVoucher(this.voucher).subscribe(res => {
+            this.route.navigate(["admin/voucher"])
+          })
+        }
       }else {
         alert("Vui lòng điền đầy đủ các trường thông tin !!!")
       }
@@ -37,9 +41,13 @@ export class VoucherCreateComponent implements OnInit {
     if (this.voucher.isPercent == false){
       if(this.voucher.name != "" && this.voucher.key != "" && this.voucher.discountPrice!= null ){
         this.voucher.key.toUpperCase();
-        this.api.createVoucher(this.voucher).subscribe(res => {
-          this.route.navigate(["admin/voucher"])
-        })
+        if(this.voucher.startDate > this.voucher.endDate){
+          alert("Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!")
+        } else {
+          this.api.createVoucher(this.voucher).subscribe(res => {
+            this.route.navigate(["admin/voucher"])
+          })
+        }
       }else {
         alert("Vui lòng điền đầy đủ các trường thông tin !!!")
       }

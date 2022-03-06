@@ -13,7 +13,7 @@
               <thead>
                 <tr>
                   <th style="width: 10px">#</th>
-                  <th>ID</th>
+                  <!-- <th>ID</th> -->
                   <th>Tên thể loại</th>
                   <th>Trạng thái</th>
                   <th>TAG</th>
@@ -25,7 +25,7 @@
               <tbody>
                 <tr *ngFor="let category of categoryList; index as i">
                   <td>{{i + 1}}</td>
-                  <td>{{category.id}}</td>
+                  <!-- <td>{{category.id}}</td> -->
                   <td>{{category.name}}</td>
                   <td>
                     <div *ngIf="category.status == 'ENABLE'">
@@ -37,18 +37,21 @@
                   </td>
                   <td>{{category.sortName}}</td>
                   <!-- <td>{{category.sortName}}</td> -->
-                  <td>300</td>
+                  <td *ngIf=" category.countProd && category.countProd > 0">{{category.countProd}}</td>
+                  <td *ngIf="category.countProd === 0">Chưa có sản phẩm</td>
                   <td>{{category.createdDate | date:'medium'}}</td>
                   <td>
-                    <button class="btn mb-1 btn-warning mr-2" routerLink="/admin/category/edit/{{category.id}}">Edit</button>
-                    <button class="btn mb-1 btn-danger" (click)="delete(category.id)">Delete</button>
+                    <!-- <button class="btn mb-1 btn-warning mr-2" routerLink="/admin/category/edit/{{category.id}}">Edit</button>
+                    <button class="btn mb-1 btn-danger" (click)="delete(category.id)">Delete</button> -->
+                    <a routerLink="/admin/category/edit/{{category.id}}" class="btn mr-2 shadow text-warning"><i class="fas fa-pen"></i></a>
+                    <a class="btn shadow text-danger" (click)="delete(category.id)" ><i class="fas fa-eraser"></i></a>
                   </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th style="width: 10px">#</th>
-                  <th>Id</th>
+                  <!-- <th>Id</th> -->
                   <th>Tên thể loại</th>
                   <th>Trạng thái</th>
                   <th>TAG</th>

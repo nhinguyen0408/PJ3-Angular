@@ -1,0 +1,127 @@
+
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4 col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Tạo Sale Sản phẩm</h3><br>
+                  <a routerLink="/admin/product" class="btn btn-success mt-2">Back</a>
+
+                </div>
+                <div class="d-flex justify-content-center">
+                  <div class="col-lg-8 col-xl-12">
+                    <div class="card">
+
+                        <div class="card-body">
+                            <h3 class="">Thông tin Sale</h3> <br>
+                            <div class="row">
+                              <div class="col-md-6 col-lg-4">
+                                  <div class="card border shadow">
+                                    <div class="d-flex sale" *ngIf="product.saleEntity">
+                                      <div class="sale-percent btn">SALE {{product.saleEntity.sale}}%</div>
+                                    </div>
+                                      <img class="img-fluid card-img-top product-image" src="{{product.avatarUrl}}" alt="Card image cap">
+                                      <div class="card-body">
+                                          <h5 class="card-title product-name">{{product.name}}</h5> <br>
+                                          <h6 class="card-title text-primary">
+                                            {{product.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+
+                                          </h6> <br> <br>
+                                          <h6 class="my-3">Mã sản phẩm: {{product.code}}</h6>
+                                          <p class="card-text"><small class="text-muted">Last updated {{product.modifiedDate | date :'medium'}}</small>
+                                          </p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6 col-lg-8">
+                                <form action="#" class="form-profile shadow" >
+
+                                  <div class="card-body">
+                                    <div class="form-group">
+                                      <label for="exampleInputEmail1">Sale(%)</label>
+                                      <input type="number" class="form-control" id="exampleInputEmail1"
+                                      name="percent"
+                                      [(ngModel)]="salePercent"
+                                      min="0" max="50"
+                                      required
+                                      #percentage="ngModel"
+                                       placeholder="Nhập phần trăm Sale...">
+                                       <div *ngIf="percentage.invalid && (percentage.dirty || percentage.touched)"
+                                          class="alert"
+                                          style="background: rgb(248, 131, 131); border-radius: 0%;"
+                                          >
+
+                                          <div *ngIf="percentage.errors?.['required']">
+                                            Phần trăm Sale không được để trống !!!!
+                                          </div>
+                                          <div *ngIf="salePercent != null && salePercent > 50 ">
+                                            Phần trăm Sale tối đa là 50% !!!!
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" *ngIf="stringStart">
+                                      <label for="birthday" class="col-sm-12 col-form-label">Ngày Bắt đầu</label>
+                                      <div class="col-sm-11">
+
+                                        <input type="text" class="form-control" id="birthday" value="{{stringStart}}" name="startDate"
+
+                                              disabled>
+
+                                      </div><button class="btn btn-warning col-sm-1" (click)="editStart()"><i class="fas fa-pen"></i></button>
+                                    </div>
+                                    <div class="form-group row" *ngIf="stringStart ===''">
+                                      <label for="birthday" class="col-sm-12 col-form-label">Ngày Bắt đầu</label>
+                                      <div class="col-sm-12">
+
+                                        <input type="date" class="form-control" id="birthday" [(ngModel)]="startDate" name="startDate"
+
+                                              min="2022-01-01" max="2025-12-31">
+                                      </div>
+                                    </div>
+                                    <div class="form-group row" *ngIf="stringEnd">
+                                      <label for="birthday" class="col-sm-12 col-form-label">Ngày Kết thúc</label>
+                                      <div class="col-sm-11">
+
+                                        <input type="text" class="form-control" id="birthday" value="{{stringEnd}}" name="startDate"
+
+                                              disabled>
+                                      </div><button class="btn btn-warning col-sm-1" (click)="editEnd()"><i class="fas fa-pen"></i></button>
+                                    </div>
+                                    <div class="form-group row" *ngIf="stringEnd === ''">
+                                      <label for="birthday" class="col-sm-12 col-form-label">Ngày Kết thúc</label> <br>
+                                      <div class="col-sm-12">
+
+                                        <input type="date" class="form-control" id="birthday" [(ngModel)]="endDate" name="endDate"
+
+                                              min="2022-01-01" max="2025-12-31">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- /.card-body -->
+
+                                  <div class="card-footer">
+                                    <button type="submit" (click)="onSubmit()" class="btn btn-primary">Submit</button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="card">
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+  </div>
+</div>
+

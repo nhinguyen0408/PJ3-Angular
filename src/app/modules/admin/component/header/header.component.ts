@@ -17,4 +17,5 @@ export class HeaderComponent implements OnInit {
   logOut(){
     this.auth.logout();
   }
+  search: string | null = null
 }

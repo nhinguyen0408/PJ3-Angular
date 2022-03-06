@@ -43,6 +43,21 @@ export class ApiProductService {
       catchError(this.handleError)
     )
   }
+  searchProduct(code: string, idCate: number, idProduction: number, name: string):Observable<Product>{
+    if(code === ''){
+      const url = this.url+"/product/getall?idCate="+ idCate +"&idProduction="+ idProduction +"&name=" + name;
+      console.log("url no code:::", url)
+      return this.http.get<Product>(url).pipe(
+        retry(1),
+      )
+    }
+
+    const url = this.url+"/product/getall?code="+code+"&idCate="+ idCate +"&idProduction="+ idProduction +"&name=" + name;
+    console.log("url has code",url);
+    return this.http.get<Product>(url).pipe(
+      retry(1),
+    )
+  }
   getById(id: number):Observable<Product>{
     return this.http.get<Product>(this.url+"/product/getdetail?id=" + id).pipe(
       retry(1),

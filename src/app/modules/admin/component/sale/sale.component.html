@@ -8,32 +8,46 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <button class="btn mb-1 btn-success mr-2" routerLink="/admin/category/create">Thêm Sale</button>
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th style="width: 10px">#</th>
-                  <th>ID</th>
-                  <th>Tên thể loại</th>
-                  <th>Trạng thái</th>
-                  <th>TAG</th>
-                  <th>Số lượng sản phẩm</th>
-                  <th>Ngày tạo lập</th>
+                  <th>Image</th>
+                  <th>Tên</th>
+                  <th>Sale</th>
+                  <th>Ngày bắt đầu</th>
+                  <th>Ngày kết thúc</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
-
+                <tr *ngFor="let item of saleList; index as i">
+                  <th>{{i + 1}}</th>
+                  <td><img class="img-fluid card-img-top product-image" src="{{item.avatarUrl}}" alt="Card image cap"></td>
+                  <td><p class="text-primary">{{item.productName}}</p>
+                    <small>Ngày tạo lập: {{item.createdDate | date:'medium'}} <br>
+                          Tạo bởi: <strong>{{item.fistName + ' ' +item.lastName}}</strong>
+                    </small>
+                    <!-- <a routerLink="details/{{item.id}}" class="btn mr-2 shadow text-primary"><i class="far fa-eye"></i></a>
+                    <a routerLink="edit/{{item.id}}" class="btn mr-2 shadow text-warning"><i class="fas fa-pen"></i></a>
+                    <a class="btn shadow text-danger" (click)="delete(item.id)" ><i class="fas fa-eraser"></i></a> -->
+                  </td>
+                  <th>{{item.sale}}%</th>
+                  <td>{{formatDate(item.startDate)}}</td>
+                  <td>{{formatDate(item.endDate)}}</td>
+                  <td>
+                    <a class="btn shadow text-danger" (click)="onDeleteSale(item.id)"><i class="fas fa-eraser"></i></a>
+                  </td>
+                </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th style="width: 10px">#</th>
-                  <th>Id</th>
-                  <th>Tên thể loại</th>
-                  <th>Trạng thái</th>
-                  <th>TAG</th>
-                  <th>Số lượng sản phẩm</th>
-                  <th>Ngày tạo lập</th>
+                  <th>Image</th>
+                  <th>Tên</th>
+                  <th>Sale</th>
+                  <th>Ngày bắt đầu</th>
+                  <th>Ngày kết thúc</th>
                   <th>Thao tác</th>
                 </tr>
               </tfoot>

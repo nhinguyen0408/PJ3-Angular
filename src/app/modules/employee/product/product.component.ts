@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Bill } from 'src/app/models/Bill.model';
+import { Category } from 'src/app/models/Category.model';
 import { Product } from 'src/app/models/Product.model';
+import { Production } from 'src/app/models/Production.model';
 import { ShoppingCart } from 'src/app/models/ShoppingCart.model';
 import { ApiBillService } from 'src/app/services/bill/api-bill.service';
+import { ApiCategoryService } from 'src/app/services/category/api-category.service';
 import { ApiProductService } from 'src/app/services/product/api-product.service';
+import { ApiProductionService } from 'src/app/services/production/api-production.service';
 
 declare var jQuery: any;
 @Component({
@@ -14,11 +18,19 @@ declare var jQuery: any;
 })
 export class ProductComponent implements OnInit {
 
-  constructor(private api: ApiProductService, private billApi: ApiBillService) { }
+  constructor(
+    private api: ApiProductService,
+    private billApi: ApiBillService,
+    private apiCate: ApiCategoryService,
+    private apiProduction: ApiProductionService
+    ) { }
 
   ngOnInit(): void {
     this.getAll();
+    this.getCate();
+    this.getProduction();
     this.getShoppingCart();
+
   }
   ngAfterViewInit(): void {
     setTimeout(()=>{
@@ -26,9 +38,17 @@ export class ProductComponent implements OnInit {
     },200)
   }
   productList: Product[] = [];
+  categoryList: Category[] = [];
+  productionList: Production[] = [];
+  categoryId: number | null = 0;
+  productionId: number | null = 0;
+  productCode: string  = '';
+  productName: string  = '';
+  checkSearch: boolean = false;
   getAll(){
     this.api.getProductEnable().subscribe((res: any) => {
-      this.productList = res
+      this.productList = res;
+      this.getCountDown();
     })
 
   }
@@ -37,6 +57,9 @@ export class ProductComponent implements OnInit {
         $("#example1").DataTable({
           "responsive": true,
           "autoWidth": false,
+        });
+        $('.select2bs4').select2({
+          theme: 'bootstrap4'
         });
     })(jQuery);
   }
@@ -75,11 +98,19 @@ export class ProductComponent implements OnInit {
       if(!this.shoppingCart.find(x => x.product.id === id)){
         const productShopping = new ShoppingCart()
         productShopping.product = product;
-        productShopping.price = product.salePrice;
+        if(product.saleEntity){
+          productShopping.price = product.salePrice - product.salePrice * product.saleEntity.sale /100;
+        } else {
+          productShopping.price = product.salePrice;
+        }
         productShopping.quantity = 1
         this.shoppingCart.push(productShopping)
         this.api.updateQuantity({'productId': id, 'action': '-', 'number': 1}).subscribe(res => {
-          this.getAll();
+          if(this.checkSearch === true){
+            this.onSearch()
+          } else {
+            this.getAll();
+          }
           this.storeShoppingCart(this.shoppingCart);
         })
         this.getTotal();
@@ -90,9 +121,18 @@ export class ProductComponent implements OnInit {
         if(productShopping){
           if(product.quantity > 0){
             productShopping.quantity ++;
-            productShopping.price = product.salePrice * productShopping.quantity;
+            if(product.saleEntity){
+              productShopping.price = (product.salePrice - product.salePrice * product.saleEntity.sale/100)* productShopping.quantity;
+            } else {
+              productShopping.price = product.salePrice * productShopping.quantity;
+            }
+
             this.api.updateQuantity({'productId': id, 'action': '-', 'number': 1}).subscribe(res => {
-              this.getAll();
+              if(this.checkSearch === true){
+                this.onSearch()
+              } else {
+                this.getAll();
+              }
               this.storeShoppingCart(this.shoppingCart);
             })
             this.getTotal();
@@ -168,6 +208,114 @@ export class ProductComponent implements OnInit {
     // console.log("shoppingCart======== ",localStorage.getItem('cart') )
     // subject.next('changed'); this.shoppingCart = JSON.parse(localStorage.getItem('cart'));
   }
+  getCate(){
+    this.apiCate.getCategory().subscribe((res: any) =>{
+      this.categoryList = res;
+    })
+  }
+  getProduction(){
+    this.apiProduction.getProduction().subscribe((res: any)=>{
+      this.productionList = res;
+    })
+  }
+  onSearch(){
+    let categoryId = (function ($) {
+      let se = $('#category').select2('data')[0]
+      // console.log("selected category: ", se.id)
+      return se.id
+    })(jQuery);
+    let productionId = (function ($) {
+        let se = $('#production').select2('data')[0]
+        // console.log("selected category: ", se.id)
+        return se.id
+    })(jQuery);
 
+    // console.log("categoryId",categoryId)
+    // console.log("productionId",productionId)
+    // console.log("productCode",this.productCode)
+    if(productionId == 0){
+      productionId = '';
+    }
+    if(categoryId == 0){
+      categoryId = '';
+    }
+    if(categoryId=== 0 && productionId=== 0 && this.productCode === '' && this.productName===''){
 
+    } else{
+      this.api.searchProduct(this.productCode.toUpperCase(), categoryId, productionId, this.productName).subscribe((res: any)=>{
+        this.productList = res;
+        this.getCountDown();
+        this.checkSearch = true;
+      })
+    }
+  }
+  onAbortSearch(){
+    this.checkSearch = false;
+    this.productCode = '';
+    this.productName = '';
+    this.categoryId = 0;
+    this.productionId = 0;
+    this.getAll()
+  }
+  countDown: any;
+  getCountDown(){
+    if(this.productList){
+
+      var x = setInterval(() =>{
+        this.countDown = [];
+        for(let i =0; i<=this.productList.length; i++){
+          let data = {'days': '', 'hours': '', 'minutes': '', 'seconds': '','idPr': 0};
+          if(this.productList[i].saleEntity!= null){
+            const endTime = new Date(this.productList[i].saleEntity.endDate).getTime();
+            var now = new Date().getTime();
+            var distance = endTime - now;
+            data.days = (distance / (1000 * 60 * 60 * 24)).toFixed();
+            data.hours = (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) >10 ?((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed() : '0' + ((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed();
+            data.minutes = ((distance % (1000 * 60 * 60)) / (1000 * 60)) > 10 ? ((distance % (1000 * 60 * 60)) / (1000 * 60)).toFixed() : '0' +((distance % (1000 * 60 * 60)) / (1000 * 60)).toFixed();
+            data.seconds = ((distance % (1000 * 60)) / 1000) > 10 ? ((distance % (1000 * 60)) / 1000).toFixed() : '0' + ((distance % (1000 * 60)) / 1000).toFixed();
+            data.idPr = this.productList[i].id
+          }
+          this.countDown.push(data);
+          // console.log("data",data)
+        }
+
+      }, 1000)
+
+    }
+  }
+  productDetails: any | null;
+  onShow: boolean = false;
+  days: any;
+  hours: any;
+  minutes: any;
+  seconds: any;
+  onGetProductDetails(id: number){
+    this.api.getById(id).subscribe(res => {
+      this.productDetails = res;
+      this.getCountDownProductDetails();
+      this.onShow = true;
+    })
+  }
+  onEndShowDetails(){
+    this.productDetails = null;
+    this.onShow = false;
+    this.days = null;
+    this.hours = null;
+    this.minutes = null;
+    this.seconds = null;
+  }
+  getCountDownProductDetails(){
+    if(this.productDetails.saleEntity){
+      var x = setInterval(() =>{
+        const endTime = new Date(this.productDetails.saleEntity.endDate).getTime();
+        var now = new Date().getTime();
+        var distance = endTime - now;
+        this.days = (distance / (1000 * 60 * 60 * 24)).toFixed();
+        this.hours = ((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed();
+        this.minutes = ((distance % (1000 * 60 * 60)) / (1000 * 60)).toFixed();
+        this.seconds = ((distance % (1000 * 60)) / 1000).toFixed();
+      }, 1000)
+
+    }
+  }
 }

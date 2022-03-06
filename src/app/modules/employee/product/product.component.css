@@ -1,9 +1,12 @@
 .product-image{
-  height: 70px;
-  width: auto;
+  height: 200px;
+  width: 200px;
   object-fit: cover;
 }
 
+.name{
+  cursor: pointer;
+}
 .product-name{
   width: 100%;
   overflow: hidden;
@@ -18,3 +21,68 @@
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
 }
+
+.sale-percent {
+  border-radius: 0;
+  width: fit-content;
+  background: rgb(223,63,251);
+  background: radial-gradient(circle, rgba(223,63,251,1) 0%, rgba(254,0,146,1) 100%);
+  box-shadow: 0px 10px 10px #313131;
+  z-index: 1;
+  color: white;
+  width: 170px;
+  height: auto;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.img-thumbnail {
+  border: none
+}
+
+.card {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, .2);
+  border-radius: 5px;
+  padding-bottom: 10px
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 900
+}
+
+.countdown{
+  background: #000;
+  padding: 3px;
+  margin: 3px;
+}
+.product-details-image{
+  position: relative;
+  height: 400px;
+  width: auto;
+  object-fit: cover;
+}
+
+/* .card {
+  width: fit-content
+} */
+
+/* .card-body {
+  width: fit-content
+} */
+.sale-details-percent {
+  position: absolute;
+  border-radius: 0;
+  width: fit-content;
+  background: rgb(223,63,251);
+  background: radial-gradient(circle, rgba(223,63,251,1) 0%, rgba(254,0,146,1) 100%);
+  box-shadow: 0px 10px 10px #E0E0E0;
+  z-index: 1;
+  color: white;
+  width: 170px;
+  height: auto;
+  font-size: 14px;
+  font-weight: 900;
+  bottom: 15px;
+}
+

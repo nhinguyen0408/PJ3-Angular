@@ -13,17 +13,18 @@
               <thead>
                 <tr>
                   <th style="width: 10px">#</th>
-                  <th>Id</th>
+                  <!-- <th>Id</th> -->
                   <th>Tên hãng</th>
                   <th>Công ty</th>
                   <th>Trạng thái</th>
+                  <th>Số lượng sản phẩm</th>
                   <th>Ngày tạo lập</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let production of productionList; index as i">
-                  <td>{{i + 1}}</td>
+                  <!-- <td>{{i + 1}}</td> -->
                   <td>{{production.id}}</td>
                   <td>{{production.name}}</td>
                   <td>{{production.company}}</td>
@@ -35,20 +36,25 @@
                       <span class="badge badge-danger px-2">Inactive</span>
                     </div>
                   </td>
+                  <td *ngIf=" production.countProd && production.countProd > 0">{{production.countProd}}</td>
+                  <td *ngIf="production.countProd === 0">Chưa có sản phẩm</td>
                   <td>{{production.createdDate  | date:'medium'}}</td>
                   <td>
-                    <button class="btn mb-1 btn-warning mr-2" routerLink="/admin/production/edit/{{production.id}}">Edit</button>
-                    <button class="btn mb-1 btn-danger" (click)="delete(production.id)">Delete</button>
+                    <!-- <button class="btn mb-1 btn-warning mr-2" routerLink="/admin/production/edit/{{production.id}}">Edit</button>
+                    <button class="btn mb-1 btn-danger" (click)="delete(production.id)">Delete</button> -->
+                    <a routerLink="/admin/production/edit/{{production.id}}" class="btn mr-2 shadow text-warning"><i class="fas fa-pen"></i></a>
+                    <a class="btn shadow text-danger" (click)="delete(production.id)" ><i class="fas fa-eraser"></i></a>
                   </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th style="width: 10px">#</th>
-                  <th>Id</th>
+                  <!-- <th>Id</th> -->
                   <th>Tên hãng</th>
                   <th>Công ty</th>
                   <th>Trạng thái</th>
+                  <th>Số lượng sản phẩm</th>
                   <th>Ngày tạo lập</th>
                   <th>Thao tác</th>
                 </tr>

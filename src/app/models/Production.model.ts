@@ -4,5 +4,6 @@ export class Production{
   company: string = "";
   createdDate: Date = new Date();
   modifiedDate: Date = new Date();
-  status: string=""
+  status: string="";
+  countProd: number | null = null;
 }

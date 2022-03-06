@@ -32,7 +32,7 @@
             <div class="icon">
               <i class="fas fa-shopping-cart"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a routerLink="/admin/order" class="small-box-footer">
               More info <i class="fas fa-arrow-circle-right"></i>
             </a>
           </div>
@@ -49,7 +49,7 @@
             <div class="icon">
               <i class="fas fa-chart-pie"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a routerLink="/admin/product" class="small-box-footer">
               More info <i class="fas fa-arrow-circle-right"></i>
             </a>
           </div>
@@ -88,7 +88,7 @@
             <div class="icon">
               <i class="fas fa-user-plus"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a routerLink="/admin/employee-manager" class="small-box-footer">
               More info <i class="fas fa-arrow-circle-right"></i>
             </a>
           </div>
@@ -99,10 +99,10 @@
       <!-- /.row -->
 
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
           <div class="card">
-            <div class="card-header">
-              <h5 class="card-title">Monthly Recap Report</h5>
+            <div class="card-header bg-black">
+              <h5 class="card-title">Tổng quan năm 2022</h5>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -233,8 +233,8 @@
           </div>
           <!-- /.card -->
         </div>
-        <div class="card col-md-3">
-          <div class="card-header">
+        <div class="card col-md-4 p-0">
+          <div class="card-header bg-black">
             <h3 class="card-title"><strong>Sản phẩm bán chạy trong tháng</strong></h3>
 
             <div class="card-tools">
@@ -275,7 +275,7 @@
         <div class="col-md-6">
           <!-- USERS LIST -->
           <div class="card">
-            <div class="card-header">
+            <div class="card-header bg-black">
               <h3 class="card-title"><strong>Sản phẩm mới</strong></h3>
 
               <div class="card-tools">
@@ -287,32 +287,123 @@
               </div>
             </div>
             <!-- /.card-header -->
-            <div class="card-body p-0" *ngIf="productLatest.length >= 2">
+            <div class="card-body p-0" *ngIf="productLatest.length >= 3">
               <div class="bootstrap-carousel">
-                <div class="carousel slide" data-ride="carousel">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                   <div class="carousel-inner">
+                    <ol class="carousel-indicators">
+                      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                  </ol>
                       <div class="carousel-item active">
-                          <img class="d-block w-100 product-image" src="{{productLatest[0].avatarUrl}}" alt="First slide">
-                          <div>
-                            <p class="product-name"><strong>{{productLatest[0].name}}</strong></p>
-                            <span class="badge badge-warning">{{productLatest[0].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</span>
+                        <div class="d-flex sale" *ngIf="productLatest[0].saleEntity && productLatest[0].id == countDown[0].idPr">
+                          <div class="sale-percent btn text-right">SALE {{productLatest[0].saleEntity.sale}}%
+                            <br>  <p id="countdown">{{countDown[0].days}}:{{countDown[0].hours}}:{{countDown[0].minutes}}:{{countDown[0].seconds}}</p>
+                          </div>
 
+                        </div>
+                          <img class="d-block w-100 product-image" src="{{productLatest[0].avatarUrl}}" alt="First slide">
+                          <div class="bg-black">
+                            <p class="product-name"><strong>{{productLatest[0].name}}</strong></p>
+                            <span *ngIf="productLatest[0].saleEntity">
+                              <span class="badge badge-warning">
+                                {{(productLatest[0].salePrice - productLatest[0].salePrice *productLatest[0].saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                              </span>
+                              <span class="badge badge-info">
+                                <del> {{productLatest[0].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del>
+
+                              </span>
+                            </span>
+                            <span *ngIf="productLatest[0].saleEntity === null">
+                              <span class="badge badge-warning">
+                                {{productLatest[0].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                              </span>
+                            </span>
                           </div>
                       </div>
                       <div class="carousel-item">
+                        <div class="d-flex sale" *ngIf="productLatest[1].saleEntity && productLatest[1].id == countDown[1].idPr">
+                          <div class="sale-percent btn text-right">SALE {{productLatest[1].saleEntity.sale}}%
+                            <br>  <p id="countdown">{{countDown[1].days}}:{{countDown[1].hours}}:{{countDown[1].minutes}}:{{countDown[1].seconds}}</p>
+                          </div>
+
+                        </div>
                           <img class="d-block w-100 product-image" src="{{productLatest[1].avatarUrl}}" alt="Second slide">
-                          <div>
+                          <div class="bg-black">
                             <p class="product-name"><strong>{{productLatest[1].name}}</strong></p>
-                            <span class="badge badge-warning">{{productLatest[1].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</span>
+                            <span *ngIf="productLatest[1].saleEntity">
+                              <span class="badge badge-warning">
+                                {{(productLatest[1].salePrice - productLatest[1].salePrice *productLatest[1].saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                              </span>
+                              <span class="badge badge-info">
+                                <del> {{productLatest[1].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del>
+
+                              </span>
+                            </span>
+                            <span *ngIf="productLatest[1].saleEntity === null">
+                              <span class="badge badge-warning">
+                                {{productLatest[1].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                              </span>
+                            </span>
                           </div>
                       </div>
                       <div class="carousel-item">
+                        <div class="d-flex sale" *ngIf="productLatest[2].saleEntity && productLatest[2].id == countDown[2].idPr">
+                          <div class="sale-percent btn text-right">SALE {{productLatest[2].saleEntity.sale}}%
+                            <br>  <p id="countdown">{{countDown[2].days}}:{{countDown[2].hours}}:{{countDown[2].minutes}}:{{countDown[2].seconds}}</p>
+                          </div>
+
+                        </div>
                           <img class="d-block w-100 product-image" src="{{productLatest[2].avatarUrl}}" alt="Third slide">
-                          <div>
+                          <div class="bg-black">
                             <p class="product-name"><strong>{{productLatest[2].name}}</strong></p>
-                            <span class="badge badge-warning">{{productLatest[2].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</span>
+                            <span *ngIf="productLatest[2].saleEntity">
+                              <span class="badge badge-warning">
+                                {{(productLatest[2].salePrice - productLatest[2].salePrice *productLatest[2].saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                              </span>
+                              <span class="badge badge-info">
+                                <del> {{productLatest[2].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del>
+
+                              </span>
+                            </span>
+                            <span *ngIf="productLatest[2].saleEntity === null">
+                              <span class="badge badge-warning">
+                                {{productLatest[2].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                              </span>
+                            </span>
                           </div>
                       </div>
+                      <div class="carousel-item">
+                        <div class="d-flex sale" *ngIf="productLatest[3].saleEntity && productLatest[3].id == countDown[3].idPr">
+                          <div class="sale-percent btn text-right">SALE {{productLatest[3].saleEntity.sale}}%
+                            <br>  <p id="countdown">{{countDown[3].days}}:{{countDown[3].hours}}:{{countDown[3].minutes}}:{{countDown[3].seconds}}</p>
+                          </div>
+
+                        </div>
+                        <img class="d-block w-100 product-image" src="{{productLatest[3].avatarUrl}}" alt="Third slide">
+                        <div class="bg-black">
+                          <p class="product-name"><strong>{{productLatest[3].name}}</strong></p>
+                          <span *ngIf="productLatest[3].saleEntity">
+                            <span class="badge badge-warning">
+                              {{(productLatest[3].salePrice - productLatest[3].salePrice *productLatest[3].saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                            </span>
+                            <span class="badge badge-info">
+                              <del> {{productLatest[3].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del>
+
+                            </span>
+                          </span>
+                          <span *ngIf="productLatest[3].saleEntity === null">
+                            <span class="badge badge-warning">
+                              {{productLatest[3].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                            </span>
+                          </span>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" data-slide="prev"><span class="carousel-control-prev-icon"></span> <span class="sr-only">Previous</span> </a><a class="carousel-control-next" href="#carouselExampleIndicators"
+                    data-slide="next"><span class="carousel-control-next-icon"></span> <span class="sr-only">Next</span></a>
+
                   </div>
               </div>
             </div>
@@ -330,7 +421,7 @@
         <div class="col-md-6">
           <!-- USERS LIST -->
           <div class="card">
-            <div class="card-header">
+            <div class="card-header bg-black">
               <h3 class="card-title"><strong>Nhân viên mới</strong></h3>
 
               <div class="card-tools">
@@ -346,12 +437,11 @@
               <ul class="users-list clearfix">
                 <li *ngFor="let item of countNewProfile.data; index as i">
                   <div *ngIf="i<8">
-                    <img src="{{item.imageUrl}}" *ngIf="item.imageUrl" alt="User Image">
-                    <img src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg" *ngIf="item.imageUrl == null ||item.imageUrl ==='' " alt="User Image">
+                    <img src="{{item.imageUrl}}" *ngIf="item.imageUrl" class="avatar-image" alt="User Image">
+                    <img src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg" *ngIf="item.imageUrl == null || item.imageUrl ==='' " alt="User Image">
                     <a class="users-list-name" href="#">{{item.fistName + ' '+ item.lastName}}</a>
                     <span class="users-list-date">This month</span>
                   </div>
-
                 </li>
 
               </ul>
@@ -388,7 +478,7 @@
             <!-- /.card-header -->
             <div class="card-body p-0">
               <div class="table-responsive">
-                <table class="table m-0 thead-dark">
+                <table class="table m-0 thead-dark w-100">
                   <thead class="thead-dark">
                     <tr>
                       <th style="width: 10px">#</th>

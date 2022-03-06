@@ -1,6 +1,9 @@
-<div class="">
-  <h4 class="m-2">Giỏ hàng</h4>
-  <div class="row">
+<div class="shadow">
+  <div class="card-header bg-black mb-2">
+    <h4 class="m-2">Giỏ hàng</h4>
+  </div>
+
+  <div class="row p-2">
       <aside class="col-lg-9">
           <div class="card">
 
@@ -16,25 +19,25 @@
                       </thead>
                       <tbody>
                           <tr *ngFor="let item of shopping_Cart; index as i">
-                              <td>
-                                  <figure class="itemside align-items-center">
+                              <td class="align-middle">
+                                  <div class="itemside align-items-center">
                                       <div class="aside"><img src="{{item.product.avatarUrl}}" class="img-sm"></div>
-                                      <figcaption class="info product-name"> <a href="#" class="title text-dark" data-abc="true">{{item.product.name}}</a>
+                                      <div class="info product-name"> <span class="title text-dark">{{item.product.name}}</span>
 
-                                      </figcaption>
-                                  </figure>
+                                      </div>
+                                  </div>
                               </td>
-                              <td>
+                              <td class="align-middle">
                                 <input type="number"
                                 min="1" max="{{item.product.quantity}}"
                                 value="{{item.quantity}}"
                                 (input)="onChangeQuantity($event, item.quantity, i, item.product.id)"
                                 name="quantity">
                               </td>
-                              <td>
+                              <td class="align-middle">
                                   <div class="price-wrap"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
                               </td>
-                              <td class="text-right d-none d-md-block"> <a class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> <i class="fas fa-trash"></i></a> </td>
+                              <td class="text-right align-middle "> <span class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> <i class="fas fa-trash"></i></span> </td>
                           </tr>
 
                       </tbody>
@@ -93,7 +96,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="bill">
         <h5 class="mb-3">Thông tin Khách hàng:</h5>
         <div class="tab-pane" id="activity">
           <form class="form-horizontal">
@@ -103,7 +106,7 @@
                 <input type="text" class="form-control" id="firstName"
                 [(ngModel)]="bill.ownerName"
                 required #lastName="ngModel"
-                name="ownerName" placeholder="Name">
+                name="ownerName">
                 <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
                   class="alert"
                   style="background: rgb(248, 131, 131); border-radius: 0%;"
@@ -120,8 +123,7 @@
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="lastName"
                 [(ngModel)]="bill.phone" name="phone"
-                required [pattern]="phoneValidate" #phone="ngModel"
-                placeholder="Phone number">
+                required [pattern]="phoneValidate" #phone="ngModel">
                 <div *ngIf="phone.invalid && (phone.dirty || phone.touched)"
                   class="alert"
                   style="background: rgb(248, 131, 131); border-radius: 0%;"
@@ -154,8 +156,7 @@
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputName2"
                 [(ngModel)]="bill.address" name="address"
-                required #address="ngModel"
-                placeholder="Address">
+                required #address="ngModel">
                 <div *ngIf="address.invalid && (address.dirty || address.touched)"
                   class="alert"
                   style="background: rgb(248, 131, 131); border-radius: 0%;"
@@ -185,19 +186,19 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of shopping_Cart; index as i">
-                    <td>{{i + 1}}</td>
-                    <td>
+                    <td class="align-middle">{{i + 1}}</td>
+                    <td class="align-middle">
                         <figure class="itemside align-items-center">
                             <figcaption class="info product-name"> <a href="#" class="title text-dark" data-abc="true">{{item.product.name}}</a>
 
                             </figcaption>
                         </figure>
                     </td>
-                    <td>{{item.product.code}}</td>
-                    <td>
+                    <td class="align-middle">{{item.product.code}}</td>
+                    <td class="align-middle">
                      {{item.quantity}}
                     </td>
-                    <td>
+                    <td class="align-middle">
                         <div class="price-wrap"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
                     </td>
                     <!-- <td class="text-right d-none d-md-block"> <a class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> <i class="fas fa-trash"></i></a> </td> -->
@@ -224,6 +225,7 @@
       </div>
       <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onPrint()" ><i class="fas fa-print"></i></button>
         <button type="button" class="btn  add-to-cart" (click)="paymentCart()" data-dismiss="modal">Check Out</button>
       </div>
     </div>

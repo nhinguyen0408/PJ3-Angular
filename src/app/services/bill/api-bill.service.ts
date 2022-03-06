@@ -47,4 +47,9 @@ export class ApiBillService {
       catchError(this.handleError)
     )
   }
+  searchBill(startDate: string, endDate: string):Observable<Bill>{
+    return this.http.get<Bill>(this.url+"/bill/getall?startDate="+startDate+"&endDate="+endDate).pipe(
+      catchError(this.handleError)
+    )
+  }
 }

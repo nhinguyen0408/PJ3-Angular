@@ -1,0 +1,18 @@
+.sale {
+  flex-direction: row-reverse;
+  position: relative;
+}
+
+.sale-percent {
+  position: absolute;
+  border-radius: 0;
+  width: fit-content;
+  background-color: #69F0AE;
+  box-shadow: 0px 10px 10px #E0E0E0;
+  z-index: 1;
+  color: white;
+  width: 100px;
+  font-size: 14px;
+  font-weight: 900;
+  top: 25px;
+}

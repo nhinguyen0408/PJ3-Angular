@@ -3,6 +3,7 @@ import { Bill } from 'src/app/models/Bill.model';
 import { ShoppingCart } from 'src/app/models/ShoppingCart.model';
 import { ApiVoucherService } from 'src/app/services/voucher/api-voucher.service';
 
+declare var jQuery: any;
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
@@ -122,5 +123,21 @@ export class ShoppingCartComponent implements OnInit {
       this.onUpdateQuantity.emit({'newQuantity': newQuantity, 'quantityUpdate': - quantityUpdate, 'action': '+' , 'shoppingCartIndex': index, 'productId': productId})
     }
 
+  }
+  onPrint(){
+    var x = (function ($) {
+      var divContents = document.getElementById("bill")?.innerHTML;
+            var a = window.open('', '', 'height=1000, width=1000');
+            a?.document.write('<html>');
+            a?.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" type="text/css" />');
+            a?.document.write('<body >');
+            a?.document.write(divContents ? divContents : '');
+            a?.document.write('</body></html>');
+            a?.document.close();
+            setTimeout(()=>{
+              a?.print();
+            },200)
+
+    })(jQuery);
   }
 }

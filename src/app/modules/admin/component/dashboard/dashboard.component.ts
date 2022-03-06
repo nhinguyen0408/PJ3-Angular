@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit {
   chartImportTotal: number [] = []
   chartSoldTotal: number [] = []
   chartMonth: number [] = []
+  countDown: any
   getProuctSold(){
 
   }
@@ -76,7 +77,8 @@ export class DashboardComponent implements OnInit {
   }
   getLatestProduct(){
     this.apiProduct.getProductEnable().subscribe(res =>{
-      this.productLatest = res
+      this.productLatest = res;
+      this.getCountDown()
     })
   }
   getCountProdSold(){
@@ -134,7 +136,7 @@ export class DashboardComponent implements OnInit {
             },
             {
               label: 'Tổng Bán',
-              backgroundColor: '#ced4da',
+              backgroundColor: '#696969',
               borderColor    : '#ced4da',
               data           : dataSale
             }
@@ -147,6 +149,31 @@ export class DashboardComponent implements OnInit {
         }
       })
       })(jQuery);
+  }
+  getCountDown(){
+    if(this.productLatest){
+
+      var x = setInterval(() =>{
+        this.countDown = [];
+        for(let i =0; i<=4; i++){
+          let data = {'days': '', 'hours': '', 'minutes': '', 'seconds': '','idPr': 0};
+          if(this.productLatest[i].saleEntity){
+            const endTime = new Date(this.productLatest[i].saleEntity.endDate).getTime();
+            var now = new Date().getTime();
+            var distance = endTime - now;
+            data.days = (distance / (1000 * 60 * 60 * 24)).toFixed();
+            data.hours = (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) >10 ?((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed() : '0' + ((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed();
+            data.minutes = ((distance % (1000 * 60 * 60)) / (1000 * 60)) > 10 ? ((distance % (1000 * 60 * 60)) / (1000 * 60)).toFixed() : '0' +((distance % (1000 * 60 * 60)) / (1000 * 60)).toFixed();
+            data.seconds = ((distance % (1000 * 60)) / 1000) > 10 ? ((distance % (1000 * 60)) / 1000).toFixed() : '0' + ((distance % (1000 * 60)) / 1000).toFixed();
+            data.idPr = this.productLatest[i].id
+          }
+          this.countDown.push(data);
+          // console.log("data",data)
+        }
+
+      }, 1000)
+
+    }
   }
 
 

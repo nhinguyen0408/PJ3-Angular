@@ -10,6 +10,7 @@ import { FileUpload } from 'src/app/models/upload/FileUpload.model';
 import { ApiCategoryService } from 'src/app/services/category/api-category.service';
 import { ApiProductService } from 'src/app/services/product/api-product.service';
 import { ApiProductionService } from 'src/app/services/production/api-production.service';
+import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 import { FileUploadService } from 'src/app/services/upload/file-upload.service';
 import { __await } from 'tslib';
 // import ClassicEditor from 'node_modules/ckeditor5-build-classic';
@@ -27,7 +28,8 @@ export class CreateProductComponent implements OnInit {
     private apiProduction: ApiProductionService,
     private apiProduct: ApiProductService,
     private route: Router,
-    private uploadService: FileUploadService
+    private uploadService: FileUploadService,
+    private toastsService: ToastService
     ) { }
 
   aliases: ProductInformation[] = []
@@ -44,16 +46,16 @@ export class CreateProductComponent implements OnInit {
         $('.select2bs4').select2({
           theme: 'bootstrap4'
         });
-        $('.toastsDefaultInfo').click(function() {
-          $(document).Toasts('create', {
-            class: 'bg-info',
-            title: 'Đang tiến hành vui lòng đợi',
-            subtitle: '',
-            body: 'Updating...',
-            autohide: true,
-            delay: 2500
-          })
-        });
+        // $('.toastsDefaultInfo').click(function() {
+        //   $(document).Toasts('create', {
+        //     class: 'bg-info',
+        //     title: 'Đang tiến hành vui lòng đợi',
+        //     subtitle: '',
+        //     body: 'Updating...',
+        //     autohide: true,
+        //     delay: 2500
+        //   })
+        // });
       });
     })(jQuery);
   }
@@ -201,12 +203,14 @@ export class CreateProductComponent implements OnInit {
     this.product.modifiedBy = Number(localStorage.getItem("adminId"));
     if(this.product.name == '' || this.product.description == '<p><br></p>'
     || this.product.categoryId == 0|| this.product.productionId == 0  || this.product.quantity == 0  ){
-      alert("Vui lòng điền đầy đủ các trường thông tin")
+      // alert("Vui lòng điền đầy đủ các trường thông tin")
+      this.toastsService.alert('Thông báo !!!', 'Vui lòng điền đầy đủ các trường thông tin','bg-warning');
     }else {
       if(this.aliases.length > 0){
       this.aliases.forEach(element => {
         if(element.key == '' || element.value == ''){
-          alert("Vui lòng điền đủ trường thông tin Đặc điểm!!!")
+          // alert("Vui lòng điền đủ trường thông tin Đặc điểm!!!")
+          this.toastsService.alert('Thông báo !!!', 'Vui lòng điền đủ trường thông tin Đặc điểm!!!','bg-warning');
         }
       });
       this.upload()

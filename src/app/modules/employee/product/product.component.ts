@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Bill } from 'src/app/models/Bill.model';
 import { Category } from 'src/app/models/Category.model';
+import { CountDown } from 'src/app/models/CountDown.model';
 import { Product } from 'src/app/models/Product.model';
 import { Production } from 'src/app/models/Production.model';
 import { ShoppingCart } from 'src/app/models/ShoppingCart.model';
@@ -52,6 +53,8 @@ export class ProductComponent implements OnInit {
     })
 
   }
+  // "responsive": true,
+  // "autoWidth": false,
   setDataTable(){
     (function ($) {
         $("#example1").DataTable({
@@ -257,16 +260,17 @@ export class ProductComponent implements OnInit {
     this.productionId = 0;
     this.getAll()
   }
-  countDown: any;
+
+  countDown: CountDown [] = [];
   getCountDown(){
     if(this.productList){
 
       var x = setInterval(() =>{
         this.countDown = [];
         for(let i =0; i<=this.productList.length; i++){
-          let data = {'days': '', 'hours': '', 'minutes': '', 'seconds': '','idPr': 0};
-          if(this.productList[i].saleEntity!= null){
-            const endTime = new Date(this.productList[i].saleEntity.endDate).getTime();
+          let data = new CountDown();
+          if(this.productList[i]?.saleEntity!= null){
+            const endTime = new Date(this.productList[i]?.saleEntity.endDate).getTime();
             var now = new Date().getTime();
             var distance = endTime - now;
             data.days = (distance / (1000 * 60 * 60 * 24)).toFixed();
@@ -290,8 +294,14 @@ export class ProductComponent implements OnInit {
   minutes: any;
   seconds: any;
   onGetProductDetails(id: number){
+    console.log("id::", id)
+    this.clearEditor()
     this.api.getById(id).subscribe(res => {
+      console.log(res)
+      let des = '';
+      des = res.description;
       this.productDetails = res;
+      this.editEditor(des);
       this.getCountDownProductDetails();
       this.onShow = true;
     })
@@ -305,9 +315,9 @@ export class ProductComponent implements OnInit {
     this.seconds = null;
   }
   getCountDownProductDetails(){
-    if(this.productDetails.saleEntity){
+    if(this.productDetails?.saleEntity){
       var x = setInterval(() =>{
-        const endTime = new Date(this.productDetails.saleEntity.endDate).getTime();
+        const endTime = new Date(this.productDetails?.saleEntity.endDate).getTime();
         var now = new Date().getTime();
         var distance = endTime - now;
         this.days = (distance / (1000 * 60 * 60 * 24)).toFixed();
@@ -317,5 +327,16 @@ export class ProductComponent implements OnInit {
       }, 1000)
 
     }
+  }
+  editEditor(dataa: string){
+    (function ($) {
+      let se = $('#textareaInput').summernote('pasteHTML',dataa)
+      $('#textareaInput').summernote('destroy')
+    })(jQuery);
+  }
+  clearEditor(){
+    (function ($) {
+      let se = $('#textareaInput').summernote('code', '')
+    })(jQuery);
   }
 }

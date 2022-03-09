@@ -56,9 +56,12 @@ export class DetailsProductComponent implements OnInit {
         var now = new Date().getTime();
         var distance = endTime - now;
         this.days = (distance / (1000 * 60 * 60 * 24)).toFixed();
-        this.hours = ((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed();
-        this.minutes = ((distance % (1000 * 60 * 60)) / (1000 * 60)).toFixed();
-        this.seconds = ((distance % (1000 * 60)) / 1000).toFixed();
+        // this.hours = (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) > 9 ?((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed() : '0' + ((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed();
+        // this.minutes = ((distance % (1000 * 60 * 60)) / (1000 * 60)).toFixed();
+        // this.seconds = ((distance % (1000 * 60)) / 1000).toFixed();
+        this.hours = (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) >9 ?((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed() : '0' + ((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed();
+        this.minutes = ((distance % (1000 * 60 * 60)) / (1000 * 60)) > 9 ? ((distance % (1000 * 60 * 60)) / (1000 * 60)).toFixed() : '0' +((distance % (1000 * 60 * 60)) / (1000 * 60)).toFixed();
+        this.seconds = ((distance % (1000 * 60)) / 1000) > 9 ? ((distance % (1000 * 60)) / 1000).toFixed() : '0' + ((distance % (1000 * 60)) / 1000).toFixed();
       }, 1000)
 
     }

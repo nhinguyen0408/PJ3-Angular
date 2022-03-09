@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Voucher } from 'src/app/models/Voucher.model';
+import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 import { ApiVoucherService } from 'src/app/services/voucher/api-voucher.service';
 
 declare var jQuery: any;
@@ -13,7 +14,8 @@ export class VoucherComponent implements OnInit {
 
   constructor(
     private api: ApiVoucherService,
-    private route: Router
+    private route: Router,
+    private toastsService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +44,7 @@ export class VoucherComponent implements OnInit {
     const x = this.voucherList.find(x => x.id === id)
     if(window.confirm("Xác nhận xóa Voucher: "+ "'"+ x?.name +"'")){
       this.api.deleteVoucher(id).subscribe(res => {
+        this.toastsService.alert('Thông báo !!!', 'Xóa Voucher thành công !!!!','bg-success');
         this.getAllVoucher()
       })
     }

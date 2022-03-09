@@ -5,6 +5,7 @@ import { Production } from 'src/app/models/Production.model';
 import { ApiCategoryService } from 'src/app/services/category/api-category.service';
 import { ApiProductService } from 'src/app/services/product/api-product.service';
 import { ApiProductionService } from 'src/app/services/production/api-production.service';
+import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 declare var jQuery: any;
 declare var Swal: any;
@@ -18,7 +19,8 @@ export class ProductComponent implements OnInit, AfterViewInit {
   constructor(
     private api: ApiProductService,
     private apiCate: ApiCategoryService,
-    private apiProduction: ApiProductionService
+    private apiProduction: ApiProductionService,
+    private toastsService: ToastService
     ) { }
 
   ngAfterViewInit(): void {
@@ -78,12 +80,34 @@ export class ProductComponent implements OnInit, AfterViewInit {
       this.productionList = res;
     })
   }
-  delete(id: number){
-    if(window.confirm("Are u sure????")){
-      this.api.deleteProduct(id).subscribe(data => {
+  // delete(id: number){
+  //   if(window.confirm("Are u sure????")){
+  //     this.api.deleteProduct(id).subscribe(data => {
+  //       this.getAll()
+  //     })
+  //   }
+  // }
+  updateStatus(product:Product){
+    if(product.status === "ACTIVE"){
+      product.status = "INACTIVE";
+      console.log(product)
+      this.api.editProduct(product).subscribe(res =>{
+        console.log(res)
+
         this.getAll()
       })
+      this.toastsService.alert("Thông báo!!!","Vô hiệu hóa sản phẩm thành công!!!","bg-success")
+    } else if(product.status === "INACTIVE"){
+      product.status = "ACTIVE";
+      console.log(product)
+      this.api.editProduct(product).subscribe(res =>{
+        console.log(res)
+
+        this.getAll()
+      })
+      this.toastsService.alert("Thông báo!!!","Kích hoạt sản phẩm thành công!!!","bg-success")
     }
+
   }
   setDataTable(){
     (function ($) {
@@ -140,14 +164,14 @@ export class ProductComponent implements OnInit, AfterViewInit {
         this.countDown = [];
         for(let i =0; i<=this.productList.length; i++){
           let data = {'days': '', 'hours': '', 'minutes': '', 'seconds': '','idPr': 0};
-          if(this.productList[i].saleEntity){
-            const endTime = new Date(this.productList[i].saleEntity.endDate).getTime();
+          if(this.productList[i]?.saleEntity){
+            const endTime = new Date(this.productList[i]?.saleEntity.endDate).getTime();
             var now = new Date().getTime();
             var distance = endTime - now;
             data.days = (distance / (1000 * 60 * 60 * 24)).toFixed();
-            data.hours = (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) >10 ?((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed() : '0' + ((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed();
-            data.minutes = ((distance % (1000 * 60 * 60)) / (1000 * 60)) > 10 ? ((distance % (1000 * 60 * 60)) / (1000 * 60)).toFixed() : '0' +((distance % (1000 * 60 * 60)) / (1000 * 60)).toFixed();
-            data.seconds = ((distance % (1000 * 60)) / 1000) > 10 ? ((distance % (1000 * 60)) / 1000).toFixed() : '0' + ((distance % (1000 * 60)) / 1000).toFixed();
+            data.hours = (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) >9 ?((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed() : '0' + ((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toFixed();
+            data.minutes = ((distance % (1000 * 60 * 60)) / (1000 * 60)) > 9 ? ((distance % (1000 * 60 * 60)) / (1000 * 60)).toFixed() : '0' +((distance % (1000 * 60 * 60)) / (1000 * 60)).toFixed();
+            data.seconds = ((distance % (1000 * 60)) / 1000) > 9 ? ((distance % (1000 * 60)) / 1000).toFixed() : '0' + ((distance % (1000 * 60)) / 1000).toFixed();
             data.idPr = this.productList[i].id
           }
           this.countDown.push(data);

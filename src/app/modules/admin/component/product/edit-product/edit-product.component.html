@@ -160,6 +160,24 @@
                    </div>
                  </div>
                 </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Bảo hành(Tháng)</label>
+                  <input type="text" class="form-control" [(ngModel)]="product.warranty" name="warranty"
+                   id="exampleInputPassword1" placeholder="Bảo hành..." required [pattern]="numberValidate" #warranty="ngModel">
+                   <div *ngIf="warranty.invalid && (warranty.dirty || warranty.touched)"
+                    class="alert"
+                    style="background: rgb(248, 131, 131); border-radius: 0%;"
+                    >
+
+                    <div *ngIf="warranty.errors?.['required']">
+                      Bảo hành không được để trống !!!!
+                    </div>
+
+                    <div *ngIf="warranty.errors?.['pattern']">
+                      Bảo hành phải là số !!!!
+                    </div>
+                  </div>
+                </div>
                 <!-- asda -->
                 <div class="form-group" *ngIf="avtUrl== true">
                   <label for="exampleInputPassword1">URL Ảnh đại diện</label>

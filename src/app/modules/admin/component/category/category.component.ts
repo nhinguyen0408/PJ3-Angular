@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/Category.model';
 import { ApiCategoryService } from 'src/app/services/category/api-category.service';
+import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 declare var jQuery: any;
 @Component({
@@ -10,7 +11,7 @@ declare var jQuery: any;
 })
 export class CategoryComponent implements OnInit {
 
-  constructor(private api: ApiCategoryService) { }
+  constructor(private api: ApiCategoryService, private toastsService: ToastService) { }
   ngAfterViewInit(): void {
     setTimeout(()=>{
       this.setDataTable()
@@ -36,13 +37,15 @@ export class CategoryComponent implements OnInit {
     console.log(this.categoryList)
   }
 
-  delete(id: number){
-    if(window.confirm("Are u sure????")){
-      this.api.deleteCategory(id).subscribe(data => {
-        this.getAll()
-      })
-    }
-  }
+  // delete(id: number){
+  //   if(window.confirm("Are u sure????")){
+  //     this.api.deleteCategory(id).subscribe(data => {
+  //       console.log(data)
+  //       this.toastsService.alert('Thông báo !!!', 'Xóa thể loại thành công!!!','bg-warning');
+  //       this.getAll()
+  //     })
+  //   }
+  // }
   setDataTable(){
     (function ($) {
         $("#example1").DataTable({

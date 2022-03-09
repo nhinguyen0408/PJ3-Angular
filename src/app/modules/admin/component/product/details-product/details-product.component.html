@@ -100,6 +100,10 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <td>Bảo hành</td>
+                    <td>{{product.warranty}} tháng</td>
+                  </tr>
                   <tr *ngFor="let item of product.listInformation">
                     <td>{{item.key}}</td>
                     <td>{{item.value}}</td>

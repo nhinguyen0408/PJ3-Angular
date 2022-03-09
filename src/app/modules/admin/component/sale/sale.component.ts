@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Sale } from 'src/app/models/Sale.model';
 import { ApiSaleService } from 'src/app/services/sale/api-sale.service';
+import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 declare var jQuery: any;
 @Component({
@@ -10,7 +11,7 @@ declare var jQuery: any;
 })
 export class SaleComponent implements OnInit {
 
-  constructor(private api: ApiSaleService) { }
+  constructor(private api: ApiSaleService, private toastsService: ToastService) { }
 
   ngAfterViewInit(): void {
     setTimeout(()=>{
@@ -30,7 +31,8 @@ export class SaleComponent implements OnInit {
   onDeleteSale(id: number){
     if(window.confirm("Bạn chắc chắn muốn xóa giảm giá này ???")){
       this.api.deleteSale(id).subscribe(res=>{
-        alert("Xóa sale thành công!!!!!");
+        // alert("Xóa sale thành công!!!!!");
+        this.toastsService.alert('Thông báo !!!', 'Xóa sale thành công !!!!','bg-success');
         this.getSale();
       })
     }

@@ -38,7 +38,7 @@ export class ApiProductService {
     )
   }
   getProductEnable():Observable<Product>{
-    return this.http.get<Product>(this.url+"/product/getall?getall=false").pipe(
+    return this.http.get<Product>(this.url+"/product/getall?getall=false&status=ACTIVE").pipe(
       retry(1),
       catchError(this.handleError)
     )
@@ -75,7 +75,7 @@ export class ApiProductService {
   editProduct(product: Product):Observable<Product>{
     return this.http.put<Product>(this.url+"/product/update", JSON.stringify(product), this.httpOptions).pipe(
       retry(1),
-      catchError(this.handleError)
+      // catchError(this.handleError)
     )
   }
   deleteProduct(id: number):Observable<Product>{

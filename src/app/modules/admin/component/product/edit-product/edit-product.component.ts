@@ -6,6 +6,7 @@ import { FileUpload } from 'src/app/models/upload/FileUpload.model';
 import { ApiCategoryService } from 'src/app/services/category/api-category.service';
 import { ApiProductService } from 'src/app/services/product/api-product.service';
 import { ApiProductionService } from 'src/app/services/production/api-production.service';
+import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 import { FileUploadService } from 'src/app/services/upload/file-upload.service';
 declare var jQuery: any;
 @Component({
@@ -23,7 +24,8 @@ export class EditProductComponent implements OnInit {
     private apiProduct: ApiProductService,
     private route: Router,
     private actRoute: ActivatedRoute,
-    private uploadService: FileUploadService
+    private uploadService: FileUploadService,
+    private toastsService: ToastService,
     ) { }
 
   aliases: any[] = []
@@ -272,12 +274,13 @@ imgNamePreview: string [] = []
       this.product.modifiedBy = Number(localStorage.getItem("adminId"));
       if(this.product.name == ''
       || this.product.categoryId == 0 || this.product.productionId == 0 || this.product.quantity == 0 ){
-        alert("Vui lòng điền đầy đủ các trường thông tin")
+        this.toastsService.alert('Thông báo !!!', 'Vui lòng điền đầy đủ các trường thông tin!!!','bg-warning');
       }else {
         if(this.aliases.length > 0){
         this.aliases.forEach(element => {
           if(element.key == '' || element.value == ''){
-            alert("Vui lòng điền đủ trường thông tin Đặc điểm!!!")
+            // alert("Vui lòng điền đủ trường thông tin Đặc điểm!!!")
+            this.toastsService.alert('Thông báo !!!', 'Vui lòng điền đủ trường thông tin Đặc điểm!!!','bg-warning');
           }
         });
 

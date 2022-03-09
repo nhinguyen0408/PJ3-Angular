@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Profile } from 'src/app/models/Profile.model';
 import { ApiProfileService } from 'src/app/services/profile/api-profile.service';
+import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 declare var jQuery: any;
 @Component({
@@ -12,6 +13,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private api: ApiProfileService,
+    private toastsService: ToastService
   ) { }
   ngAfterViewInit(): void {
     setTimeout(()=>{
@@ -31,7 +33,8 @@ export class ProfileComponent implements OnInit {
   blockUser(id: number){
     if(window.confirm("Bạn đã chắc chắn muốn thực hiện khóa nhân viên này !!!!!")){
       this.api.blockOrUnBlockUser(id).subscribe(res => {
-        window.alert("Khóa tài khoản thành công !!!");
+        // window.alert("Khóa tài khoản thành công !!!");
+        this.toastsService.alert('Thông báo !!!', 'Khóa tài khoản thành công !!!','bg-success');
         this.getAllProfile()
       })
     }
@@ -40,7 +43,8 @@ export class ProfileComponent implements OnInit {
   unBlockUser(id: number){
     if(window.confirm("Bạn đã chắc chắn muốn thực hiện mở khóa nhân viên này !!!!!")){
       this.api.blockOrUnBlockUser(id).subscribe(res => {
-        window.alert("Mở khóa tài khoản thành công !!!");
+        // window.alert("Mở khóa tài khoản thành công !!!");
+        this.toastsService.alert('Thông báo !!!', 'Mở khóa tài khoản thành công !!!','bg-success');
         this.getAllProfile()
       })
     }
@@ -49,7 +53,8 @@ export class ProfileComponent implements OnInit {
   resetPass(role: string ,id: number){
     if(window.confirm("Bạn đã chắc chắn muốn reset mật khẩu cho nhân viên này !!!!!")){
       this.api.resetPass({role, id}).subscribe(res => {
-        window.alert("Reset mật khẩu thành công !!!");
+        // window.alert("Reset mật khẩu thành công !!!");
+        this.toastsService.alert('Thông báo !!!', 'Reset mật khẩu thành công !!!','bg-success');
         this.getAllProfile()
       })
     }

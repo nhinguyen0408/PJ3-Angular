@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Profile } from 'src/app/models/Profile.model';
 import { ApiProfileService } from 'src/app/services/profile/api-profile.service';
+import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 @Component({
   selector: 'app-create-profile',
@@ -13,6 +14,7 @@ export class CreateProfileComponent implements OnInit {
   constructor(
     private api: ApiProfileService,
     private route: Router,
+    private toastsService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -28,10 +30,20 @@ export class CreateProfileComponent implements OnInit {
           this.newProfile.passWord = '123123';
           console.log("Obj create::::::: ", this.newProfile)
           this.api.createProfile(this.newProfile).subscribe(data => {
-            this.route.navigate(['admin/employee-manager'])
+            if(data.responseCode == '002'){
+              this.toastsService.alert('Thông báo !!!', 'Số điện thoại đã được sử dụng !!!','bg-danger');
+            } else if(data.responseCode == '001'){
+              this.toastsService.alert('Thông báo !!!', 'Email đã được sử dụng !!!','bg-danger');
+            } else if(data.responseCode == '200'){
+              this.toastsService.alert('Thông báo !!!', 'Thêm nhân viên thành công !!! Mật khẩu mặc định là 123123 !!!','bg-success');
+              this.route.navigate(['admin/employee-manager'])
+            }
+
+            // console.log("data====", data)
           })
     } else {
-      alert("Vui lòng điền đầy đủ các trường thông tin !!!")
+      // alert("Vui lòng điền đầy đủ các trường thông tin !!!")
+      this.toastsService.alert('Thông báo !!!', 'Vui lòng điền đầy đủ các trường thông tin !!!','bg-warning');
     }
   }
 

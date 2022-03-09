@@ -110,7 +110,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of productList; index as i">
+              <tr *ngFor="let item of productList; let i = index">
                 <td class="align-middle">{{i + 1}}</td>
                 <!-- <td><p class="font-weight-bold text-primary">{{item.id}}</p></td> -->
                 <td class="align-middle"><img class="img-fluid card-img-top product-image" src="{{item.avatarUrl}}" alt="Card image cap"></td>
@@ -118,31 +118,32 @@
                   <a class="text-primary name" data-toggle="modal" data-target="#modal-xl" (click)="onGetProductDetails(item.id)">
                     {{item.name}}
                   </a>
-                  <div>
-                    <div class="d-flex sale" *ngIf="productList[i].saleEntity && productList[i].id == countDown[i].idPr">
-                      <div class="sale-percent btn">SALE {{productList[i].saleEntity.sale}}% in
-                       <span class="countdown">{{countDown[i].days}}</span>:<span class="countdown">{{countDown[i].hours}}</span>:<span class="countdown">{{countDown[i].minutes}}</span>:<span class="countdown">{{countDown[i].seconds}}</span>
+                  <div *ngIf="item.saleEntity">
+                    <div>
+                      <div class="d-flex sale" *ngIf="countDown[i] && item.saleEntity &&  item.id == countDown[i].idPr">
+                        <div class="sale-percent btn">SALE {{item.saleEntity.sale}}% in
+                         <span class="countdown">{{countDown[i].days}}</span>:<span class="countdown">{{countDown[i].hours}}</span>:<span class="countdown">{{countDown[i].minutes}}</span>:<span class="countdown">{{countDown[i].seconds}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bg-dark py-2 px-3 mt-4 price">
+                      <h5 class="mb-0" *ngIf="item.saleEntity == null || item.saleEntity == 0">
+                        {{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+
+                      </h5>
+                      <div *ngIf="item.saleEntity">
+                        <h5 class="mb-0" >
+                          {{(item.salePrice - item.salePrice * item.saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+
+                        </h5>
+                        <h5 class="mt-0">
+                          <small>Ex Tax: <del>{{(item.salePrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del> </small>
+                        </h5>
                       </div>
 
                     </div>
                   </div>
-                  <div class="bg-dark py-2 px-3 mt-4 price">
-                    <h5 class="mb-0" *ngIf="item.saleEntity == null || item.saleEntity == 0">
-                      {{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
-                      <!-- {{product.salePrice}} -->
-                    </h5>
-                    <div *ngIf="item.saleEntity">
-                      <h5 class="mb-0" >
-                        {{(item.salePrice - item.salePrice * item.saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
-                        <!-- {{product.salePrice}} -->
-                      </h5>
-                      <h5 class="mt-0">
-                        <!-- <small>Ex Tax: ${{(product.salePrice * 1.2)}} </small> -->
-                        <small>Ex Tax: <del>{{(item.salePrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del> </small>
-                      </h5>
-                    </div>
 
-                  </div>
                 </td>
                 <td class="align-middle"><span class="font-weight-bold text-info">{{item.code}}</span></td>
 
@@ -224,11 +225,11 @@
                                 <div class="carousel-inner">
                                   <ol class="carousel-indicators">
                                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                    <li data-target="#carouselExampleIndicators" *ngIf="productDetails.listImage.length >=1" data-slide-to="1"></li>
-                                    <li data-target="#carouselExampleIndicators" *ngIf="productDetails.listImage.length >=2" data-slide-to="2"></li>
-                                    <li data-target="#carouselExampleIndicators" *ngIf="productDetails.listImage.length >=3" data-slide-to="3"></li>
-                                    <li data-target="#carouselExampleIndicators" *ngIf="productDetails.listImage.length >=4" data-slide-to="4"></li>
-                                    <li data-target="#carouselExampleIndicators" *ngIf="productDetails.listImage.length >=5" data-slide-to="5"></li>
+                                    <li data-target="#carouselExampleIndicators" *ngIf="productDetails.listImage?.length >=1" data-slide-to="1"></li>
+                                    <li data-target="#carouselExampleIndicators" *ngIf="productDetails.listImage?.length >=2" data-slide-to="2"></li>
+                                    <li data-target="#carouselExampleIndicators" *ngIf="productDetails.listImage?.length >=3" data-slide-to="3"></li>
+                                    <li data-target="#carouselExampleIndicators" *ngIf="productDetails.listImage?.length >=4" data-slide-to="4"></li>
+                                    <li data-target="#carouselExampleIndicators" *ngIf="productDetails.listImage?.length >=5" data-slide-to="5"></li>
                                 </ol>
                                     <div class="carousel-item active">
                                         <img class="d-block w-100 product-details-image " src="{{productDetails.avatarUrl}}" alt="First slide">
@@ -275,6 +276,10 @@
                                 </tr>
                               </thead>
                               <tbody>
+                                <tr>
+                                  <td>Bảo hành</td>
+                                  <td>{{productDetails.warranty}} tháng</td>
+                                </tr>
                                 <tr *ngFor="let item of productDetails.listInformation">
                                   <td>{{item.key}}</td>
                                   <td>{{item.value}}</td>

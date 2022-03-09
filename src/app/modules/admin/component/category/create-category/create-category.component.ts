@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Category } from 'src/app/models/Category.model';
 import { ApiCategoryService } from 'src/app/services/category/api-category.service';
+import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 @Component({
   selector: 'app-create-category',
@@ -11,7 +12,11 @@ import { ApiCategoryService } from 'src/app/services/category/api-category.servi
 })
 export class CreateCategoryComponent implements OnInit {
 
-  constructor(private api: ApiCategoryService, private router: Router ) { }
+  constructor(
+    private api: ApiCategoryService,
+    private router: Router,
+    private toastsService: ToastService,
+    ) { }
 
   ngOnInit(): void {
   }
@@ -27,7 +32,7 @@ export class CreateCategoryComponent implements OnInit {
       this.category.name = this.categoryForm.value.name;
     this.category.sortName = this.categoryForm.value.sortName;
     this.api.createCategory(this.category).subscribe((data: {}) => {
-      alert("Success!!!!")
+      this.toastsService.alert("Thông báo!!!!",'Thêm thể loại thành công !!!!', 'bg-success')
       this.router.navigate(['/admin/category'])
     })
     } else {

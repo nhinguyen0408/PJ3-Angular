@@ -157,7 +157,7 @@ export class DashboardComponent implements OnInit {
         this.countDown = [];
         for(let i =0; i<=4; i++){
           let data = {'days': '', 'hours': '', 'minutes': '', 'seconds': '','idPr': 0};
-          if(this.productLatest[i].saleEntity){
+          if(this.productLatest[i]?.saleEntity){
             const endTime = new Date(this.productLatest[i].saleEntity.endDate).getTime();
             var now = new Date().getTime();
             var distance = endTime - now;

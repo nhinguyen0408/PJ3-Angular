@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiProductService } from 'src/app/services/product/api-product.service';
 import { ApiSaleService } from 'src/app/services/sale/api-sale.service';
+import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 @Component({
   selector: 'app-create-sale',
@@ -14,7 +15,8 @@ export class CreateSaleComponent implements OnInit {
     private api: ApiSaleService,
     private apiProduct: ApiProductService,
     private route: Router,
-    private actRoute: ActivatedRoute
+    private actRoute: ActivatedRoute,
+    private toastsService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -78,7 +80,8 @@ export class CreateSaleComponent implements OnInit {
         // console.log("salePercent",this.endDate)
         // console.log("salePercent",this.salePercent)
         if(this.startDate > this.endDate){
-          alert("Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!")
+          // alert("Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!")
+          this.toastsService.alert('Thông báo !!!', "Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!",'bg-warning');
         } else {
           const adminId = localStorage.getItem("adminId")
           const obj = {
@@ -90,16 +93,19 @@ export class CreateSaleComponent implements OnInit {
           }
           // console.log("obj",obj)
           this.api.upSertSale(obj).subscribe(res => {
-            alert("Tạo Sale thành công !!!");
+            // alert("Tạo Sale thành công !!!");
+            this.toastsService.alert('Thông báo !!!', "Tạo Sale thành công !!!",'bg-success');
             this.route.navigate(['/admin/sale'])
           })
         }
 
       } else {
-        alert("Số Phần trăm không hợp lệ !!! Vui lòng thử lại !!!!")
+        // alert("Số Phần trăm không hợp lệ !!! Vui lòng thử lại !!!!")
+        this.toastsService.alert('Thông báo !!!', "Số Phần trăm không hợp lệ !!! Vui lòng thử lại !!!!",'bg-warning');
       }
     } else {
-      alert("Vui lòng điền đủ các trường thông tin !!!")
+      // alert("Vui lòng điền đủ các trường thông tin !!!")
+      this.toastsService.alert('Thông báo !!!', "Vui lòng điền đủ các trường thông tin !!!",'bg-warning');
     }
 
 

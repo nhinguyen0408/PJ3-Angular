@@ -40,15 +40,16 @@
                       <span class="badge badge-success px-2">{{item.percentage}} %</span>
                     </div>
                     <div *ngIf="item.isPercent == false">
-                      <span class="badge badge-success px-2">{{item.discountPrice}} VND</span>
+                      <span class="badge badge-success px-2">{{item.discountPrice?.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</span>
                     </div>
                   </td>
                   <td>{{item.startDate | date:"dd/MM/yyyy"}}</td>
                   <!-- <td>{{category.sortName}}</td> -->
                   <td>{{item.endDate | date:"dd/MM/yyyy"}}</td>
                   <td>
-                    <button class="btn mb-1 btn-warning mr-2" routerLink="/admin/voucher/edit/{{item.id}}">Edit</button>
-                    <button class="btn mb-1 btn-danger" (click)="onDelete(item.id)">Delete</button>
+                    <button class="btn mb-1 btn-warning mr-2" routerLink="/admin/voucher/edit/{{item.id}}"><i class="fas fa-pen"></i></button>
+                    <button class="btn mb-1 btn-danger" (click)="onDelete(item.id)"><i class="fas fa-eraser"></i></button>
+
                   </td>
                 </tr>
               </tbody>

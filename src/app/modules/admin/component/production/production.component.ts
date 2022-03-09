@@ -48,13 +48,13 @@ export class ProductionComponent implements OnInit {
     // this.loadDataTable()
   }
 
-  delete(id: number){
-    if(window.confirm("Are u sure????")){
-      this.api.deleteProduction(id).subscribe(data => {
-        this.getAll()
-      })
-    }
-  }
+  // delete(id: number){
+  //   if(window.confirm("Are u sure????")){
+  //     this.api.deleteProduction(id).subscribe(data => {
+  //       this.getAll()
+  //     })
+  //   }
+  // }
   setDataTable(){
     (function ($) {
         $("#example1").DataTable({

@@ -63,8 +63,8 @@
         <div class="col-12 col-sm-6 col-md-3">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>{{((turnOver.turnover / turnOver.importPrice) *100).toFixed()}}%</h3>
-
+              <h3 *ngIf="turnOver.importPrice > 0">{{((turnOver.turnover / turnOver.importPrice) *100).toFixed()}}%</h3>
+              <h3 *ngIf="turnOver.importPrice == 0">100%</h3>
               <p><small>Thu: {{turnOver.turnover.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                 | Nhập: {{turnOver.importPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</small></p>
             </div>
@@ -81,7 +81,7 @@
         <div class="col-12 col-sm-6 col-md-3">
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3>{{countNewProfile.count - 2}}</h3>
+              <h3>{{countNewProfile.count }}</h3>
 
               <p>Nhân viên đăng ký mới</p>
             </div>
@@ -298,8 +298,8 @@
                       <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
                   </ol>
                       <div class="carousel-item active">
-                        <div class="d-flex sale" *ngIf="productLatest[0].saleEntity && productLatest[0].id == countDown[0].idPr">
-                          <div class="sale-percent btn text-right">SALE {{productLatest[0].saleEntity.sale}}%
+                        <div class="d-flex sale" *ngIf="productLatest[0]?.saleEntity && productLatest[0].id == countDown[0].idPr">
+                          <div class="sale-percent btn text-right">SALE {{productLatest[0]?.saleEntity.sale}}%
                             <br>  <p id="countdown">{{countDown[0].days}}:{{countDown[0].hours}}:{{countDown[0].minutes}}:{{countDown[0].seconds}}</p>
                           </div>
 
@@ -307,16 +307,16 @@
                           <img class="d-block w-100 product-image" src="{{productLatest[0].avatarUrl}}" alt="First slide">
                           <div class="bg-black">
                             <p class="product-name"><strong>{{productLatest[0].name}}</strong></p>
-                            <span *ngIf="productLatest[0].saleEntity">
+                            <span *ngIf="productLatest[0]?.saleEntity">
                               <span class="badge badge-warning">
-                                {{(productLatest[0].salePrice - productLatest[0].salePrice *productLatest[0].saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                                {{(productLatest[0].salePrice - productLatest[0].salePrice *productLatest[0]?.saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                               </span>
                               <span class="badge badge-info">
                                 <del> {{productLatest[0].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del>
 
                               </span>
                             </span>
-                            <span *ngIf="productLatest[0].saleEntity === null">
+                            <span *ngIf="productLatest[0]?.saleEntity === null">
                               <span class="badge badge-warning">
                                 {{productLatest[0].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                               </span>
@@ -324,8 +324,8 @@
                           </div>
                       </div>
                       <div class="carousel-item">
-                        <div class="d-flex sale" *ngIf="productLatest[1].saleEntity && productLatest[1].id == countDown[1].idPr">
-                          <div class="sale-percent btn text-right">SALE {{productLatest[1].saleEntity.sale}}%
+                        <div class="d-flex sale" *ngIf="productLatest[1]?.saleEntity && productLatest[1].id == countDown[1].idPr">
+                          <div class="sale-percent btn text-right">SALE {{productLatest[1]?.saleEntity.sale}}%
                             <br>  <p id="countdown">{{countDown[1].days}}:{{countDown[1].hours}}:{{countDown[1].minutes}}:{{countDown[1].seconds}}</p>
                           </div>
 
@@ -333,16 +333,16 @@
                           <img class="d-block w-100 product-image" src="{{productLatest[1].avatarUrl}}" alt="Second slide">
                           <div class="bg-black">
                             <p class="product-name"><strong>{{productLatest[1].name}}</strong></p>
-                            <span *ngIf="productLatest[1].saleEntity">
+                            <span *ngIf="productLatest[1]?.saleEntity">
                               <span class="badge badge-warning">
-                                {{(productLatest[1].salePrice - productLatest[1].salePrice *productLatest[1].saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                                {{(productLatest[1].salePrice - productLatest[1].salePrice *productLatest[1]?.saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                               </span>
                               <span class="badge badge-info">
                                 <del> {{productLatest[1].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del>
 
                               </span>
                             </span>
-                            <span *ngIf="productLatest[1].saleEntity === null">
+                            <span *ngIf="productLatest[1]?.saleEntity === null">
                               <span class="badge badge-warning">
                                 {{productLatest[1].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                               </span>
@@ -350,8 +350,8 @@
                           </div>
                       </div>
                       <div class="carousel-item">
-                        <div class="d-flex sale" *ngIf="productLatest[2].saleEntity && productLatest[2].id == countDown[2].idPr">
-                          <div class="sale-percent btn text-right">SALE {{productLatest[2].saleEntity.sale}}%
+                        <div class="d-flex sale" *ngIf="productLatest[2]?.saleEntity && productLatest[2].id == countDown[2].idPr">
+                          <div class="sale-percent btn text-right">SALE {{productLatest[2]?.saleEntity.sale}}%
                             <br>  <p id="countdown">{{countDown[2].days}}:{{countDown[2].hours}}:{{countDown[2].minutes}}:{{countDown[2].seconds}}</p>
                           </div>
 
@@ -359,16 +359,16 @@
                           <img class="d-block w-100 product-image" src="{{productLatest[2].avatarUrl}}" alt="Third slide">
                           <div class="bg-black">
                             <p class="product-name"><strong>{{productLatest[2].name}}</strong></p>
-                            <span *ngIf="productLatest[2].saleEntity">
+                            <span *ngIf="productLatest[2]?.saleEntity">
                               <span class="badge badge-warning">
-                                {{(productLatest[2].salePrice - productLatest[2].salePrice *productLatest[2].saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                                {{(productLatest[2].salePrice - productLatest[2].salePrice *productLatest[2]?.saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                               </span>
                               <span class="badge badge-info">
                                 <del> {{productLatest[2].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del>
 
                               </span>
                             </span>
-                            <span *ngIf="productLatest[2].saleEntity === null">
+                            <span *ngIf="productLatest[2]?.saleEntity === null">
                               <span class="badge badge-warning">
                                 {{productLatest[2].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                               </span>
@@ -376,8 +376,8 @@
                           </div>
                       </div>
                       <div class="carousel-item">
-                        <div class="d-flex sale" *ngIf="productLatest[3].saleEntity && productLatest[3].id == countDown[3].idPr">
-                          <div class="sale-percent btn text-right">SALE {{productLatest[3].saleEntity.sale}}%
+                        <div class="d-flex sale" *ngIf="productLatest[3]?.saleEntity && productLatest[3].id == countDown[3].idPr">
+                          <div class="sale-percent btn text-right">SALE {{productLatest[3]?.saleEntity.sale}}%
                             <br>  <p id="countdown">{{countDown[3].days}}:{{countDown[3].hours}}:{{countDown[3].minutes}}:{{countDown[3].seconds}}</p>
                           </div>
 
@@ -385,16 +385,16 @@
                         <img class="d-block w-100 product-image" src="{{productLatest[3].avatarUrl}}" alt="Third slide">
                         <div class="bg-black">
                           <p class="product-name"><strong>{{productLatest[3].name}}</strong></p>
-                          <span *ngIf="productLatest[3].saleEntity">
+                          <span *ngIf="productLatest[3]?.saleEntity">
                             <span class="badge badge-warning">
-                              {{(productLatest[3].salePrice - productLatest[3].salePrice *productLatest[3].saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                              {{(productLatest[3].salePrice - productLatest[3].salePrice *productLatest[3]?.saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                             </span>
                             <span class="badge badge-info">
                               <del> {{productLatest[3].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del>
 
                             </span>
                           </span>
-                          <span *ngIf="productLatest[3].saleEntity === null">
+                          <span *ngIf="productLatest[3]?.saleEntity === null">
                             <span class="badge badge-warning">
                               {{productLatest[3].salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                             </span>

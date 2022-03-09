@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Bill } from 'src/app/models/Bill.model';
 import { ApiBillService } from 'src/app/services/bill/api-bill.service';
+import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 declare var jQuery: any;
 @Component({
@@ -11,7 +12,8 @@ declare var jQuery: any;
 export class OrderComponent implements OnInit {
 
   constructor(
-    private api: ApiBillService
+    private api: ApiBillService,
+    private toastsService: ToastService
   ) { }
   ngAfterViewInit(): void {
     setTimeout(()=>{
@@ -62,11 +64,13 @@ export class OrderComponent implements OnInit {
           this.listBill = res;
         })
       }else {
-        alert("Ngày bắt đầu không được lớn hơn ngày kết thúc !!!")
+        // alert("Ngày bắt đầu không được lớn hơn ngày kết thúc !!!")
+        this.toastsService.alert('Thông báo !!!', "Ngày bắt đầu không được lớn hơn ngày kết thúc !!!",'bg-warning');
       }
 
     } else {
-      alert("Vui lòng nhập đủ ngày bắt đầu và kết thúc !!!")
+      // alert("Vui lòng nhập đủ ngày bắt đầu và kết thúc !!!")
+      this.toastsService.alert('Thông báo !!!', "Vui lòng nhập đủ ngày bắt đầu và kết thúc !!!",'bg-warning');
     }
   }
   onAbortSearch(){
@@ -88,7 +92,7 @@ export class OrderComponent implements OnInit {
             a?.document.close();
             setTimeout(()=>{
               a?.print();
-            },200)
+            },400)
 
     })(jQuery);
   }

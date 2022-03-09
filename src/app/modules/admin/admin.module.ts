@@ -38,6 +38,7 @@ import { VoucherCreateComponent } from './component/voucher/voucher-create/vouch
 import { NgChartsModule } from 'ng2-charts';
 import { CreateSaleComponent } from './component/sale/create-sale/create-sale.component';
 import { UpdateSaleComponent } from './component/sale/update-sale/update-sale.component';
+import { WarrantyComponent } from './component/warranty/warranty.component';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { UpdateSaleComponent } from './component/sale/update-sale/update-sale.co
     VoucherCreateComponent,
     CreateSaleComponent,
     UpdateSaleComponent,
+    WarrantyComponent,
   ],
   imports: [
     CommonModule,

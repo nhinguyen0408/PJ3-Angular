@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('avatar', result.responseData.profile.imageUrl)
             if(result.responseData.role == "EMPLOYEE"){
               localStorage.setItem("employeeId", result.responseData.profile.id)
-              this.router.navigate(['employee']);
+              this.router.navigate(['employee/product']);
               console.log("employee", result)
             } else if (result.responseData.role == "SUPERADMIN"){
               localStorage.setItem("adminId", result.responseData.profile.id)

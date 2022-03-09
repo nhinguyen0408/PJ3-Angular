@@ -126,7 +126,7 @@ export class CreateProductComponent implements OnInit {
           console.log('this.product.avatarUrl upload:::' + i ,this.resultMul[i].url)
         }
         // this.resultMul = {};
-      },4000)
+      },4500 + 100*(this.selectedFilesArray.length))
 
     }
   }
@@ -221,10 +221,11 @@ export class CreateProductComponent implements OnInit {
       setTimeout(()=>{
         this.product.listImage = this.listImage;
         this.apiProduct.createProduct(this.product).subscribe((data:{})=>{
-        console.log(this.product)
-        this.route.navigate(['/admin/product'])
-      })
-      },4500)
+          this.toastsService.alert('Thông báo !!!', 'Thêm sản phẩm thành công!!!','bg-success');
+          console.log(this.product)
+          this.route.navigate(['/admin/product'])
+        })
+      },4600 + 100*(this.selectedFilesArray.length))
 
       }
     }

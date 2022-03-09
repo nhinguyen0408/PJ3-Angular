@@ -26,6 +26,7 @@ import { VoucherCreateComponent } from './component/voucher/voucher-create/vouch
 import { VoucherEditComponent } from './component/voucher/voucher-edit/voucher-edit.component';
 import { VoucherComponent } from './component/voucher/voucher.component';
 import { WarehouseComponent } from './component/warehouse/warehouse.component';
+import { WarrantyComponent } from './component/warranty/warranty.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent,
@@ -57,6 +58,7 @@ const routes: Routes = [
       {path: 'order/details/:id', component: OrderDetailsComponent},
       // {path: 'order/confirmed', component: OrderConfirmedComponent},
       // {path: 'order/aborted', component: OrderAbortedComponent},
+      {path: 'warranty', component: WarrantyComponent},
       {path: '', redirectTo:'./home', pathMatch:'full' },
     ]
   }

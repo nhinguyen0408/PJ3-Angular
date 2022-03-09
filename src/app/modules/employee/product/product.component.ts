@@ -10,6 +10,7 @@ import { ApiBillService } from 'src/app/services/bill/api-bill.service';
 import { ApiCategoryService } from 'src/app/services/category/api-category.service';
 import { ApiProductService } from 'src/app/services/product/api-product.service';
 import { ApiProductionService } from 'src/app/services/production/api-production.service';
+import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 declare var jQuery: any;
 @Component({
@@ -23,7 +24,8 @@ export class ProductComponent implements OnInit {
     private api: ApiProductService,
     private billApi: ApiBillService,
     private apiCate: ApiCategoryService,
-    private apiProduction: ApiProductionService
+    private apiProduction: ApiProductionService,
+    private toastsService: ToastService
     ) { }
 
   ngOnInit(): void {
@@ -91,7 +93,8 @@ export class ProductComponent implements OnInit {
       })
       this.getTotal();
     }else{
-      alert("Số lượng đã vượt quá số sản phẩm trong kho!!!!!!")
+      // alert("Số lượng đã vượt quá số sản phẩm trong kho!!!!!!")
+      this.toastsService.alert('Thông báo !!!', "Số lượng đã vượt quá số sản phẩm trong kho!!!!!!",'bg-warning');
     }
   }
   addShoppingCart(id: number){
@@ -140,14 +143,16 @@ export class ProductComponent implements OnInit {
             })
             this.getTotal();
           }else{
-            alert("Số lượng đã vượt quá số sản phẩm trong kho!!!!!!")
+            // alert("Số lượng đã vượt quá số sản phẩm trong kho!!!!!!")
+            this.toastsService.alert('Thông báo !!!', "Số lượng đã vượt quá số sản phẩm trong kho!!!!!!",'bg-warning');
           }
 
         }
       }
 
     } else {
-      alert("Sản phẩm đã hết hàng!!!!!!")
+      // alert("Sản phẩm đã hết hàng!!!!!!")
+      this.toastsService.alert('Thông báo !!!', "Sản phẩm đã hết hàng!!!!!!",'bg-warning');
     }
     console.log("shoppingCart",this.shoppingCart)
   }
@@ -185,6 +190,7 @@ export class ProductComponent implements OnInit {
     if(window.confirm("Xác nhận thanh toán !!!!!!!")){
       console.log("bill", bill)
       this.billApi.createBill(bill).subscribe(res => {
+        this.toastsService.alert('Thông báo !!!', "Thanh toán thành công !!!!!!",'bg-success');
         this.shoppingCart = []
         this.totalItem = 0;
         this.totalPay = 0;
@@ -202,7 +208,8 @@ export class ProductComponent implements OnInit {
   checkPayment(){
     if( this.shoppingCart.length > 0){
     } else {
-      alert("Vui lòng chọn sản phẩm và thêm vào giỏ hàng trước khi thanh toán !!!!")
+      // alert("Vui lòng chọn sản phẩm và thêm vào giỏ hàng trước khi thanh toán !!!!")
+      this.toastsService.alert('Thông báo !!!', "Vui lòng chọn sản phẩm và thêm vào giỏ hàng trước khi thanh toán !!!!",'bg-warning');
     }
   }
   storeShoppingCart(cart: ShoppingCart[]){
@@ -245,7 +252,7 @@ export class ProductComponent implements OnInit {
     if(categoryId=== 0 && productionId=== 0 && this.productCode === '' && this.productName===''){
 
     } else{
-      this.api.searchProduct(this.productCode.toUpperCase(), categoryId, productionId, this.productName).subscribe((res: any)=>{
+      this.api.searchProduct(this.productCode.toUpperCase(), categoryId, productionId, this.productName, 'ACTIVE').subscribe((res: any)=>{
         this.productList = res;
         this.getCountDown();
         this.checkSearch = true;

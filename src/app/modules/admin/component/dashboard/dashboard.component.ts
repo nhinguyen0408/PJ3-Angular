@@ -87,10 +87,12 @@ export class DashboardComponent implements OnInit {
     })
   }
   getAllProduct(){
-    this.apiProduct.getProductEnable().subscribe((res: any)=> {
+    this.apiProduct.getProduct().subscribe((res: any)=> {
       this.productList = res;
+
+      this.getOutOfStockSoon()
       for(let i = 0; i<= this.productList.length; i++){
-        this.sumPr += this.productList[i].quantity
+        this.sumPr += this.productList[i].quantity;
       }
     })
   }
@@ -174,6 +176,16 @@ export class DashboardComponent implements OnInit {
       }, 1000)
 
     }
+  }
+  productOutOfStockSoonList: Product [] = [];
+  getOutOfStockSoon(){
+    console.log("productList",this.productList)
+    this.productList.forEach( (element: any) => {
+      if(element.quantity < 5){
+        this.productOutOfStockSoonList.push(element);
+        console.log("element",element)
+      }
+    });
   }
 
 

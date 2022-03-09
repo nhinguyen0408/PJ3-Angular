@@ -58,6 +58,17 @@
                           </select>
                         </div>
                       </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="production">Trạng thái</label>
+                          <select class="form-control" id="status" name="status" [(ngModel)]="status" style="width: 100%;" >
+                            <option value="">Chọn</option>
+                            <option value="ACTIVE" >Hoạt động</option>
+                            <option value="INACTIVE" >Đã bị vô hiệu</option>
+                            <option value="EMPTY" >Hết hàng</option>
+                          </select>
+                        </div>
+                      </div>
 
 
                       <div class="row w-100 d-flex align-items-center justify-content-center ">
@@ -128,7 +139,7 @@
                   </td>
                   <td><a routerLink="details/{{item.id}}" title="Xem chi tiết" class="text-primary">{{item.name}}</a>
                     <div>
-                      <div class="d-flex sale" *ngIf="productList[i].saleEntity && productList[i].id == countDown[i].idPr">
+                      <div class="d-flex sale" *ngIf="countDown[i] && productList[i].saleEntity && productList[i].id == countDown[i].idPr">
                         <div class="sale-percent btn">SALE {{productList[i].saleEntity.sale}}% in
                          <span class="countdown">{{countDown[i].days}}</span>:<span class="countdown">{{countDown[i].hours}}</span>:<span class="countdown">{{countDown[i].minutes}}</span>:<span class="countdown">{{countDown[i].seconds}}</span>
                         </div>

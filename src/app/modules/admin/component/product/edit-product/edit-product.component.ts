@@ -170,7 +170,7 @@ imgNamePreview: string [] = []
           console.log('this.product.avatarUrl upload:::' + i ,this.resultMul[i].url)
         }
         // this.resultMul = {};
-      },4900)
+      },4500 + 200*(this.selectedFilesArray.length))
 
     }
   }
@@ -194,9 +194,12 @@ imgNamePreview: string [] = []
     console.log("id:::",id)
     if(id){
       if(window.confirm("Bạn có chắc muốn xóa hình ảnh này !!!!! \nSau khi xóa sẽ không thể hoàn tác lại !!!")){
-        this.apiProduct.deleteImageInformation(id).subscribe(res => {})
+        this.apiProduct.deleteImageInformation(id).subscribe(res => {
+          this.toastsService.alert('Thông báo !!!', 'Xóa ảnh thành công!!!','bg-success');
+        })
         const index = this.listImg.findIndex(x => x.id === id)
         this.listImg.splice(index,1);
+
         console.log("product listImg", this.listImg)
       }
     }
@@ -218,7 +221,9 @@ imgNamePreview: string [] = []
       // console.log(index)
       if(this.aliases[index].id){
         console.log(this.aliases[index].id);
-        this.apiProduct.deleteProductInformation(this.aliases[index].id).subscribe(res => {});
+        this.apiProduct.deleteProductInformation(this.aliases[index].id).subscribe(res => {
+          this.toastsService.alert('Thông báo !!!', 'Xóa thuộc tính thành công!!!','bg-success');
+        });
       }
       this.aliases.splice(index,1);
     }
@@ -273,7 +278,7 @@ imgNamePreview: string [] = []
       this.product.listInformation = this.aliases;
       this.product.modifiedBy = Number(localStorage.getItem("adminId"));
       if(this.product.name == ''
-      || this.product.categoryId == 0 || this.product.productionId == 0 || this.product.quantity == 0 ){
+      || this.product.categoryId == 0 || this.product.productionId == 0 ){
         this.toastsService.alert('Thông báo !!!', 'Vui lòng điền đầy đủ các trường thông tin!!!','bg-warning');
       }else {
         if(this.aliases.length > 0){
@@ -297,6 +302,7 @@ imgNamePreview: string [] = []
           setTimeout(()=>{
             console.log(" new avatar",this.product);
             this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
+              this.toastsService.alert('Thông báo !!!', 'Sửa sản phẩm thành công!!!','bg-success');
               this.route.navigate(['/admin/product/details/'+ this.product.id])
             })
           }, 5000)
@@ -308,14 +314,16 @@ imgNamePreview: string [] = []
             setTimeout(()=>{
               console.log(" new more image",this.product);
               this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
+                this.toastsService.alert('Thông báo !!!', 'Sửa sản phẩm thành công!!!','bg-success');
                 this.route.navigate(['/admin/product/details/'+ this.product.id])
               })
             }, 5000)
           } else {
             console.log("default",this.product);
             this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
-            this.route.navigate(['/admin/product/details/'+ this.product.id])
-          })
+              this.toastsService.alert('Thông báo !!!', 'Sửa sản phẩm thành công!!!','bg-success');
+              this.route.navigate(['/admin/product/details/'+ this.product.id])
+            })
           }
 
         }

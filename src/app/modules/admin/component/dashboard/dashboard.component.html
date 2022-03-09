@@ -32,9 +32,9 @@
             <div class="icon">
               <i class="fas fa-shopping-cart"></i>
             </div>
-            <a routerLink="/admin/order" class="small-box-footer">
+            <!-- <a routerLink="/admin/order" class="small-box-footer">
               More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
+            </a> -->
           </div>
           <!-- /.info-box -->
         </div>
@@ -49,9 +49,9 @@
             <div class="icon">
               <i class="fas fa-chart-pie"></i>
             </div>
-            <a routerLink="/admin/product" class="small-box-footer">
+            <!-- <a routerLink="/admin/product" class="small-box-footer">
               More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
+            </a> -->
           </div>
           <!-- /.info-box -->
         </div>
@@ -71,9 +71,9 @@
             <div class="icon">
               <i class="fab fa-accusoft"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <!-- <a href="#" class="small-box-footer">
               More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
+            </a> -->
           </div>
           <!-- /.info-box -->
         </div>
@@ -88,9 +88,9 @@
             <div class="icon">
               <i class="fas fa-user-plus"></i>
             </div>
-            <a routerLink="/admin/employee-manager" class="small-box-footer">
+            <!-- <a routerLink="/admin/employee-manager" class="small-box-footer">
               More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
+            </a> -->
           </div>
           <!-- /.info-box -->
         </div>
@@ -120,9 +120,9 @@
                     <a href="#" class="dropdown-item">Separated link</a>
                   </div>
                 </div> -->
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
                   <i class="fas fa-times"></i>
-                </button>
+                </button> -->
               </div>
             </div>
             <!-- /.card-header -->
@@ -191,38 +191,29 @@
             <!-- ./card-body -->
             <div class="card-footer">
               <div class="row">
-                <div class="col-sm-3 col-6">
+                <div class="col-sm-4 col-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
-                    <h5 class="description-header">$35,210.43</h5>
-                    <span class="description-text">TOTAL REVENUE</span>
+                    <!-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span> -->
+                    <h5 class="description-header">{{turnOver.importPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</h5>
+                    <span class="description-text">Tổng nhập tháng</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
-                <div class="col-sm-3 col-6">
+                <div class="col-sm-4 col-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>
-                    <h5 class="description-header">$10,390.90</h5>
-                    <span class="description-text">TOTAL COST</span>
+                    <!-- <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span> -->
+                    <h5 class="description-header">{{turnOver.turnover.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</h5>
+                    <span class="description-text">Tổng Doanh thu</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
-                <div class="col-sm-3 col-6">
+                <div class="col-sm-4 col-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
-                    <h5 class="description-header">$24,813.53</h5>
-                    <span class="description-text">TOTAL PROFIT</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-3 col-6">
-                  <div class="description-block">
-                    <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>
-                    <h5 class="description-header">1200</h5>
-                    <span class="description-text">GOAL COMPLETIONS</span>
+                    <!-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span> -->
+                    <h5 class="description-header">{{countNewBill.count}}</h5>
+                    <span class="description-text">Số đơn hàng</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
@@ -241,27 +232,30 @@
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
               </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
+              <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
                 <i class="fas fa-times"></i>
-              </button>
+              </button> -->
             </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body p-0">
             <ul class="products-list product-list-in-card pl-2 pr-2">
-              <li class="item" *ngFor="let item of productSold ; index as i">
-                <div *ngIf="i < 4">
+              <div *ngFor="let item of productSold ; index as i">
+                <li class="item" *ngIf="i < 6">
+                  <div >
 
-                  <div class="product-img">
-                    <img src="{{item.avatarUrl}}" alt="Product Image" class="img-size-50">
+                    <div class="product-img">
+                      <img src="{{item.avatarUrl}}" alt="Product Image" class="img-size-50">
+                    </div>
+                    <div class="product-info">
+                      <a class="product-title product-name"> {{item.productName}}</a>
+                      <span class="badge badge-warning float-right">{{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</span> &nbsp;
+                      <span class="badge badge-success float-right">Đã bán: {{item.sold}}</span>&nbsp;
+                    </div>
                   </div>
-                  <div class="product-info">
-                    <a class="product-title product-name"> {{item.productName}}</a>
-                    <span class="badge badge-warning float-right">{{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</span> &nbsp;
-                    <span class="badge badge-success float-right">Đã bán: {{item.sold}}</span>&nbsp;
-                  </div>
-                </div>
-              </li>
+                </li>
+              </div>
+
               <!-- /.item -->
 
 
@@ -272,7 +266,7 @@
       </div>
       <!-- /.row -->
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <!-- USERS LIST -->
           <div class="card">
             <div class="card-header bg-black">
@@ -282,8 +276,8 @@
                 <span class="badge badge-danger">5 latest</span>
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-                </button>
+                <!-- <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                </button> -->
               </div>
             </div>
             <!-- /.card-header -->
@@ -411,14 +405,53 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer text-center">
-              <a href="javascript::">Xem tất cả</a>
+              <a routerLink="/admin/product" >Xem tất cả</a>
             </div>
             <!-- /.card-footer -->
           </div>
           <!--/.card -->
         </div>
 
-        <div class="col-md-6">
+        <div class="card col-md-4 p-0">
+          <div class="card-header bg-black">
+            <h3 class="card-title"><strong>Sản phẩm Sắp hết hàng</strong></h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button> -->
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <ul class="products-list product-list-in-card pl-2 pr-2">
+              <div *ngFor="let item of productOutOfStockSoonList ; index as i">
+                <li class="item" *ngIf="i < 6">
+                  <div >
+
+                    <div class="product-img">
+                      <img src="{{item.avatarUrl}}" alt="Product Image" class="img-size-50">
+                    </div>
+                    <div class="product-info">
+                      <a class="product-title product-name"> {{item.name}}</a>
+                      <span class="badge badge-warning float-right">{{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</span> &nbsp;
+                      <span class="badge badge-success float-right">Còn lại: {{item.quantity}}</span>&nbsp;
+                    </div>
+                  </div>
+                </li>
+              </div>
+
+              <!-- /.item -->
+
+
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-4 p-0">
           <!-- USERS LIST -->
           <div class="card">
             <div class="card-header bg-black">
@@ -428,8 +461,8 @@
                 <span class="badge badge-danger">Latest</span>
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-                </button>
+                <!-- <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                </button> -->
               </div>
             </div>
             <!-- /.card-header -->
@@ -449,12 +482,13 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer text-center">
-              <a href="javascript::">Xem tất cả</a>
+              <a routerLink="/admin/employee-manager">Xem tất cả</a>
             </div>
             <!-- /.card-footer -->
           </div>
           <!--/.card -->
         </div>
+
       </div>
 
       <!-- Main row -->
@@ -470,9 +504,9 @@
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
                   <i class="fas fa-times"></i>
-                </button>
+                </button> -->
               </div>
             </div>
             <!-- /.card-header -->

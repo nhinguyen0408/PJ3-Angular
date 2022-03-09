@@ -1,5 +1,6 @@
 import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/Category.model';
+import { CountDown } from 'src/app/models/CountDown.model';
 import { Product } from 'src/app/models/Product.model';
 import { Production } from 'src/app/models/Production.model';
 import { ApiCategoryService } from 'src/app/services/category/api-category.service';
@@ -62,6 +63,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
   productionId: number | null = 0;
   productCode: string  = '';
   productName: string  = '';
+  status: string = '';
   checkSearch: boolean = false;
   getAll(){
     this.api.getProduct().subscribe((res: any) => {
@@ -141,7 +143,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
     if(categoryId=== 0 && productionId=== 0 && this.productCode === '' && this.productName===''){
 
     } else{
-      this.api.searchProduct(this.productCode, categoryId, productionId, this.productName).subscribe((res: any)=>{
+      this.api.searchProduct(this.productCode, categoryId, productionId, this.productName, this.status).subscribe((res: any)=>{
         this.productList = res;
         this.checkSearch = true;
       })
@@ -151,12 +153,13 @@ export class ProductComponent implements OnInit, AfterViewInit {
     this.checkSearch = false;
     this.productCode = '';
     this.productName = '';
+    this.status = '';
     this.categoryId = 0;
     this.productionId = 0;
     this.getAll()
   }
 
-  countDown: any;
+  countDown: CountDown [] = [];
   getCountDown(){
     if(this.productList){
 

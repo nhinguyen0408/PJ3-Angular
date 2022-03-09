@@ -26,27 +26,22 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
+          <a routerLink="/admin/home" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
-              <i class="right fas fa-angle-left"></i>
+
             </p>
           </a>
-          <ul class="nav nav-treeview">
+          <!-- <ul class="nav nav-treeview">
             <li class="nav-item">
               <a class="nav-link" routerLink="/admin/home">
                 <i class="far fa-circle nav-icon" ></i>
                 <p>Dashboard</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link " routerLink="/admin/warehouse">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Thống kê kho</p>
-              </a>
-            </li>
-          </ul>
+
+          </ul> -->
         </li>
 
         <li class="nav-item has-treeview">
@@ -106,6 +101,12 @@
               </a>
             </li>
             <li class="nav-item">
+              <a routerLink="/admin/warranty" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tra cứu bảo hành</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a routerLink="/admin/sale" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Sale</p>
@@ -136,15 +137,40 @@
             </li>
           </ul>
         </li> -->
+
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-edit"></i>
+            <i class="nav-icon fas fa-table"></i>
             <p>
-              Quản lý Đơn Hàng
+              Quản lý Voucher
               <i class="fas fa-angle-left right"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a [routerLink]="['voucher/create']" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tạo Voucher</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['voucher']" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Danh sách Voucher</p>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+        <li class="nav-item has-treeview">
+          <a routerLink="/admin/order" class="nav-link">
+            <i class="nav-icon fas fa-edit"></i>
+            <p>
+              Quản lý Đơn Hàng
+
+            </p>
+          </a>
+          <!-- <ul class="nav nav-treeview">
             <li class="nav-item">
               <a routerLink="/admin/order" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
@@ -169,31 +195,7 @@
                 <p>Đơn hàng đã hủy</p>
               </a>
             </li>
-          </ul>
-        </li>
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-table"></i>
-            <p>
-              Quản lý Voucher
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a [routerLink]="['voucher/create']" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Tạo Voucher</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a [routerLink]="['voucher']" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Danh sách Voucher</p>
-              </a>
-            </li>
-
-          </ul>
+          </ul> -->
         </li>
       </ul>
     </nav>

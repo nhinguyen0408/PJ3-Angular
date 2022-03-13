@@ -29,8 +29,72 @@
 
       </div>
       <!-- Tim kiem -->
-      <div class="row m-2">
-        <div class="card col-sm-12 p-0 collapsed-card">
+      <!-- <div class="row m-2">
+        <div class="card col-sm-12 p-0">
+          <div class="card-header bg-black">
+            <h3 class="card-title"><strong>Bộ lọc tìm kiếm</strong></h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="inputEmail" class="">Tên sản phẩm</label>
+                    <input type="text" class="form-control" id="inputEmail" name="code" [(ngModel)]="productName" placeholder="Nhập Tên sản phẩm">
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="inputEmail" class="">Mã sản phẩm</label>
+                    <input type="text" class="form-control" id="inputEmail" name="code" [(ngModel)]="productCode" placeholder="Nhập Mã sản phẩm">
+                  </div>
+                </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="category">Thể loại</label>
+                          <select class=" select2bs4" id="category" name="categoryId" [(ngModel)]="categoryId" style="width: 100%;" required>
+                            <option value="0" >Chọn</option>
+                            <option *ngFor="let cat of categoryList" value="{{cat.id}}" >{{cat.name}}</option>
+                          </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="production">Hãng</label>
+                      <select class=" select2bs4" id="production" name="productionId" [(ngModel)]="productionId" style="width: 100%;" >
+                        <option [value]="0" >Chọn</option>
+                        <option class="option-value" *ngFor="let production of productionList" value="{{production.id}}">{{production.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+
+                  <div class="row w-100 d-flex align-items-center justify-content-center ">
+                    <div class="">
+                      <button type="button" class="btn btn-primary" (click)="onSearch()">
+                        <i class="fas fa-search"> </i>Tìm kiếm
+                      </button>
+                      &nbsp;
+                      <button type="button" class="btn btn-danger" *ngIf="checkSearch===true" (click)="onAbortSearch()" >
+                        <i class="fas fa-ban"></i> Hủy
+                      </button>
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+        </div>
+      </div> -->
+
+
+      <!-- end tim kiem -->
+      <div class="row product-table shadow">
+        <div class="card col-sm-12 p-0">
           <div class="card-header bg-black">
             <h3 class="card-title"><strong>Bộ lọc tìm kiếm</strong></h3>
 
@@ -90,12 +154,6 @@
             </div>
 
         </div>
-      </div>
-
-
-      <!-- end tim kiem -->
-      <div class="row product-table shadow">
-
         <div class="col-12 m-b-30">
 
           <div class="row">

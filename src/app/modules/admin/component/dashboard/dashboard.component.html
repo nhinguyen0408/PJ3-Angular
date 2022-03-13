@@ -63,7 +63,7 @@
         <div class="col-12 col-sm-6 col-md-3">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3 *ngIf="turnOver.importPrice > 0">{{((turnOver.turnover / turnOver.importPrice) *100).toFixed()}}%</h3>
+              <h3 *ngIf="turnOver.importPrice > 0"><small>Doanh thu</small> {{((turnOver.turnover / turnOver.importPrice) *100).toFixed()}}%</h3>
               <h3 *ngIf="turnOver.importPrice == 0">100%</h3>
               <p><small>Thu: {{turnOver.turnover.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                 | Nhập: {{turnOver.importPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</small></p>
@@ -194,7 +194,7 @@
                 <div class="col-sm-4 col-6">
                   <div class="description-block border-right">
                     <!-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span> -->
-                    <h5 class="description-header">{{turnOver.importPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</h5>
+                    <h5 class="description-header text-danger">{{turnOver.importPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</h5>
                     <span class="description-text">Tổng nhập tháng</span>
                   </div>
                   <!-- /.description-block -->
@@ -203,7 +203,7 @@
                 <div class="col-sm-4 col-6">
                   <div class="description-block border-right">
                     <!-- <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span> -->
-                    <h5 class="description-header">{{turnOver.turnover.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</h5>
+                    <h5 class="description-header text-success">{{turnOver.turnover.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</h5>
                     <span class="description-text">Tổng Doanh thu</span>
                   </div>
                   <!-- /.description-block -->
@@ -212,7 +212,7 @@
                 <div class="col-sm-4 col-6">
                   <div class="description-block border-right">
                     <!-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span> -->
-                    <h5 class="description-header">{{countNewBill.count}}</h5>
+                    <h5 class="description-header text-warning">{{countNewBill.count}}</h5>
                     <span class="description-text">Số đơn hàng</span>
                   </div>
                   <!-- /.description-block -->
@@ -266,7 +266,7 @@
       </div>
       <!-- /.row -->
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <!-- USERS LIST -->
           <div class="card">
             <div class="card-header bg-black">
@@ -412,7 +412,7 @@
           <!--/.card -->
         </div>
 
-        <div class="card col-md-4 p-0">
+        <div class="card col-md-6 p-0">
           <div class="card-header bg-black">
             <h3 class="card-title"><strong>Sản phẩm Sắp hết hàng</strong></h3>
 
@@ -451,7 +451,7 @@
           </div>
         </div>
 
-        <div class="col-md-4 p-0">
+        <div class="col-md-12">
           <!-- USERS LIST -->
           <div class="card">
             <div class="card-header bg-black">
@@ -471,7 +471,7 @@
                 <li *ngFor="let item of countNewProfile.data; index as i">
                   <div *ngIf="i<8">
                     <img src="{{item.imageUrl}}" *ngIf="item.imageUrl" class="avatar-image" alt="User Image">
-                    <img src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg" *ngIf="item.imageUrl == null || item.imageUrl ==='' " alt="User Image">
+                    <img src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg" *ngIf="item.imageUrl == null || item.imageUrl ==='' " alt="User Image" class="avatar-image">
                     <a class="users-list-name" href="#">{{item.fistName + ' '+ item.lastName}}</a>
                     <span class="users-list-date">This month</span>
                   </div>

@@ -8,7 +8,7 @@
   -webkit-box-orient: vertical;
 }
 .product-image{
-  height: 300px;
+  height: 400px;
   width: auto;
   object-fit: cover;
 }

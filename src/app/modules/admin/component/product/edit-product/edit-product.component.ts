@@ -195,7 +195,7 @@ imgNamePreview: string [] = []
     if(id){
       if(window.confirm("Bạn có chắc muốn xóa hình ảnh này !!!!! \nSau khi xóa sẽ không thể hoàn tác lại !!!")){
         this.apiProduct.deleteImageInformation(id).subscribe(res => {
-          this.toastsService.alert('Thông báo !!!', 'Xóa ảnh thành công!!!','bg-success');
+          this.toastsService.alert('Thông báo !!!', 'Xóa ảnh mô tả sản phẩm thành công!!!','bg-success');
         })
         const index = this.listImg.findIndex(x => x.id === id)
         this.listImg.splice(index,1);

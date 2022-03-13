@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Bill } from 'src/app/models/Bill.model';
+import { Profile } from 'src/app/models/Profile.model';
 import { ApiBillService } from 'src/app/services/bill/api-bill.service';
+import { ApiProfileService } from 'src/app/services/profile/api-profile.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 declare var jQuery: any;
@@ -13,7 +15,8 @@ export class OrderComponent implements OnInit {
 
   constructor(
     private api: ApiBillService,
-    private toastsService: ToastService
+    private toastsService: ToastService,
+    private apiProfile: ApiProfileService
   ) { }
   ngAfterViewInit(): void {
     setTimeout(()=>{
@@ -21,16 +24,31 @@ export class OrderComponent implements OnInit {
     },200)
   }
   ngOnInit(): void {
-    this.getAllBill()
+    this.getAllBill();
+    this.getAllProfile();
   }
   listBill: any
   bill:  any | null;
+  listEmployee: Profile[] = [];
+  employee: number = 0;
   onShow: boolean = false;
   startDate: Date | null = null;
   endDate: Date | null = null;
   getAllBill(){
     this.api.getBill().subscribe((res: Bill) =>{
       this.listBill = res;
+    })
+  }
+  getAllProfile(){
+    this.apiProfile.getProfile().subscribe((res: any) =>{
+      console.log(res);
+      if(res.length > 0){
+        res.forEach( (element: any) => {
+          if(element.role === "EMPLOYEE"){
+            this.listEmployee.push(element);
+          }
+        })
+      }
     })
   }
   getDataDetail(id: number){
@@ -49,17 +67,26 @@ export class OrderComponent implements OnInit {
           "responsive": true,
           "autoWidth": false,
         });
+        $('.select2bs4').select2({
+          theme: 'bootstrap4'
+        });
     })(jQuery);
   }
   checkSearch: boolean | null = null;
   onSearch(){
     if(this.startDate && this.endDate){
+      let employeeId = (function ($) {
+        let se = $('#employee').select2('data')[0]
+        console.log("selected category: ", se.id)
+        return se.id
+      })(jQuery);
       // console.log(this.startDate + ' ' + this.endDate)
       const start = this.startDate.toString().replace(/-/g,'/')
       const end = this.endDate.toString().replace(/-/g,'/')
       if(this.startDate <= this.endDate){
-        this.api.searchBill(start, end).subscribe((res: Bill)=>{
-          alert("Tìm kiếm thành công !!!")
+        this.api.searchBill(start, end, employeeId).subscribe((res: Bill)=>{
+          // alert("Tìm kiếm thành công !!!")
+          this.toastsService.alert('Thông báo !!!', "Tìm kiếm thành công !!!!",'bg-success');
           this.checkSearch = true;
           this.listBill = res;
         })
@@ -77,6 +104,7 @@ export class OrderComponent implements OnInit {
     this.checkSearch = null;
     this.startDate = null;
     this.endDate = null;
+    this.employee = 0;
     this.getAllBill();
   }
 

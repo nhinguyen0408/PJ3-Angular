@@ -33,6 +33,7 @@ export class ApiProfileService {
     )
   }
 
+
   updateMyProfile(profile: Profile){
     return this.http.put<Profile>(this.url+'/profile/updateMyProfile', profile).pipe(
       retry(1),

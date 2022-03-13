@@ -29,6 +29,7 @@ export class WarrantyComponent implements OnInit {
     } else if(phone.match(this.phoneValidate)){
       this.api.searchBillWarranty(phone).subscribe((data: any) => {
         this.listBill = data;
+        // console.log(data)
         if(this.listBill.length == 0){
           this.toastsService.alert("Thông báo !!!", "Số điện thoại chưa từng được sử dụng !!!", "bg-warning");
         }

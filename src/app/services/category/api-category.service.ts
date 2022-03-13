@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Category } from 'src/app/models/Category.model';
+import { ToastService } from '../toasts-alert/toast.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiCategoryService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private toastsService: ToastService) { }
 
   url = "http://localhost:8080"
   httpOptions = {
@@ -29,6 +30,7 @@ export class ApiCategoryService {
       errorMessage = `Message : ${err.error.responseMessage}`
     }
     window.alert(errorMessage);
+    this.toastsService.alert("Thông báo!!!!",errorMessage, 'bg-danger')
     return throwError(err);
   }
   getCategory():Observable<Category>{

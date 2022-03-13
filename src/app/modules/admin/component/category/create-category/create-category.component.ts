@@ -36,7 +36,8 @@ export class CreateCategoryComponent implements OnInit {
       this.router.navigate(['/admin/category'])
     })
     } else {
-      alert("Vui lòng điền đủ các trường thông tin")
+      // alert("Vui lòng điền đủ các trường thông tin")
+      this.toastsService.alert("Thông báo!!!!",'Vui lòng điền đủ các trường thông tin !!!!', 'bg-warning')
     }
 
   }

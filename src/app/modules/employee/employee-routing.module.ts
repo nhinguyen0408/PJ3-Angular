@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { ProductComponent } from './product/product.component';
+import { WarrantyComponent } from './warranty/warranty.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent,
@@ -12,6 +13,7 @@ const routes: Routes = [
       // {path: 'order/confirmed', component: OrderConfirmedComponent},
       {path: 'myprofile', component: MyProfileComponent},
       {path: 'product', component: ProductComponent},
+      {path: 'warranty', component: WarrantyComponent},
       {path: '', redirectTo:'./home', pathMatch:'full' },
     ]
   }

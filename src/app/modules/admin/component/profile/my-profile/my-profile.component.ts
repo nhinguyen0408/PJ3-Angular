@@ -105,21 +105,28 @@ export class MyProfileComponent implements OnInit {
 
   onSubmitUpdate(){
     console.log("profile update======== ", this.myProfile);
-    if(window.confirm("Chắc chắn bạn muốn thực hiện thay đổi ????")){
-      if(this.selectedFiles != null && this.selectedFiles != undefined){
-        this.upload();
-        setTimeout(()=>{
-          console.log("Mydata",this.myProfile)
+    if(this.myProfile.fistName === "" || this.myProfile.lastName === "" || this.myProfile.email === ""|| this.myProfile.address === ""){
+      this.toastsService.alert("Thông báo !!!!", "Vui lòng nhập đủ thông tin !!!","bg-warning");
+    } else {
+      if(window.confirm("Chắc chắn bạn muốn thực hiện thay đổi ????")){
+        if(this.selectedFiles != null && this.selectedFiles != undefined){
+          this.upload();
+          setTimeout(()=>{
+            console.log("Mydata",this.myProfile)
+            this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
+              this.toastsService.alert("Thông báo !!!!", "Sửa tài khoản thành công !!!","bg-success");
+              this.getMydata()
+            });
+          },4300)
+        } else {
           this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
-            this.getMydata()
+            window.location.reload;
+            this.toastsService.alert("Thông báo !!!!", "Sửa tài khoản thành công !!!","bg-success");
           });
-        },4300)
-      } else {
-        this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
-          window.location.reload
-        });
+        }
       }
     }
+
   }
 
   onChangePassword(){

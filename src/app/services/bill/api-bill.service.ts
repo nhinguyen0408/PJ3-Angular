@@ -47,8 +47,20 @@ export class ApiBillService {
       catchError(this.handleError)
     )
   }
-  searchBill(startDate: string, endDate: string):Observable<Bill>{
-    return this.http.get<Bill>(this.url+"/bill/getall?startDate="+startDate+"&endDate="+endDate).pipe(
+  searchBill(startDate: string, endDate: string, profileId: number):Observable<Bill>{
+    if(profileId == 0){
+      return this.http.get<Bill>(this.url+"/bill/getall?startDate="+startDate+"&endDate="+endDate).pipe(
+        catchError(this.handleError)
+      )
+    } else {
+      return this.http.get<Bill>(this.url+"/bill/getall?startDate="+startDate+"&endDate="+endDate + "&profileId=" + profileId).pipe(
+        catchError(this.handleError)
+      )
+    }
+
+  }
+  searchBillWarranty(phone: string):Observable<Bill>{
+    return this.http.get<Bill>(this.url+"/bill/getall?phone=" + phone).pipe(
       catchError(this.handleError)
     )
   }

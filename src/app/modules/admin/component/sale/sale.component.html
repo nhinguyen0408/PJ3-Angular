@@ -37,6 +37,7 @@
                   <td>{{formatDate(item.endDate)}}</td>
                   <td>
                     <a class="btn shadow text-danger" (click)="onDeleteSale(item.id)"><i class="fas fa-eraser"></i></a>
+                    <a routerLink="/admin/sale/create/{{item.id}}" class="btn mr-2 shadow text-warning"><i class="fas fa-pen"></i></a>
                   </td>
                 </tr>
               </tbody>

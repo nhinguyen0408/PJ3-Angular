@@ -6,10 +6,12 @@ import { CountDown } from 'src/app/models/CountDown.model';
 import { Product } from 'src/app/models/Product.model';
 import { Production } from 'src/app/models/Production.model';
 import { ShoppingCart } from 'src/app/models/ShoppingCart.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ApiBillService } from 'src/app/services/bill/api-bill.service';
 import { ApiCategoryService } from 'src/app/services/category/api-category.service';
 import { ApiProductService } from 'src/app/services/product/api-product.service';
 import { ApiProductionService } from 'src/app/services/production/api-production.service';
+import { ApiProfileService } from 'src/app/services/profile/api-profile.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 declare var jQuery: any;
@@ -25,7 +27,9 @@ export class ProductComponent implements OnInit {
     private billApi: ApiBillService,
     private apiCate: ApiCategoryService,
     private apiProduction: ApiProductionService,
-    private toastsService: ToastService
+    private toastsService: ToastService,
+    private apiProfile: ApiProfileService,
+    private auth: AuthService
     ) { }
 
   ngOnInit(): void {
@@ -142,6 +146,7 @@ export class ProductComponent implements OnInit {
               this.storeShoppingCart(this.shoppingCart);
             })
             this.getTotal();
+
           }else{
             // alert("Số lượng đã vượt quá số sản phẩm trong kho!!!!!!")
             this.toastsService.alert('Thông báo !!!', "Số lượng đã vượt quá số sản phẩm trong kho!!!!!!",'bg-warning');
@@ -149,6 +154,7 @@ export class ProductComponent implements OnInit {
 
         }
       }
+      this.toastsService.alert('Thông báo !!!', "Thêm thành công sản phẩm: "+ product.name +" vào giỏ hàng !!!!!!",'bg-success');
 
     } else {
       // alert("Sản phẩm đã hết hàng!!!!!!")
@@ -345,5 +351,13 @@ export class ProductComponent implements OnInit {
     (function ($) {
       let se = $('#textareaInput').summernote('code', '')
     })(jQuery);
+  }
+  checkBlock(){
+    this.apiProfile.getProfileById(Number(localStorage.getItem('employeeId'))).subscribe(res => {
+      if(res.block === true){
+        alert("Tài khoản của bạn đã bị khóa !!!");
+        this.auth.logout();
+      }
+    })
   }
 }

@@ -46,6 +46,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('adminId');
+    localStorage.removeItem('employeeId');
     console.log("this.result",this.result)
     this.router.navigate(['login']);
   }

@@ -13,6 +13,7 @@ import { ShoppingCartComponent } from './product/shopping-cart/shopping-cart.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule }   from '@angular/forms';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { WarrantyComponent } from './warranty/warranty.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
     ProductComponent,
     ShoppingCartComponent,
     MyProfileComponent,
+    WarrantyComponent,
   ],
   imports: [
     CommonModule,

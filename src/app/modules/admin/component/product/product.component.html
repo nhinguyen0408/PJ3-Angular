@@ -5,7 +5,7 @@
         <div class="col-12 m-b-30 ">
           <div class="d-flex justify-content-between mt-3 ">
             <div class="card-header">
-              <h4 class="d-inline ">Product List</h4>
+              <h4 class="d-inline ">Danh sách sản phẩm</h4>
             </div>
 
             <div class="">
@@ -147,6 +147,7 @@
                       </div>
                     </div>
                     <small>Ngày tạo lập: {{item.createdDate | date:'medium'}}</small> <br>
+                    <!-- <small>Nguời tạo lập: <strong>{{item.fistName + " " + item.lastName}}</strong></small> <br> -->
                     <a routerLink="details/{{item.id}}" class="btn mr-2 shadow text-primary" title="View"><i class="far fa-eye"></i></a>
                     <a routerLink="edit/{{item.id}}" class="btn mr-2 shadow text-warning" title="Sửa sản phẩm"><i class="fas fa-pen"></i></a>
                     <a routerLink="/admin/sale/create/{{item.id}}" class="btn mr-2 shadow text-success" title="Tạo sale"><i class="fas fa-tag"></i></a>

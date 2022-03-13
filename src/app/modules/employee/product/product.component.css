@@ -1,7 +1,8 @@
 .product-image{
-  height: 200px;
-  width: 200px;
+  height: 300px;
+  width: auto;
   object-fit: cover;
+  position: relative;
 }
 
 .name{
@@ -23,6 +24,7 @@
 }
 
 .sale-percent {
+  position: absolute;
   border-radius: 0;
   width: fit-content;
   background: rgb(223,63,251);
@@ -34,6 +36,7 @@
   height: auto;
   font-size: 14px;
   font-weight: 900;
+  top: 230px;
 }
 
 .img-thumbnail {
@@ -85,4 +88,28 @@
   font-weight: 900;
   bottom: 15px;
 }
+.price{
+  width: 100%;
+  position: absolute;
+  bottom: 60px;
+}
+.btn-success{
+  background: rgb(46, 153, 153) !important;
+  background: linear-gradient(90deg, rgba(125,134,50,1) 0%, rgba(48,75,9,1) 35%, rgba(152,89,64,1) 100%) !important;
+}
+.ngx-pagination {
+  padding-left: 0px !important;
+}
 
+.ngx-pagination .current,
+.btn-info {
+  background: #17a2b8 !important;
+  border: transparent !important;
+  border-radius: 20px !important;
+}
+
+.ngx-pagination .current:hover {
+  background: #17a2b8 !important;
+  border-radius: 20px !important;
+  border: transparent !important;
+}

@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiProductService } from 'src/app/services/product/api-product.service';
@@ -16,7 +17,8 @@ export class CreateSaleComponent implements OnInit {
     private apiProduct: ApiProductService,
     private route: Router,
     private actRoute: ActivatedRoute,
-    private toastsService: ToastService
+    private toastsService: ToastService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -109,5 +111,8 @@ export class CreateSaleComponent implements OnInit {
     }
 
 
+  }
+  back(){
+    this.location.back();
   }
 }

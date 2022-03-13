@@ -6,6 +6,7 @@ import { EditCategoryComponent } from './component/category/edit-category/edit-c
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { EmployeeManagerComponent } from './component/employee-manager/employee-manager.component';
 import { HomeComponent } from './component/home/home.component';
+import { ImportProductComponent } from './component/import-product/import-product.component';
 import { OrderDetailsComponent } from './component/order/order-details/order-details.component';
 import { OrderComponent } from './component/order/order.component';
 import { CreateProductComponent } from './component/product/create-product/create-product.component';
@@ -59,6 +60,7 @@ const routes: Routes = [
       // {path: 'order/confirmed', component: OrderConfirmedComponent},
       // {path: 'order/aborted', component: OrderAbortedComponent},
       {path: 'warranty', component: WarrantyComponent},
+      {path: 'import-product', component: ImportProductComponent},
       {path: '', redirectTo:'./home', pathMatch:'full' },
     ]
   }

@@ -31,6 +31,18 @@ export class DashboardComponent implements OnInit {
     this.getCountProdSold()
     this.getAllProduct()
     this.getChart()
+    this.getBestEmp()
+    this.getChartMonth();
+    (function ($) {
+      $("#chart-year").click(function() {
+        $("#div-sales-chart").addClass("active");
+        $("#div-sales-chart-month").removeClass("active");
+      });
+      $("#chart-month").click(function() {
+        $("#div-sales-chart").removeClass("active");
+        $("#div-sales-chart-month").addClass("active");
+      });
+    })(jQuery);
 
   }
   countNewBill: any;
@@ -105,11 +117,28 @@ export class DashboardComponent implements OnInit {
         this.chartSoldTotal[i] = this.chartData[i].soldTotal;
         this.chartMonth[i] = this.chartData[i].month;
       };
-      console.log("this.chartImportTotal==",this.chartImportTotal)
-      console.log("this.chartSoldTotal==",this.chartSoldTotal)
-      console.log("this.chartMonth==",this.chartMonth)
+      // console.log("this.chartImportTotal==",this.chartImportTotal)
+      // console.log("this.chartSoldTotal==",this.chartSoldTotal)
+      // console.log("this.chartMonth==",this.chartMonth)
       this.createChart(this.chartImportTotal, this.chartSoldTotal, this.chartMonth)
 
+    })
+  }
+  dataDay: number [] = []
+  dataBill: number [] = []
+  getChartMonth(){
+    this.api.getChartMonth().subscribe((res:any) => {
+      if(res && res.length > 0){
+        // let dataDay = [];
+        // let dataBill = [];
+        res.forEach((element: any) =>{
+          this.dataDay.push(element.day);
+          this.dataBill.push(element.billCount)
+        })
+        this.createChartMonth(this.dataDay, this.dataBill)
+        // console.log("dataDay==",this.dataDay);
+        // console.log("dataDay==",this.dataBill);
+      }
     })
   }
   $: any;
@@ -132,16 +161,50 @@ export class DashboardComponent implements OnInit {
           datasets: [
             {
               label: 'Tổng Nhập kho',
-              backgroundColor: '#007bff',
+              backgroundColor: '#46696F',
               borderColor    : '#007bff',
               data           : dataPrice
             },
             {
               label: 'Tổng Bán',
-              backgroundColor: '#696969',
+              backgroundColor: '#1DA8BD',
               borderColor    : '#ced4da',
               data           : dataSale
             }
+          ]
+        },
+        options: {
+
+          maintainAspectRatio: false,
+
+        }
+      })
+      })(jQuery);
+  }
+  createChartMonth(dataDay: number[], dataBill: number[] ){
+    (function ($) {
+      'use strict'
+
+      var ticksStyle = {
+        fontColor: '#495057',
+        fontStyle: 'bold'
+      }
+      var mode      = 'index';
+      var data      = 'index';
+      var intersect = true;
+      var $salesChart = $('#sales-chart-month')
+      var salesChart  = new Chart($salesChart, {
+        type   : 'bar',
+        data   : {
+          labels  : dataDay,
+          datasets: [
+            {
+              label: 'Tổng đơn hàng',
+              backgroundColor: '#188EDC',
+              borderColor    : '#007bff',
+              data           : dataBill
+            },
+
           ]
         },
         options: {
@@ -186,6 +249,13 @@ export class DashboardComponent implements OnInit {
         console.log("element",element)
       }
     });
+  }
+  dataBestEmp: any;
+  getBestEmp(){
+    this.api.getBestEmployee().subscribe((res:any)=>{
+      this.dataBestEmp = res;
+      console.log("this.dataBestEmp",res)
+    })
   }
 
 

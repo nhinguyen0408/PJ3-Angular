@@ -360,4 +360,21 @@ export class ProductComponent implements OnInit {
       }
     })
   }
+
+  // Pagination
+
+  page = 1;
+  count = 0;
+  tableSize = 8;
+  tableSizesArr = [4, 8, 12];
+  tabSize(event: any){
+    this.page = event;
+    this.getAll();
+  }
+  tableData(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getAll();
+  }
+
 }

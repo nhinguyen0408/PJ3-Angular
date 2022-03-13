@@ -39,6 +39,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { CreateSaleComponent } from './component/sale/create-sale/create-sale.component';
 import { UpdateSaleComponent } from './component/sale/update-sale/update-sale.component';
 import { WarrantyComponent } from './component/warranty/warranty.component';
+import { ImportProductComponent } from './component/import-product/import-product.component';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { WarrantyComponent } from './component/warranty/warranty.component';
     CreateSaleComponent,
     UpdateSaleComponent,
     WarrantyComponent,
+    ImportProductComponent,
   ],
   imports: [
     CommonModule,

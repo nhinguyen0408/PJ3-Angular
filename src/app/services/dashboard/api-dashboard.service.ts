@@ -70,5 +70,15 @@ export class ApiDashboardService {
       catchError(this.handleError)
     )
   }
+  getChartMonth():Observable<any>{
+    return this.http.get<any>(this.url+"/chart/dayOfMonth").pipe(
+      catchError(this.handleError)
+    )
+  }
+  getBestEmployee():Observable<any>{
+    return this.http.get<any>(this.url+"/bill/getTopEmployee").pipe(
+      catchError(this.handleError)
+    )
+  }
 
 }

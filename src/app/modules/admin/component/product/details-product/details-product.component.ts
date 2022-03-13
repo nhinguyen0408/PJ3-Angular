@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiProductService } from 'src/app/services/product/api-product.service';
@@ -11,7 +12,7 @@ declare var jQuery: any;
 })
 export class DetailsProductComponent implements OnInit {
 
-  constructor(private api: ApiProductService, private actRoute: ActivatedRoute) { }
+  constructor(private api: ApiProductService, private actRoute: ActivatedRoute , private location: Location) { }
   id = this.actRoute.snapshot.params['id']
   days: any;
   hours: any;
@@ -65,5 +66,8 @@ export class DetailsProductComponent implements OnInit {
       }, 1000)
 
     }
+  }
+  back(){
+    this.location.back();
   }
 }

@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule }   from '@angular/forms';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { WarrantyComponent } from './warranty/warranty.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { WarrantyComponent } from './warranty/warranty.component';
     CommonModule,
     EmployeeRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ]
 })
 export class EmployeeModule { }

@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -29,7 +30,8 @@ export class CreateProductComponent implements OnInit {
     private apiProduct: ApiProductService,
     private route: Router,
     private uploadService: FileUploadService,
-    private toastsService: ToastService
+    private toastsService: ToastService,
+    private location: Location
     ) { }
 
   aliases: ProductInformation[] = []
@@ -229,5 +231,8 @@ export class CreateProductComponent implements OnInit {
 
       }
     }
+  }
+  back(){
+    this.location.back();
   }
 }

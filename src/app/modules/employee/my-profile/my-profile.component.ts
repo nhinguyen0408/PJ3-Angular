@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FileUpload } from 'src/app/models/upload/FileUpload.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ApiProfileService } from 'src/app/services/profile/api-profile.service';
+import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 import { FileUploadService } from 'src/app/services/upload/file-upload.service';
 
 declare var jQuery: any;
@@ -19,6 +20,7 @@ export class MyProfileComponent implements OnInit {
     private auth: AuthService,
     private route: Router,
     private uploadService: FileUploadService,
+    private toastsService: ToastService
   ) { }
   myProfile: any;
   profileUpdate: any;
@@ -110,11 +112,13 @@ export class MyProfileComponent implements OnInit {
         setTimeout(()=>{
           console.log("Mydata",this.myProfile)
           this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
+            this.toastsService.alert("Thông báo !!!!", "Cập nhật thông tin thành công !!!", "bg-success");
             this.getMydata()
           });
         },4300)
       } else {
         this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
+          this.toastsService.alert("Thông báo !!!!", "Cập nhật thông tin thành công !!!", "bg-success");
           this.getMydata()
         });
       }
@@ -130,22 +134,27 @@ export class MyProfileComponent implements OnInit {
         const objChangePass = {oldPass,newPass,myId}
         console.log("objChangePass===== ", objChangePass)
         this.api.updatePassword(objChangePass).subscribe(data =>{
-          window.alert("Đổi mật khẩu thành công !!!!!");
+          // window.alert("Đổi mật khẩu thành công !!!!!");
+          this.toastsService.alert("Thông báo !!!!", "Đổi mật khẩu thành công !!!!!", "bg-success");
           this.auth.logout();
         })
         this.changePassForm.reset()
 
        } else {
-        alert("Mật khẩu nhập lại không trùng khớp hoặc trùng với mật khẩu cũ !!!")
+        // alert("Mật khẩu nhập lại không trùng khớp hoặc trùng với mật khẩu cũ !!!")
+        this.toastsService.alert("Thông báo !!!!", "Mật khẩu nhập lại không trùng khớp hoặc trùng với mật khẩu cũ !!!", "bg-warning");
        }
 
     } else {
       if(this.changePassForm.value.oldPass.length < 6){
-        alert("Mật khẩu cũ phải dài hơn 6 ký tự")
+        // alert("Mật khẩu cũ phải dài hơn 6 ký tự")
+        this.toastsService.alert("Thông báo !!!!", "Mật khẩu cũ phải dài hơn 6 ký tự !!!", "bg-warning");
        } else if(this.changePassForm.value.newPass.length < 6){
-        alert("Mật khẩu mới phải dài hơn 6 ký tự")
+        // alert("Mật khẩu mới phải dài hơn 6 ký tự")
+        this.toastsService.alert("Thông báo !!!!", "Mật khẩu mới phải dài hơn 6 ký tự !!!", "bg-warning");
        } else if(this.changePassForm.value.reNewPass.length < 6){
-        alert("Nhập lại mật khẩu phải dài hơn 6 ký tự")
+        // alert("Nhập lại mật khẩu phải dài hơn 6 ký tự")
+        this.toastsService.alert("Thông báo !!!!", "Nhập lại mật khẩu phải dài hơn 6 ký tự !!!", "bg-warning");
        }
     }
 

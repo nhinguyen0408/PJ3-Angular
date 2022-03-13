@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Image } from 'src/app/models/Image.model';
@@ -26,6 +27,7 @@ export class EditProductComponent implements OnInit {
     private actRoute: ActivatedRoute,
     private uploadService: FileUploadService,
     private toastsService: ToastService,
+    private location: Location
     ) { }
 
   aliases: any[] = []
@@ -331,6 +333,9 @@ imgNamePreview: string [] = []
       }
     }
 
+  }
+  back(){
+    this.location.back();
   }
 
 }

@@ -37,6 +37,12 @@ export class ApiProductService {
       catchError(this.handleError)
     )
   }
+  getImportProduct():Observable<Product>{
+    return this.http.get<Product>(this.url+"/import/getAll").pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
   getProductEnable():Observable<Product>{
     return this.http.get<Product>(this.url+"/product/getall?getall=false&status=ACTIVE").pipe(
       retry(1),

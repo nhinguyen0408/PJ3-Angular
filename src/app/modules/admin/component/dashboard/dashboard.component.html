@@ -63,7 +63,7 @@
         <div class="col-12 col-sm-6 col-md-3">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3 *ngIf="turnOver.importPrice > 0"><small>Doanh thu</small> {{((turnOver.turnover / turnOver.importPrice) *100).toFixed()}}%</h3>
+              <h3 *ngIf="turnOver.importPrice > 0"><small>Doanh thu đạt mức</small> {{((turnOver.turnover / turnOver.importPrice) *100).toFixed()}}%</h3>
               <h3 *ngIf="turnOver.importPrice == 0">100%</h3>
               <p><small>Thu: {{turnOver.turnover.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                 | Nhập: {{turnOver.importPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</small></p>
@@ -114,7 +114,7 @@
                   </button>
                   <div class="dropdown-menu dropdown-menu-right" role="menu">
                     <a id="chart-year" class="dropdown-item">Theo Năm</a>
-                    <a id="chart-month" class="dropdown-item">Theo Tháng</a>
+                    <a id="chart-month" class="dropdown-item">Đơn hàng theo Tháng</a>
                   </div>
                 </div>
                 <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
@@ -482,7 +482,7 @@
                 </li>
 
               </ul> -->
-              <ul class="col-md-8 users-list clearfix">
+              <ul class="col-md-12 users-list clearfix">
                 <li *ngFor="let item of countNewProfile.data; index as i">
                   <div *ngIf="i<8">
                     <img src="{{item.imageUrl}}" *ngIf="item.imageUrl" class="avatar-image" alt="User Image">

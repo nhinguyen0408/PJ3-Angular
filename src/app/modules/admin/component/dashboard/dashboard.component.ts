@@ -126,6 +126,7 @@ export class DashboardComponent implements OnInit {
   }
   dataDay: number [] = []
   dataBill: number [] = []
+  dataTotalSale: number[] =[]
   getChartMonth(){
     this.api.getChartMonth().subscribe((res:any) => {
       if(res && res.length > 0){
@@ -133,11 +134,13 @@ export class DashboardComponent implements OnInit {
         // let dataBill = [];
         res.forEach((element: any) =>{
           this.dataDay.push(element.day);
-          this.dataBill.push(element.billCount)
+          this.dataBill.push(element.billCount);
+          this.dataTotalSale.push(element.totalSale);
+
         })
-        this.createChartMonth(this.dataDay, this.dataBill)
+        this.createChartMonth(this.dataDay, this.dataBill, this.dataTotalSale)
         // console.log("dataDay==",this.dataDay);
-        // console.log("dataDay==",this.dataBill);
+        console.log("dataDay==",this.dataTotalSale);
       }
     })
   }
@@ -181,7 +184,7 @@ export class DashboardComponent implements OnInit {
       })
       })(jQuery);
   }
-  createChartMonth(dataDay: number[], dataBill: number[] ){
+  createChartMonth(dataDay: number[], dataBill: number[], dataTotalSale: number[] ){
     (function ($) {
       'use strict'
 
@@ -198,13 +201,18 @@ export class DashboardComponent implements OnInit {
         data   : {
           labels  : dataDay,
           datasets: [
+            // {
+            //   label: 'Tổng đơn hàng',
+            //   backgroundColor: '#188EDC',
+            //   borderColor    : '#007bff',
+            //   data           : dataBill
+            // },
             {
-              label: 'Tổng đơn hàng',
-              backgroundColor: '#188EDC',
-              borderColor    : '#007bff',
-              data           : dataBill
-            },
-
+              label: 'Tổng Bán',
+              backgroundColor: '#1DA8BD',
+              borderColor    : '#ced4da',
+              data           : dataTotalSale
+            }
           ]
         },
         options: {

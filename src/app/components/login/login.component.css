@@ -67,3 +67,6 @@ max-width: 500px;
    }
    #second{display:none;}
 
+.container{
+  margin-top: 200px;
+}

@@ -65,7 +65,7 @@
                   </td>
                   <td><p class="font-weight-bold text-info">{{item.code}}</p></td>
                   <td>{{item.importQuantity}}</td>
-                  <td>{{item.importTotal}}</td>
+                  <td>{{item.importTotal.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
                 </tr>
               </tbody>
               <tfoot>

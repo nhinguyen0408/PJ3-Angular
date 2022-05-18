@@ -216,8 +216,10 @@ export class CreateProductComponent implements OnInit {
         }
       });
       this.upload()
+      if(this.selectedFilesArray.length > 0){
+        this.uploadMultiple()
+      }
 
-      this.uploadMultiple()
 
       // console.log(this.product);
       setTimeout(()=>{

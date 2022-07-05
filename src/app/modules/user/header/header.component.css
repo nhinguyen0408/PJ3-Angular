@@ -1,0 +1,16 @@
+.container{
+  max-width: 1600px !important;
+}
+
+.input-search{
+  width: 500px !important;
+}
+.navbar-collapse{
+  justify-content: space-between;
+  padding: 0 50px;
+}
+.logo-header{
+  width: 50px;
+  height: auto;
+  object-fit: cover;
+}

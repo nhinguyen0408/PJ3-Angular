@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { API_URL } from '../api-const.type';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class ApiDashboardService {
 
   constructor(private http: HttpClient) { }
 
-  url = "http://localhost:8080"
+  url = API_URL
   httpOptions = {
     headers : new HttpHeaders({
       'Access-Control-Allow-Origin':'*',

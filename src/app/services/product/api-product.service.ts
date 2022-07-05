@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Product } from 'src/app/models/Product.model';
+import { API_URL } from '../api-const.type';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,15 @@ export class ApiProductService {
 
   constructor(private http: HttpClient) { }
 
-  url = "http://localhost:8080"
+  url = API_URL;
+  token: any = localStorage.getItem('token') ? localStorage.getItem('token') : '' ;
   httpOptions = {
     headers : new HttpHeaders({
       'Access-Control-Allow-Origin':'*',
       "Access-Control-Allow-Headers":'*',
       'Content-type':'application/json',
-      'withCredentials': 'true'
+      'withCredentials': 'true',
+      'Accept-Token': this.token
     })
   }
 

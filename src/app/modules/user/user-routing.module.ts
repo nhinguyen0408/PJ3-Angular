@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { MyProfileComponent } from './my-profile/my-profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent,
@@ -9,8 +8,10 @@ const routes: Routes = [
       // {path: 'order-confirmation', component: OrderConfirmationComponent},
       // {path: 'order/details', component: OrderDetailsComponent},
       // {path: 'order/confirmed', component: OrderConfirmedComponent},
-      {path: 'myprofile', component: MyProfileComponent},
-      {path: '', redirectTo:'./home', pathMatch:'full' },
+      // {path: 'myprofile', component: MyProfileComponent},
+      // {path: 'product', component: ProductComponent},
+      // {path: 'warranty', component: WarrantyComponent},
+      // {path: '', redirectTo:'./home', pathMatch:'full' },
     ]
   }
 ];
@@ -19,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ManagerRoutingModule { }
+export class UserRoutingModule { }

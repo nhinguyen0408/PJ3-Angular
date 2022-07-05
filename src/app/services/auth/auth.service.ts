@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, of, retry, throwError } from 'rxjs';
 import { Login } from 'src/app/models/Login.model';
+import { API_URL } from '../api-const.type';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { Login } from 'src/app/models/Login.model';
 export class AuthService {
 
   constructor(private router: Router, private http: HttpClient) { }
-  url = "http://localhost:8080"
+  url = API_URL
   httpOptions = {
     headers : new HttpHeaders({
       'Access-Control-Allow-Origin':'*',

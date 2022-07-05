@@ -27,7 +27,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(()=>{
       this.setDataTable()
-    },200)
+    },500)
   }
 
   ngOnInit(): void {

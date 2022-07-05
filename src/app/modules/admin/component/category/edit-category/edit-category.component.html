@@ -48,11 +48,11 @@
                           <input type="text" class="form-control" value="{{category.createdDate | date: 'medium'}}" disabled>
                         </div>
                         <div class="form-group">
-                          <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success" *ngIf="category.status === 'ENABLE'">
+                          <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success" *ngIf="category.status === 'ACTIVE'">
                             <input type="checkbox" class="custom-control-input" id="customSwitch3" name="status" (change)="toggleEditable($event)" checked >
                             <label class="custom-control-label" for="customSwitch3">Trạng thái hoạt động</label>
                           </div>
-                          <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success" *ngIf="category.status === 'DISABLE'">
+                          <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success" *ngIf="category.status === 'INACTIVE'">
                             <input type="checkbox" class="custom-control-input" id="customSwitch3" name="status" (change)="toggleEditable($event)" >
                             <label class="custom-control-label" for="customSwitch3">Trạng thái hoạt động</label>
                           </div>

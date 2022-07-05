@@ -20,9 +20,8 @@ const routes: Routes = [
     canActivate: [EmployeeGuardGuard],
     loadChildren: () => import ('./modules/employee/employee.module').then(m => m.EmployeeModule)
   },
-  { path: 'manager',
-    canActivate: [ManagerGuard],
-    loadChildren: () => import ('./modules/manager/manager.module').then(m => m.ManagerModule)
+  { path: 'user',
+    loadChildren: () => import ('./modules/user/user.module').then(m => m.UserModule)
   },
 
 

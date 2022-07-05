@@ -42,7 +42,7 @@ export class ProductComponent implements OnInit {
   ngAfterViewInit(): void {
     setTimeout(()=>{
       this.setDataTable()
-    },200)
+    },500)
   }
   productList: Product[] = [];
   categoryList: Category[] = [];

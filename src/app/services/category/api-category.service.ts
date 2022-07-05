@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Category } from 'src/app/models/Category.model';
+import { API_URL } from '../api-const.type';
 import { ToastService } from '../toasts-alert/toast.service';
 
 @Injectable({
@@ -11,7 +12,7 @@ export class ApiCategoryService {
 
   constructor(private http: HttpClient, private toastsService: ToastService) { }
 
-  url = "http://localhost:8080"
+  url = API_URL
   httpOptions = {
     headers : new HttpHeaders({
       'Access-Control-Allow-Origin':'*',
@@ -40,7 +41,7 @@ export class ApiCategoryService {
     )
   }
   getCategoryEnable():Observable<Category>{
-    return this.http.get<Category>(this.url+"/category/getall?status=ENABLE").pipe(
+    return this.http.get<Category>(this.url+"/category/getall?status=ACTIVE").pipe(
       retry(1),
       catchError(this.handleError)
     )

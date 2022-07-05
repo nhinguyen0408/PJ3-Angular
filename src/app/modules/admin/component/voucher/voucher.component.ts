@@ -24,7 +24,7 @@ export class VoucherComponent implements OnInit {
   ngAfterViewInit(): void {
     setTimeout(()=>{
       this.setDataTable()
-    },200)
+    },500)
   }
   setDataTable(){
     (function ($) {

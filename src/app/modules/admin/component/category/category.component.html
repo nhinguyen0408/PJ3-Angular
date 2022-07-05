@@ -28,10 +28,10 @@
                   <!-- <td>{{category.id}}</td> -->
                   <td>{{category.name}}</td>
                   <td>
-                    <div *ngIf="category.status == 'ENABLE'">
+                    <div *ngIf="category.status == 'ACTIVE'">
                       <span class="badge badge-primary px-2">Active</span>
                     </div>
-                    <div *ngIf="category.status == 'DISABLE'">
+                    <div *ngIf="category.status == 'INACTIVE'">
                       <span class="badge badge-danger px-2">Inactive</span>
                     </div>
                   </td>

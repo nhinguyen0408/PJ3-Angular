@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Production } from 'src/app/models/Production.model';
+import { API_URL } from '../api-const.type';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class ApiProductionService {
 
   constructor(private http: HttpClient) { }
 
-  url = "http://localhost:8080"
+  url = API_URL
   httpOptions = {
     headers : new HttpHeaders({
       'Access-Control-Allow-Origin':'*',

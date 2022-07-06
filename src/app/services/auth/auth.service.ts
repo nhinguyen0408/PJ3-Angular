@@ -40,7 +40,10 @@ export class AuthService {
   isLogedin():boolean{
     console.log("isLogedin",this.getToken())
     return this.getToken() !== null;
+  }
 
+  isUserLogedin():boolean{
+    return localStorage.getItem('user-token') !== null && localStorage.getItem('user-role') ==='USER';
   }
 
   logout(){
@@ -51,26 +54,16 @@ export class AuthService {
     console.log("this.result",this.result)
     this.router.navigate(['login']);
   }
+  logoutUser(){
+    localStorage.removeItem('userId');
+    localStorage.removeItem('user-role');
+    this.router.navigate(['user/login']);
+  }
   result: any;
   login(dataLogin:Login):Observable<any>{
     return  this.http.post<Login>(this.url+"/profile/signin", dataLogin).pipe(
       retry(1)
     )
-    // response.subscribe((res: any) => {
-    //   console.log(" this.result",res)
-    //   if(res.responseMessage === "SUCCESS"){
-    //     this.setToken(res.responseData.token);
-    //     this.setRole(res.responseData.role);
-    //   }
-    // })
-    // if(this.result.responseMessage === "SUCCESS"){
-    //   // console.log('LOGIN RESULT SUCCESS::::::::::', this.result)
-    //   console.log("this.result.token", this.result.responseData.token)
-    //   // console.log("this.result.role", this.result.responseData.role)
-
-    //   return of(this.result.responseData.profile);
-    // }
-    // return of({error: 'Tên đăng nhập hoặc mật khẩu không đúng'});
   }
 
 

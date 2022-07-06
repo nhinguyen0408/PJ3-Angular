@@ -41,7 +41,7 @@ export class ApiCategoryService {
     )
   }
   getCategoryEnable():Observable<Category>{
-    return this.http.get<Category>(this.url+"/category/getall?status=ACTIVE").pipe(
+    return this.http.get<Category>(this.url+"/category/getall?status=ENABLE").pipe(
       retry(1),
       catchError(this.handleError)
     )

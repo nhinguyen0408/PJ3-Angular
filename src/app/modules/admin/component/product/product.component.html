@@ -120,7 +120,7 @@
                   <!-- <th>ID</th> -->
                   <th>Image</th>
                   <th>Tên</th>
-                  <!-- <th>Code</th> -->
+                  <th>Code</th>
                   <th>Trạng thái</th>
                   <th>Thể loại</th>
                   <th>Hãng</th>
@@ -154,7 +154,7 @@
                     <a class="btn shadow text-danger" *ngIf="item.status == 'ACTIVE'" title="Vô hiệu hóa sản phẩm" (click)="updateStatus(item)" ><i class="fas fa-ban"></i></a>
                     <a class="btn shadow text-success" *ngIf="item.status == 'INACTIVE'" title="Kích hoạt sản phẩm" (click)="updateStatus(item)" ><i class="fas fa-check"></i></a>
                   </td>
-                  <!-- <td><p class="font-weight-bold text-info">{{item.code}}</p></td> -->
+                  <td><p class="font-weight-bold text-info">{{item.code}}</p></td>
                   <td>
                     <div class="custom-control " *ngIf="item.status == 'ACTIVE'">
                         <span class="badge badge-success px-2">Active</span>
@@ -191,7 +191,7 @@
                   <!-- <th>ID</th> -->
                   <th>Image</th>
                   <th>Tên</th>
-                  <!-- <th>Code</th> -->
+                  <th>Code</th>
                   <th>Trạng thái</th>
                   <th>Thể loại</th>
                   <th>Hãng</th>

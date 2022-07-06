@@ -18,6 +18,8 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from '../environments/environment';
 import { NgChartsModule } from 'ng2-charts';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LoginUserComponent } from './components/login-user/login-user.component';
+import { RegisterUserComponent } from './components/register-user/register-user.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    LoginUserComponent,
+    RegisterUserComponent
   ],
   imports: [
     BrowserModule,

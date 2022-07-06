@@ -1,0 +1,11 @@
+.login-logo{
+  text-align: left !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-box-msg{
+  font-size: 20px !important;
+  font-weight: 600;
+  color: rgb(89, 141, 186);
+}

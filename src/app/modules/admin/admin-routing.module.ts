@@ -61,7 +61,7 @@ const routes: Routes = [
       // {path: 'order/aborted', component: OrderAbortedComponent},
       {path: 'warranty', component: WarrantyComponent},
       {path: 'import-product', component: ImportProductComponent},
-      {path: '', redirectTo:'./home', pathMatch:'full' },
+      {path: '', redirectTo:'/admin/home', pathMatch:'full' },
     ]
   }
 ];

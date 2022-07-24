@@ -37,6 +37,7 @@ export class CreateProductComponent implements OnInit {
   aliases: ProductInformation[] = []
   productInformation: any
   numberValidate = "^[0-9]*$"
+  isLoading: boolean = false
   // Editor = ClassicEditor
   ngOnInit(): void {
     this.getAllCategory();
@@ -178,6 +179,7 @@ export class CreateProductComponent implements OnInit {
   }
   $: any;
   onSubmit(){
+    this.isLoading = true;
     let categoryId = (function ($) {
       let se = $('#category').select2('data')[0]
       // console.log("selected category: ", se.id)
@@ -227,6 +229,7 @@ export class CreateProductComponent implements OnInit {
         this.apiProduct.createProduct(this.product).subscribe((data:{})=>{
           this.toastsService.alert('Thông báo !!!', 'Thêm sản phẩm thành công!!!','bg-success');
           console.log(this.product)
+          this.isLoading = false
           this.route.navigate(['/admin/product'])
         })
       },4600 + 100*(this.selectedFilesArray.length))

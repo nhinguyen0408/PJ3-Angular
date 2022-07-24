@@ -29,7 +29,7 @@ import { RegisterUserComponent } from './components/register-user/register-user.
     RegisterComponent,
     NotFoundComponent,
     LoginUserComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
   ],
   imports: [
     BrowserModule,

@@ -58,6 +58,7 @@ export class DashboardComponent implements OnInit {
   chartSoldTotal: number [] = []
   chartMonth: number [] = []
   countDown: any
+
   getProuctSold(){
 
   }

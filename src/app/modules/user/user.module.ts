@@ -6,6 +6,9 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { RightSideComponent } from './right-side/right-side.component';
+import { ProductComponent } from './product/product.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -13,11 +16,15 @@ import { RightSideComponent } from './right-side/right-side.component';
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    RightSideComponent
+    RightSideComponent,
+    ProductComponent
   ],
   imports: [
     CommonModule,
-    UserRoutingModule
+    UserRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgxPaginationModule
   ]
 })
 export class UserModule { }

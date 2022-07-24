@@ -11,13 +11,16 @@ export class ApiBillService {
 
   constructor(private http: HttpClient) { }
 
-  url = API_URL
+  url = API_URL;
+  token: any = localStorage.getItem('token') ? localStorage.getItem('token') : '' ;
+
   httpOptions = {
     headers : new HttpHeaders({
       'Access-Control-Allow-Origin':'*',
       "Access-Control-Allow-Headers":'*',
       'Content-type':'application/json',
-      'withCredentials': 'true'
+      'withCredentials': 'true',
+      'Accept-Token': this.token
     })
   }
 
@@ -38,7 +41,7 @@ export class ApiBillService {
     )
   }
   getBillById(id: number):Observable<Bill>{
-    return this.http.get<Bill>(this.url+"/bill/getById?billId=" + id).pipe(
+    return this.http.get<Bill>(this.url+"/bill/getById?billId=" + id, this.httpOptions).pipe(
       catchError(this.handleError)
     )
   }
@@ -50,18 +53,18 @@ export class ApiBillService {
   }
   searchBill(startDate: string, endDate: string, profileId: number):Observable<Bill>{
     if(profileId == 0){
-      return this.http.get<Bill>(this.url+"/bill/getall?startDate="+startDate+"&endDate="+endDate).pipe(
+      return this.http.get<Bill>(this.url+"/bill/getall?startDate="+startDate+"&endDate="+endDate, this.httpOptions).pipe(
         catchError(this.handleError)
       )
     } else {
-      return this.http.get<Bill>(this.url+"/bill/getall?startDate="+startDate+"&endDate="+endDate + "&profileId=" + profileId).pipe(
+      return this.http.get<Bill>(this.url+"/bill/getall?startDate="+startDate+"&endDate="+endDate + "&profileId=" + profileId, this.httpOptions).pipe(
         catchError(this.handleError)
       )
     }
 
   }
   searchBillWarranty(phone: string):Observable<Bill>{
-    return this.http.get<Bill>(this.url+"/bill/getall?phone=" + phone).pipe(
+    return this.http.get<Bill>(this.url+"/bill/getall?phone=" + phone, this.httpOptions).pipe(
       catchError(this.handleError)
     )
   }

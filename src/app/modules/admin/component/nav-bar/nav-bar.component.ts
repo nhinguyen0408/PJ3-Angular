@@ -13,10 +13,9 @@ export class NavBarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getDataUser()
-    // (function ($) {
-
-    // })(jQuery);
+    setTimeout(() => {
+      this.getDataUser()
+    }, 200)
   }
 
   username: string | null = '';
@@ -28,7 +27,6 @@ export class NavBarComponent implements OnInit {
     this.api.getProfileById(Number(id)).subscribe((res:any)=>{
       this.profile = res;
       this.userAvt = this.profile.imageUrl
-      console.log("userAvt====",this.userAvt)
     })
   }
 

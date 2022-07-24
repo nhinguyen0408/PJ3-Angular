@@ -1,5 +1,8 @@
 <div class="content-wrapper">
   <div class="container-fluid">
+    <div class="is-loading" *ngIf="isLoading === true">
+      <div class="loader"></div>
+    </div>
     <div class="card-body">
       <div class="row">
         <div class="col-md-3">

@@ -29,7 +29,7 @@ export class EditProductComponent implements OnInit {
     private toastsService: ToastService,
     private location: Location
     ) { }
-
+  isLoading: boolean = false
   aliases: any[] = []
   productInformation: any
   product: any;
@@ -254,6 +254,7 @@ imgNamePreview: string [] = []
   }
   $: any;
   onSubmit(){
+    this.isLoading = true
     if(window.confirm("Bạn có muốn thực thi những thay đổi??? Xác Nhận::::")){
       let categoryId = (function ($) {
         let se = $('#category').select2('data')[0]
@@ -305,6 +306,7 @@ imgNamePreview: string [] = []
             console.log(" new avatar",this.product);
             this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
               this.toastsService.alert('Thông báo !!!', 'Sửa sản phẩm thành công!!!','bg-success');
+              this.isLoading = false;
               this.route.navigate(['/admin/product/details/'+ this.product.id])
             })
           }, 5000)
@@ -317,6 +319,7 @@ imgNamePreview: string [] = []
               console.log(" new more image",this.product);
               this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
                 this.toastsService.alert('Thông báo !!!', 'Sửa sản phẩm thành công!!!','bg-success');
+                this.isLoading = false;
                 this.route.navigate(['/admin/product/details/'+ this.product.id])
               })
             }, 5000)
@@ -324,6 +327,7 @@ imgNamePreview: string [] = []
             console.log("default",this.product);
             this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
               this.toastsService.alert('Thông báo !!!', 'Sửa sản phẩm thành công!!!','bg-success');
+              this.isLoading = false;
               this.route.navigate(['/admin/product/details/'+ this.product.id])
             })
           }

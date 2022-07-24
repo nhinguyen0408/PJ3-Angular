@@ -1,7 +1,7 @@
 import { ShoppingCart } from "./ShoppingCart.model";
 export class Bill{
   profileId: number = 0;
-  voucherId: number = 0;
+  voucherId: number| null = null;
   description: string = "";
   totalPrice: number = 0;
   discountPrice: number = 0;

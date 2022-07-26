@@ -21,6 +21,7 @@ export class MyProfileComponent implements OnInit {
     private uploadService: FileUploadService,
     private toastsService: ToastService,
   ) { }
+  isLoading: boolean = false;
   myProfile: any;
   profileUpdate: any;
   ngOnInit(): void {
@@ -109,17 +110,20 @@ export class MyProfileComponent implements OnInit {
       this.toastsService.alert("Thông báo !!!!", "Vui lòng nhập đủ thông tin !!!","bg-warning");
     } else {
       if(window.confirm("Chắc chắn bạn muốn thực hiện thay đổi ????")){
+        this.isLoading = true;
         if(this.selectedFiles != null && this.selectedFiles != undefined){
           this.upload();
           setTimeout(()=>{
             console.log("Mydata",this.myProfile)
             this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
+              this.isLoading = false;
               this.toastsService.alert("Thông báo !!!!", "Sửa tài khoản thành công !!!","bg-success");
               this.getMydata()
             });
           },4300)
         } else {
           this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
+            this.isLoading = false;
             window.location.reload;
             this.toastsService.alert("Thông báo !!!!", "Sửa tài khoản thành công !!!","bg-success");
           });
@@ -132,6 +136,7 @@ export class MyProfileComponent implements OnInit {
   onChangePassword(){
     if(this.changePassForm.valid){
       if(this.changePassForm.value.newPass === this.changePassForm.value.reNewPass && this.changePassForm.value.newPass != this.changePassForm.value.oldPass) {
+        this.isLoading = true;
         const oldPass = this.changePassForm.value.oldPass;
         const newPass = this.changePassForm.value.newPass;
         const myId = localStorage.getItem("adminId");
@@ -139,13 +144,15 @@ export class MyProfileComponent implements OnInit {
         console.log("objChangePass===== ", objChangePass)
         this.api.updatePassword(objChangePass).subscribe(data =>{
           // window.alert("Đổi mật khẩu thành công !!!!!");
+          this.isLoading = false;
           this.toastsService.alert('Thông báo !!!', 'Đổi mật khẩu thành công !!!!!','bg-success');
           this.auth.logout();
         })
         this.changePassForm.reset()
-
+        this.isLoading = false;
        } else {
         // alert("Mật khẩu nhập lại không trùng khớp hoặc trùng với mật khẩu cũ !!!")
+        this.isLoading = false;
         this.toastsService.alert('Thông báo !!!', 'Mật khẩu nhập lại không trùng khớp hoặc trùng với mật khẩu cũ !!!','bg-danger');
        }
 

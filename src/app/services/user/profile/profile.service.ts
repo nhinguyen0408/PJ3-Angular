@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { profile } from 'console';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Profile } from 'src/app/models/Profile.model';
 import { API_URL } from '../../api-const.type';
@@ -51,6 +52,14 @@ export class ProfileService {
       catchError(this.handleError)
     )
   }
+
+  registerUser = (profile: Profile) => {
+    return this.http.post<Profile>(this.url+'/profile/user/register', profile).pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+
   handleError(err: ErrorEvent) {
     let errorMessage = "";
     if(err.error instanceof ErrorEvent){

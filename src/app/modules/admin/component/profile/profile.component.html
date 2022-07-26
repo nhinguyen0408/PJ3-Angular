@@ -35,7 +35,7 @@
                   <td class="align-middle">
                     <div class="text-center">
                       <img class="profile-user-img img-fluid img-circle" *ngIf="item.imageUrl=== null || item.imageUrl ===''"
-                           src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg"
+                           src="assets/dist/img/avatar-default.jpg"
                            alt="User profile picture">
                       <img class="profile-user-img img-fluid img-circle" *ngIf="item.imageUrl"
                            src="{{item.imageUrl}}"
@@ -43,7 +43,7 @@
 
                     </div>
                   </td>
-                  <td class="align-middle">{{item.fistName + item.lastName }}</td>
+                  <td class="align-middle">{{item.fistName + ' ' + item.lastName }}</td>
                   <td class="align-middle">{{item.gender}}</td>
                   <td class="align-middle">{{item.phone}}</td>
                   <td class="align-middle">{{item.email}}</td>

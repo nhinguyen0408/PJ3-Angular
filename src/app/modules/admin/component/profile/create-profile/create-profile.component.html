@@ -2,6 +2,9 @@
 
 <div class="content-wrapper">
   <div class="container-fluid">
+    <div class="is-loading" *ngIf="isLoading === true">
+      <div class="loader"></div>
+    </div>
     <div class="row">
         <div class="col-lg-4 col-xl-4">
             <div class="card">

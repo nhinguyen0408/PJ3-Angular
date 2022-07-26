@@ -9,3 +9,29 @@
   font-weight: 600;
   color: rgb(89, 141, 186);
 }
+.login-page{
+  background-image: url("../../../assets/dist/img/bg-login-user.jpeg");
+  opacity: 1;
+  position: relative;
+}
+.login-box{
+  background-color: #fff;
+  border-radius: 5px;
+}
+.login-box .card-body{
+  padding: 20px 15px;
+  border-bottom: none;
+}
+.login-box .card{
+  margin-bottom: 0px;
+  border-radius: 5px 0px;
+}
+.title-login{
+  position: absolute;
+  color: #fff;
+  top: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}

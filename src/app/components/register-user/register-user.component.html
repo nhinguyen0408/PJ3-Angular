@@ -93,6 +93,7 @@
               </div>
             </div>
           </div>
+
           <div class="form-group row">
             <label for="birthday" class="col-sm-3 col-form-label">Ngày sinh</label>
             <div class="col-sm-9">
@@ -133,15 +134,61 @@
               </div>
             </div>
           </div>
+          <div class="form-group row">
+            <label for="inputEmail" class="col-sm-3 col-form-label">Mật khẩu</label>
+            <div class="col-sm-9">
+              <input type="password" class="form-control" id="inputEmail"
+              [(ngModel)]="newProfile.passWord"
+              required #passWord="ngModel" placeholder="mật khẩu"
+              name="passWord">
+
+              <div *ngIf="passWord.invalid && (passWord.dirty || passWord.touched)"
+                class="alert"
+                style="background: rgb(248, 131, 131); border-radius: 0%;"
+                >
+
+                <div *ngIf="passWord.errors?.['required']">
+                  Mật khẩu không được để trống !!!!
+                </div>
+
+                <div *ngIf="newProfile.passWord.trim().length < 6 && newProfile.passWord.trim().length != 0">
+                  Mật khẩu cần ít nhất 6 ký tự !!!
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputEmail" class="col-sm-3 col-form-label">Nhập lại mật khẩu</label>
+            <div class="col-sm-9">
+              <input type="password" class="form-control" id="inputEmail"
+              [(ngModel)]="confirmPassWord"
+              required #confirmPass="ngModel" placeholder="nhập lại mật khẩu"
+              name="confirmPassWord">
+
+              <div *ngIf="confirmPass.invalid && (confirmPass.dirty || confirmPass.touched)"
+                class="alert"
+                style="background: rgb(248, 131, 131); border-radius: 0%;"
+                >
+
+                <div *ngIf="confirmPass.errors?.['required']">
+                  Mật khẩu không được để trống !!!!
+                </div>
+
+                <div *ngIf="confirmPassWord.trim().length < 6 && confirmPassWord.trim().length != 0">
+                  Mật khẩu cần ít nhất 6 ký tự !!!
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div class="form-group row">
             <div class="offset-sm-2 col-sm-10">
-              <button type="submit" class="btn btn-danger" (click)="onCreate()" >Submit</button>
+              <button type="submit" class="btn btn-danger" (click)="onCreate()" >Đăng Ký</button>
             </div>
           </div>
         </form>
 
-        <a href="login.html" class="text-center">I already have a membership</a>
+        <a routerLink="/user/login" class="text-center">Tôi đã có tài khoản?</a>
       </div>
       <!-- /.form-box -->
     </div><!-- /.card -->

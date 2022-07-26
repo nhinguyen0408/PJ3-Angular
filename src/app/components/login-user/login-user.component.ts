@@ -38,9 +38,10 @@ export class LoginUserComponent implements OnInit {
             localStorage.setItem("username", result.responseData.profile.fistName + result.responseData.profile.lastName );
             localStorage.setItem('user-avatar', result.responseData.profile.imageUrl)
             localStorage.setItem("userId", result.responseData.profile.id)
-            console.log("done")
             this.router.navigate(['user']);
           }
+          else{
+            alert(`Message : Sai tên đăng nhập hoặc mật khẩu`);           }
         },
         (err:ErrorEvent) => {
           console.log(err)

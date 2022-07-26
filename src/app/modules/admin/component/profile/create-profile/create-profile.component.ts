@@ -19,6 +19,7 @@ export class CreateProfileComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  isLoading: boolean = false;
 
   newProfile = new Profile();
   phoneValidate: string = '^(84|0[3|5|7|8|9])+([0-9]{8})$'
@@ -27,6 +28,7 @@ export class CreateProfileComponent implements OnInit {
     if(this.newProfile.fistName != "" && this.newProfile.lastName != "" && this.newProfile.phone != ""
         && this.newProfile.email != "" && this.newProfile.dateBirth != null && this.newProfile.gender != ""
         && this.newProfile.address != "" && this.newProfile.role != ""){
+          this.isLoading = true;
           this.newProfile.passWord = '123123';
           console.log("Obj create::::::: ", this.newProfile)
           this.api.createProfile(this.newProfile).subscribe(data => {
@@ -35,6 +37,7 @@ export class CreateProfileComponent implements OnInit {
             } else if(data.responseCode == '001'){
               this.toastsService.alert('Thông báo !!!', 'Email đã được sử dụng !!!','bg-danger');
             } else if(data.responseCode == '200'){
+              this.isLoading = false;
               this.toastsService.alert('Thông báo !!!', 'Thêm nhân viên thành công !!! Mật khẩu mặc định là 123123 !!!','bg-success');
               this.route.navigate(['admin/employee-manager'])
             }

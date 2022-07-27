@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Sale } from 'src/app/models/Sale.model';
-import { ApiSaleService } from 'src/app/services/sale/api-sale.service';
+import { ApiSaleService } from 'src/app/services/admin/sale/api-sale.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 declare var jQuery: any;

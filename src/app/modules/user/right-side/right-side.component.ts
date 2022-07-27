@@ -12,4 +12,5 @@ export class RightSideComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  shopping_Cart: any = []
 }

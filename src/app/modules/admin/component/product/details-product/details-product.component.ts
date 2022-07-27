@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiProductService } from 'src/app/services/product/api-product.service';
+import { ApiProductService } from 'src/app/services/admin/product/api-product.service';
 
 declare var jQuery: any;
 

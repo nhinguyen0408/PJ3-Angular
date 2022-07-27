@@ -1,8 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiProductService } from 'src/app/services/product/api-product.service';
-import { ApiSaleService } from 'src/app/services/sale/api-sale.service';
+import { ApiProductService } from 'src/app/services/admin/product/api-product.service';
+import { ApiSaleService } from 'src/app/services/admin/sale/api-sale.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 @Component({

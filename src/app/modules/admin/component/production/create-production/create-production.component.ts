@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Production } from 'src/app/models/Production.model';
-import { ApiProductionService } from 'src/app/services/production/api-production.service';
+import { ApiProductionService } from 'src/app/services/admin/production/api-production.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 @Component({

@@ -3,9 +3,9 @@ import { Category } from 'src/app/models/Category.model';
 import { CountDown } from 'src/app/models/CountDown.model';
 import { Product } from 'src/app/models/Product.model';
 import { Production } from 'src/app/models/Production.model';
-import { ApiCategoryService } from 'src/app/services/category/api-category.service';
-import { ApiProductService } from 'src/app/services/product/api-product.service';
-import { ApiProductionService } from 'src/app/services/production/api-production.service';
+import { ApiCategoryService } from 'src/app/services/admin/category/api-category.service';
+import { ApiProductService } from 'src/app/services/admin/product/api-product.service';
+import { ApiProductionService } from 'src/app/services/admin/production/api-production.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 declare var jQuery: any;

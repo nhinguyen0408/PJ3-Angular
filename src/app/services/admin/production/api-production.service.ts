@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Production } from 'src/app/models/Production.model';
-import { API_URL } from '../api-const.type';
+import { API_URL } from '../../api-const.type';
 
 @Injectable({
   providedIn: 'root'

@@ -17,3 +17,16 @@
 .fa-shopping-cart{
   color: #fff !important;
 }
+.main-header{
+  position: fixed;
+  width: 100vw;
+}
+.dropdown-menu-category{
+  left: 14px;
+  width: 300px;
+}
+.dropdown-menu-category > li:hover{
+  background: rgb(67, 67, 67) !important;
+}
+
+

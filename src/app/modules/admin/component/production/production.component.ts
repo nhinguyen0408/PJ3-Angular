@@ -1,6 +1,6 @@
 import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
 import { Production } from 'src/app/models/Production.model';
-import { ApiProductionService } from 'src/app/services/production/api-production.service';
+import { ApiProductionService } from 'src/app/services/admin/production/api-production.service';
 
 
 declare var jQuery: any;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiProfileService } from 'src/app/services/profile/api-profile.service';
+import { ApiProfileService } from 'src/app/services/admin/profile/api-profile.service';
 declare var jQuery: any;
 @Component({
   selector: 'app-nav-bar',

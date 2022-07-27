@@ -4,9 +4,9 @@ import { Chart } from 'chart.js';
 // import { baseColors, Labels } from 'ng2-charts';
 import { Bill } from 'src/app/models/Bill.model';
 import { Product } from 'src/app/models/Product.model';
-import { ApiBillService } from 'src/app/services/bill/api-bill.service';
-import { ApiDashboardService } from 'src/app/services/dashboard/api-dashboard.service';
-import { ApiProductService } from 'src/app/services/product/api-product.service';
+import { ApiBillService } from 'src/app/services/admin/bill/api-bill.service';
+import { ApiDashboardService } from 'src/app/services/admin/dashboard/api-dashboard.service';
+import { ApiProductService } from 'src/app/services/admin/product/api-product.service';
 declare var jQuery: any;
 @Component({
   selector: 'app-dashboard',
@@ -104,15 +104,16 @@ export class DashboardComponent implements OnInit {
       this.productList = res;
 
       this.getOutOfStockSoon()
-      for(let i = 0; i<= this.productList.length; i++){
-        this.sumPr += this.productList[i]?.quantity;
+      for(let i = 0; i< this.productList.length; i++){
+        this.sumPr += Number(this.productList[i]?.quantity);
+        console.log('this.productList[i]?.quantity',this.productList[i]?.quantity)
       }
     })
+
   }
   getChart(){
     this.api.getChart().subscribe((res: any) => {
       this.chartData = res;
-      console.log("this.chartData==",this.chartData)
       for(let i = 0; i <= 11; i++){
         this.chartImportTotal[i] = this.chartData[i].importTotal;
         this.chartSoldTotal[i] = this.chartData[i].soldTotal;
@@ -137,11 +138,10 @@ export class DashboardComponent implements OnInit {
           this.dataDay.push(element.day);
           this.dataBill.push(element.billCount);
           this.dataTotalSale.push(element.totalSale);
-
         })
+
         this.createChartMonth(this.dataDay, this.dataBill, this.dataTotalSale)
         // console.log("dataDay==",this.dataDay);
-        console.log("dataDay==",this.dataTotalSale);
       }
     })
   }
@@ -212,7 +212,7 @@ export class DashboardComponent implements OnInit {
               label: 'Tổng Bán',
               backgroundColor: '#1DA8BD',
               borderColor    : '#ced4da',
-              data           : dataTotalSale
+              data           : dataBill
             }
           ]
         },
@@ -251,11 +251,9 @@ export class DashboardComponent implements OnInit {
   }
   productOutOfStockSoonList: Product [] = [];
   getOutOfStockSoon(){
-    console.log("productList",this.productList)
     this.productList.forEach( (element: any) => {
       if(element.quantity < 5){
         this.productOutOfStockSoonList.push(element);
-        console.log("element",element)
       }
     });
   }
@@ -263,7 +261,6 @@ export class DashboardComponent implements OnInit {
   getBestEmp(){
     this.api.getBestEmployee().subscribe((res:any)=>{
       this.dataBestEmp = res;
-      console.log("this.dataBestEmp",res)
     })
   }
 

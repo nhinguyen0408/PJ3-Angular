@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiBillService } from 'src/app/services/bill/api-bill.service';
+import { ApiBillService } from 'src/app/services/admin/bill/api-bill.service';
 
 @Component({
   selector: 'app-order-details',

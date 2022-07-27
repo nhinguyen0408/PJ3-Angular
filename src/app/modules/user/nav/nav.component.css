@@ -1,0 +1,7 @@
+.main-sidebar{
+  margin-top: 78px;
+  margin-bottom: 78px;
+  height: calc(100vh - 120px) !important;
+  z-index: 1;
+  padding-top: 100px;
+}

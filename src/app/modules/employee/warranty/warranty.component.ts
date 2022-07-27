@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Bill } from 'src/app/models/Bill.model';
-import { ApiBillService } from 'src/app/services/bill/api-bill.service';
+import { ApiBillService } from 'src/app/services/admin/bill/api-bill.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 @Component({

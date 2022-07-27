@@ -113,3 +113,9 @@
   border-radius: 20px !important;
   border: transparent !important;
 }
+.content-wrapper{
+  padding-top: 90px;
+  /* margin-left: 0px !important; */
+  margin: 0px 150px !important;
+  background: none !important;
+}

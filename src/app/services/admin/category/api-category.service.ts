@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Category } from 'src/app/models/Category.model';
-import { API_URL } from '../api-const.type';
-import { ToastService } from '../toasts-alert/toast.service';
+import { API_URL } from '../../api-const.type';
+import { ToastService } from '../../toasts-alert/toast.service';
 
 @Injectable({
   providedIn: 'root'

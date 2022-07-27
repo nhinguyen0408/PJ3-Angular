@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { ApiProfileService } from 'src/app/services/profile/api-profile.service';
+import { AuthService } from 'src/app/services/admin/auth/auth.service';
+import { ApiProfileService } from 'src/app/services/admin/profile/api-profile.service';
 
 @Component({
   selector: 'app-nav',

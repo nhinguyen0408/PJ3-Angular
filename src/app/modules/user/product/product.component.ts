@@ -5,7 +5,7 @@ import { CountDown } from 'src/app/models/CountDown.model';
 import { Product } from 'src/app/models/Product.model';
 import { Production } from 'src/app/models/Production.model';
 import { ShoppingCart } from 'src/app/models/ShoppingCart.model';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { AuthService } from 'src/app/services/admin/auth/auth.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 import { CategoryService } from 'src/app/services/user/category/category.service';
 import { ProductService } from 'src/app/services/user/product/product.service';
@@ -72,13 +72,13 @@ export class ProductComponent implements OnInit {
   shoppingCart: ShoppingCart [] =  [];
   dataLocal: any;
   getShoppingCart(){
-    if(localStorage.getItem('cart') != null && localStorage.getItem('cart') != undefined){
-      // this.shoppingCart = JSON.parse(localStorage.getItem('cart'));
-      this.dataLocal = localStorage.getItem('cart') ? localStorage.getItem('cart') : '' ;
-      this.shoppingCart = JSON.parse(this.dataLocal);
-      this.getTotal()
-      // console.log("shoppingCart======== ",localStorage.getItem('cart') )
-    }
+    // if(localStorage.getItem('cart') != null && localStorage.getItem('cart') != undefined){
+    //   // this.shoppingCart = JSON.parse(localStorage.getItem('cart'));
+    //   this.dataLocal = localStorage.getItem('cart') ? localStorage.getItem('cart') : '' ;
+    //   this.shoppingCart = JSON.parse(this.dataLocal);
+    //   this.getTotal()
+    //   // console.log("shoppingCart======== ",localStorage.getItem('cart') )
+    // }
   }
   updateQuantityCart(dataUpdate: any){
     //todo

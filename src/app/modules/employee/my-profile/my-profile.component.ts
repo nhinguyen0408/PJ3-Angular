@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FileUpload } from 'src/app/models/upload/FileUpload.model';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { ApiProfileService } from 'src/app/services/profile/api-profile.service';
+import { AuthService } from 'src/app/services/admin/auth/auth.service';
+import { ApiProfileService } from 'src/app/services/admin/profile/api-profile.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 import { FileUploadService } from 'src/app/services/upload/file-upload.service';
 

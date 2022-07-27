@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, of, retry, throwError } from 'rxjs';
 import { Login } from 'src/app/models/Login.model';
-import { API_URL } from '../api-const.type';
+import { API_URL } from '../../api-const.type';
 
 @Injectable({
   providedIn: 'root'

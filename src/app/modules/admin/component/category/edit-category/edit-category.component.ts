@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiCategoryService } from 'src/app/services/category/api-category.service';
+import { ApiCategoryService } from 'src/app/services/admin/category/api-category.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 @Component({

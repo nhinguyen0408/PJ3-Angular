@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiProductionService } from 'src/app/services/production/api-production.service';
+import { ApiProductionService } from 'src/app/services/admin/production/api-production.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 @Component({

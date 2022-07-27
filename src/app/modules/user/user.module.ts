@@ -9,6 +9,10 @@ import { RightSideComponent } from './right-side/right-side.component';
 import { ProductComponent } from './product/product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NavComponent } from './nav/nav.component';
+import { CartComponent } from './cart/cart.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProductByCategoryComponent } from './product/product-by-category/product-by-category.component';
 
 
 @NgModule({
@@ -17,7 +21,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FooterComponent,
     HomeComponent,
     RightSideComponent,
-    ProductComponent
+    ProductComponent,
+    NavComponent,
+    CartComponent,
+    ProfileComponent,
+    ProductByCategoryComponent
   ],
   imports: [
     CommonModule,

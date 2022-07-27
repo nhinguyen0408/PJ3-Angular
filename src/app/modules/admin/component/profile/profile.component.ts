@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Profile } from 'src/app/models/Profile.model';
-import { ApiProfileService } from 'src/app/services/profile/api-profile.service';
+import { ApiProfileService } from 'src/app/services/admin/profile/api-profile.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 declare var jQuery: any;

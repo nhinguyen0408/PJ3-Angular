@@ -3,17 +3,9 @@
   <div class="container-fluid">
     <div class="content-body">
       <div class="row">
-        <div class="col-12 m-b-30">
-          <div class="d-flex justify-content-between mt-3">
-
-          </div>
-        </div>
-        <!-- Pagination -->
-      </div>
-      <div class="row">
-        <div class="col-12 m-b-30">
-          <div class="card">
-
+        <div class="col-12 m-b-30 m-t-30">
+          <div class="card p-2">
+            <h3>Danh sách sản phẩm</h3>
           </div>
         </div>
 
@@ -26,7 +18,7 @@
                   itemsPerPage: tableSize,
                   currentPage: page,
                   totalItems: count
-                };; index as i " >
+                }; index as i " >
                     <div class="card border shadow">
                         <img class="img-fluid card-img-top product-image" src="{{item.avatarUrl}}" alt="Card image cap">
                         <div class="">
@@ -75,93 +67,9 @@
 
                 </div>
               </div>
-          <!-- <table id="example1" class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th style="width: 10px">#</th>
-                <th></th>
-                <th>Tên</th>
-                <th>Code</th>
-                <th>SL trong kho</th>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of productList; let i = index">
-                <td class="align-middle">{{i + 1}}</td>
-                <td class="align-middle"><img class="img-fluid card-img-top product-image" src="{{item.avatarUrl}}" alt="Card image cap"></td>
-                <td class="align-middle" width="40%">
-                  <a class="text-primary name" data-toggle="modal" data-target="#modal-xl" (click)="onGetProductDetails(item.id)">
-                    {{item.name}}
-                  </a>
-                  <div *ngIf="item.saleEntity">
-                    <div>
-                      <div class="d-flex sale" *ngIf="countDown[i] && item.saleEntity &&  item.id == countDown[i].idPr">
-                        <div class="sale-percent btn">SALE {{item.saleEntity.sale}}% in
-                         <span class="countdown">{{countDown[i].days}}</span>:<span class="countdown">{{countDown[i].hours}}</span>:<span class="countdown">{{countDown[i].minutes}}</span>:<span class="countdown">{{countDown[i].seconds}}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="bg-dark py-2 px-3 mt-4 price">
-                    <h5 class="mb-0" *ngIf="item.saleEntity === null || item.saleEntity === 0 || item.saleEntity === undefined">
-                      {{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
-
-                    </h5>
-                    <div *ngIf="item.saleEntity">
-                      <h5 class="mb-0" >
-                        {{(item.salePrice - item.salePrice * item.saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
-
-                      </h5>
-                      <h5 class="mt-0">
-                        <small>Ex Tax: <del>{{(item.salePrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del> </small>
-                      </h5>
-                    </div>
-
-                  </div>
-
-                </td>
-                <td class="align-middle"><span class="font-weight-bold text-info">{{item.code}}</span></td>
-
-                <td class="align-middle">{{item.quantity}}</td>
-                <td class="align-middle">
-                  <a class="btn mb-1 btn-success text-white mr-2" (click)="addShoppingCart(item.id)">Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i></a>
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th style="width: 10px">#</th>
-                <th></th>
-                <th>Tên</th>
-                <th>Code</th>
-                <th>SL trong kho</th>
-                <td></td>
-              </tr>
-            </tfoot>
-          </table> -->
         </div>
 
         <div class="col-lg-12" >
-          <!-- <div class="modal fade" id="modal-xl" *ngIf="productDetails && onShow === true">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title">Hóa đơn thanh toán</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onEndShowDetails()">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body" >
-
-                </div>
-                <div class="modal-footer justify-content-between">
-                  <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onEndShowDetails()">Close</button>
-                </div>
-              </div>
-            </div>
-          </div> -->
-
           <div class="modal fade" id="modal-xl" *ngIf="productDetails && onShow === true">
             <div class="modal-dialog modal-xl">
               <div class="modal-content">

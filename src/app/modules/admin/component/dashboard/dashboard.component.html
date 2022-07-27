@@ -63,10 +63,10 @@
         <div class="col-12 col-sm-6 col-md-3">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3 *ngIf="turnOver.importPrice > 0"><small>Doanh thu đạt mức</small> {{((turnOver.turnover / turnOver.importPrice) *100).toFixed()}}%</h3>
-              <h3 *ngIf="turnOver.importPrice == 0">100%</h3>
-              <p><small>Thu: {{turnOver.turnover.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
-                | Nhập: {{turnOver.importPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</small></p>
+              <h3 *ngIf="turnOver?.importPrice > 0"><small>Doanh thu đạt mức</small> {{((turnOver?.turnover / turnOver?.importPrice) *100).toFixed()}}%</h3>
+              <h3 *ngIf="turnOver?.importPrice == 0">100%</h3>
+              <p><small>Thu: {{turnOver?.turnover.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                | Nhập: {{turnOver?.importPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</small></p>
             </div>
             <div class="icon">
               <i class="fab fa-accusoft"></i>
@@ -81,7 +81,7 @@
         <div class="col-12 col-sm-6 col-md-3">
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3>{{countNewProfile.count }}</h3>
+              <h3>{{countNewProfile?.count }}</h3>
 
               <p>Nhân viên đăng ký mới</p>
             </div>
@@ -198,7 +198,7 @@
                 <div class="col-sm-4 col-6">
                   <div class="description-block border-right">
                     <!-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span> -->
-                    <h5 class="description-header text-danger">{{turnOver.importPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</h5>
+                    <h5 class="description-header text-danger">{{turnOver?.importPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</h5>
                     <span class="description-text">Tổng nhập tháng</span>
                   </div>
                   <!-- /.description-block -->
@@ -207,7 +207,7 @@
                 <div class="col-sm-4 col-6">
                   <div class="description-block border-right">
                     <!-- <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span> -->
-                    <h5 class="description-header text-success">{{turnOver.turnover.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</h5>
+                    <h5 class="description-header text-success">{{turnOver?.turnover.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</h5>
                     <span class="description-text">Tổng Doanh thu</span>
                   </div>
                   <!-- /.description-block -->
@@ -216,7 +216,7 @@
                 <div class="col-sm-4 col-6">
                   <div class="description-block border-right">
                     <!-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span> -->
-                    <h5 class="description-header text-warning">{{countNewBill.count}}</h5>
+                    <h5 class="description-header text-warning">{{countNewBill?.count}}</h5>
                     <span class="description-text">Số đơn hàng</span>
                   </div>
                   <!-- /.description-block -->
@@ -483,10 +483,10 @@
 
               </ul> -->
               <ul class="col-md-12 users-list clearfix">
-                <li *ngFor="let item of countNewProfile.data; index as i">
+                <li *ngFor="let item of countNewProfile?.data; index as i">
                   <div *ngIf="i<8">
                     <img src="{{item.imageUrl}}" *ngIf="item.imageUrl" class="avatar-image" alt="User Image">
-                    <img src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg" *ngIf="item.imageUrl == null || item.imageUrl ==='' " alt="User Image" class="avatar-image">
+                    <img src="assets/dist/img/avatar-default.jpg" *ngIf="item.imageUrl == null || item.imageUrl ==='' " alt="User Image" class="avatar-image">
                     <a class="users-list-name" href="#">{{item.fistName + ' '+ item.lastName}}</a>
                     <span class="users-list-date">This month</span>
                   </div>
@@ -524,7 +524,7 @@
                   <li *ngIf="dataBestEmp">
                     <div >
                       <img src="{{dataBestEmp[0].profileEntity.imageUrl}}" *ngIf="dataBestEmp[0].profileEntity.imageUrl" class="avatar-image" alt="User Image">
-                      <img src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg" *ngIf="dataBestEmp[0].profileEntity.imageUrl == null || dataBestEmp[0].profileEntity.imageUrl ==='' " alt="User Image" class="avatar-image">
+                      <img src="assets/dist/img/avatar-default.jpg" *ngIf="dataBestEmp[0].profileEntity.imageUrl == null || dataBestEmp[0].profileEntity.imageUrl ==='' " alt="User Image" class="avatar-image">
                       <a class="users-list-name text-center" href="#">{{dataBestEmp[0].profileEntity.fistName + ' '+ dataBestEmp[0].profileEntity.lastName}}</a>
                       <span class="users-list-date text-center bg-success"><strong>Số đơn hàng đã bán: {{dataBestEmp[0].billCount}}</strong></span>
                     </div>

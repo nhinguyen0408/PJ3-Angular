@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Category } from 'src/app/models/Category.model';
-import { ApiCategoryService } from 'src/app/services/category/api-category.service';
+import { ApiCategoryService } from 'src/app/services/admin/category/api-category.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 @Component({

@@ -25,13 +25,13 @@ export class ProfileService {
   }
 
   getProfile():Observable<Profile>{
-    return this.http.get<Profile>(this.url+"/profile/getall").pipe(
+    return this.http.get<Profile>(this.url+"/profile/getall", this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )
   }
   getProfileById(id:number):Observable<Profile>{
-    return this.http.get<Profile>(this.url+"/profile/getById?id=" + id).pipe(
+    return this.http.get<Profile>(this.url+"/profile/getById?id=" + id, this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )
@@ -39,7 +39,7 @@ export class ProfileService {
 
 
   updateMyProfile(profile: Profile){
-    return this.http.put<Profile>(this.url+'/profile/updateMyProfile', profile).pipe(
+    return this.http.put<Profile>(this.url+'/profile/updateMyProfile', profile, this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )
@@ -47,14 +47,14 @@ export class ProfileService {
 
 
   updatePassword({oldPass ,newPass, myId}: any):Observable<any>{
-    return this.http.put(this.url+'/profile/changePass', {oldPass ,newPass, myId}).pipe(
+    return this.http.put(this.url+'/profile/changePass', {oldPass ,newPass, myId}, this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )
   }
 
   registerUser = (profile: Profile) => {
-    return this.http.post<Profile>(this.url+'/profile/user/register', profile).pipe(
+    return this.http.post<Profile>(this.url+'/profile/user/register', profile, this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )

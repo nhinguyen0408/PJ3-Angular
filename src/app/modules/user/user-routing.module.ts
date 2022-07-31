@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
+import { ProductByCategoryComponent } from './product/product-by-category/product-by-category.component';
+import { ProductDetailsComponent } from './product/product-details/product-details.component';
+import { ProductSearchComponent } from './product/product-search/product-search.component';
 import { ProductComponent } from './product/product.component';
 import { ProfileComponent } from './profile/profile.component';
 
@@ -13,8 +16,10 @@ const routes: Routes = [
       // {path: 'order/confirmed', component: OrderConfirmedComponent},
       // {path: 'myprofile', component: MyProfileComponent},
       {path: 'product', component: ProductComponent},
-      // {path: 'warranty', component: WarrantyComponent},
-      {path: '', redirectTo:'./product', pathMatch:'full' },
+      {path: 'product/details/:id', component: ProductDetailsComponent},
+      {path: 'product/search', component: ProductSearchComponent},
+      {path: 'cate/:id', component: ProductByCategoryComponent},
+      {path: '', redirectTo:'/user/product', pathMatch:'full' },
     ]
   }
 ];

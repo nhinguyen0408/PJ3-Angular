@@ -7,6 +7,7 @@ import { Production } from 'src/app/models/Production.model';
 import { ShoppingCart } from 'src/app/models/ShoppingCart.model';
 import { AuthService } from 'src/app/services/admin/auth/auth.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
+import { CartService } from 'src/app/services/user/cart/cart.service';
 import { CategoryService } from 'src/app/services/user/category/category.service';
 import { ProductService } from 'src/app/services/user/product/product.service';
 import { ProductionService } from 'src/app/services/user/production/production.service';
@@ -26,7 +27,8 @@ export class ProductComponent implements OnInit {
     private apiProduction: ProductionService,
     private toastsService: ToastService,
     private apiProfile: ProfileService,
-    private auth: AuthService
+    private auth: AuthService,
+    private apiCart: CartService,
     ) { }
 
   ngOnInit(): void {
@@ -34,14 +36,13 @@ export class ProductComponent implements OnInit {
     this.getCate();
     this.getProduction();
     this.getShoppingCart();
-
   }
   ngAfterViewInit(): void {
     setTimeout(()=>{
       this.setDataTable()
     },500)
   }
-  productList: Product[] = [];
+  productList: any[] = [];
   categoryList: Category[] = [];
   productionList: Production[] = [];
   categoryId: number | null = 0;
@@ -50,7 +51,7 @@ export class ProductComponent implements OnInit {
   productName: string  = '';
   checkSearch: boolean = false;
   getAll(){
-    this.api.getProductEnable().subscribe((res: any) => {
+    this.api.userGetAll().subscribe((res: any) => {
       this.productList = res;
       this.getCountDown();
     })
@@ -71,6 +72,7 @@ export class ProductComponent implements OnInit {
   }
   shoppingCart: ShoppingCart [] =  [];
   dataLocal: any;
+  cartDetail: any;
   getShoppingCart(){
     // if(localStorage.getItem('cart') != null && localStorage.getItem('cart') != undefined){
     //   // this.shoppingCart = JSON.parse(localStorage.getItem('cart'));
@@ -79,12 +81,22 @@ export class ProductComponent implements OnInit {
     //   this.getTotal()
     //   // console.log("shoppingCart======== ",localStorage.getItem('cart') )
     // }
+    this.apiCart.getDataCart().subscribe((res: any) => {
+      if(res){
+        this.cartDetail = res;
+      }
+    })
   }
   updateQuantityCart(dataUpdate: any){
     //todo
   }
-  addShoppingCart(id: number){
+  addShoppingCart(productId: number){
     //todo
+    if(window.confirm("Thêm sản phẩm này vào giỏ hàng ???"))
+    this.apiCart.addToCart(productId, 1).subscribe((res: any) => {
+      this.getShoppingCart()
+      this.toastsService.alert('Thông báo !!!', "Đã thêm sản phẩm vào giỏ hàng !!!!!!",'bg-success');
+    })
   }
   removeProduct(productShoppingId:number){
     //todo

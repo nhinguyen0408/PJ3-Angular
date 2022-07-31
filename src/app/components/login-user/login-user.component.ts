@@ -35,7 +35,7 @@ export class LoginUserComponent implements OnInit {
           if(result.responseMessage ==="SUCCESS" && result.responseData.role == "USER"){
             localStorage.setItem('user-role',result.responseData.role);
             localStorage.setItem('user-token',result.responseData.token);
-            localStorage.setItem("username", result.responseData.profile.fistName + result.responseData.profile.lastName );
+            localStorage.setItem("username", result.responseData.profile.fistName + ' ' + result.responseData.profile.lastName );
             localStorage.setItem('user-avatar', result.responseData.profile.imageUrl)
             localStorage.setItem("userId", result.responseData.profile.id)
             this.router.navigate(['user']);

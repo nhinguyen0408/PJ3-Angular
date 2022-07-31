@@ -3,6 +3,7 @@
   width: auto;
   object-fit: cover;
   position: relative;
+  border-bottom: 1px solid rgb(192, 192, 192);
 }
 
 .name{
@@ -10,11 +11,16 @@
 }
 .product-name{
   width: 100%;
+  height: 53px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+.product-name a{
+  text-decoration: none;
+  color: black !important;
 }
 .product-table{
   padding: 10px;
@@ -96,6 +102,7 @@
 .btn-success{
   background: rgb(46, 153, 153) !important;
   background: linear-gradient(90deg, rgba(125,134,50,1) 0%, rgba(48,75,9,1) 35%, rgba(152,89,64,1) 100%) !important;
+  border: none !important;
 }
 .ngx-pagination {
   padding-left: 0px !important;
@@ -114,8 +121,14 @@
   border: transparent !important;
 }
 .content-wrapper{
-  padding-top: 90px;
+  padding: 90px 0;
   /* margin-left: 0px !important; */
   margin: 0px 150px !important;
   background: none !important;
 }
+.cate-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+

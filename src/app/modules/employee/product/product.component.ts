@@ -86,11 +86,15 @@ export class ProductComponent implements OnInit {
   updateQuantityCart(dataUpdate: any){
     console.log('dataUpdate== ',dataUpdate);
     const product = this.productList.find(x => x.id === dataUpdate.productId);
-    console.log('product== ',product);
     if(product && product.quantity >= dataUpdate.quantityUpdate){
       const productShopping = this.shoppingCart[dataUpdate.shoppingCartIndex]
       productShopping.quantity = dataUpdate.newQuantity;
       productShopping.price = product.salePrice * productShopping.quantity;
+      console.log("in here",dataUpdate.quantityUpdate)
+      if(dataUpdate.newQuantity == '' || dataUpdate.newQuantity == undefined || dataUpdate.newQuantity == null){
+        this.shoppingCart.splice(dataUpdate.shoppingCartIndex,1)
+        console.log("in here")
+      }
       this.api.updateQuantity({'productId': dataUpdate.productId, 'action': dataUpdate.action, 'number':  dataUpdate.quantityUpdate}).subscribe(res => {
         this.getAll();
         this.storeShoppingCart(this.shoppingCart);
@@ -183,18 +187,12 @@ export class ProductComponent implements OnInit {
     this.totalItem = 0 ;
     for(const productShopping of this.shoppingCart){
       this.totalItem += productShopping.quantity;
-      console.log("productShopping.price",productShopping.price)
       this.totalPrice = this.totalPrice +  productShopping.price;
     }
     this.totalPay = this.totalPrice - this.discount;
-    console.log("totalPrice",this.totalPrice)
-    console.log("totalPay",this.totalPay)
-
-    console.log("asdlaksldk")
   }
   payment(bill: Bill){
     if(window.confirm("Xác nhận thanh toán !!!!!!!")){
-      console.log("bill", bill)
       this.billApi.createBill(bill).subscribe(res => {
         this.toastsService.alert('Thông báo !!!', "Thanh toán thành công !!!!!!",'bg-success');
         this.shoppingCart = []

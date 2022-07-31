@@ -53,8 +53,36 @@ export class ProductService {
       retry(1),
     )
   }
+  searchProductFilter(idCate: number, name: string):Observable<Product>{
+    return this.http.get<Product>(this.url+"/product/getall?idCate=" + idCate + "&name=" + name, this.httpOptions).pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+
+  searchProductByName( name: string):Observable<Product>{
+    return this.http.get<Product>(this.url+"/product/getall?name=" + name, this.httpOptions).pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+
   getById(id: number):Observable<Product>{
     return this.http.get<Product>(this.url+"/product/getdetail?id=" + id, this.httpOptions).pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+
+  getProductByCate(id: number):Observable<Product>{
+    return this.http.get<Product>(this.url+"/product/getall?idCate=" + id, this.httpOptions).pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+
+  userGetAll():Observable<any>{
+    return this.http.get<any>(this.url+"/product/user/getall", this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )

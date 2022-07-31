@@ -1,1 +1,108 @@
-<p>cart works!</p>
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="content-body pb-3">
+      <h4>Giỏ hàng của tôi</h4>
+      <div class="">
+
+        <div class="row p-2">
+            <aside class="col-lg-9">
+                <div class="card">
+                    <div class="table-responsive" style="overflow-x: hidden;">
+                        <table class="table table-borderless table-shopping-cart" >
+                            <thead class="text-black bg-white">
+                                <tr class="small text-uppercase">
+                                    <th scope="col">Sản phẩm</th>
+                                    <th scope="col" width="120">Đơn giá</th>
+                                    <th scope="col" width="120">Số lượng</th>
+                                    <th scope="col" width="120">Số tiền</th>
+                                    <th scope="col" class="text-right d-none d-md-block" width="200"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of shopping_Cart.products; index as i" style="border-bottom: 1px solid  #e0e0e0; padding-left: 10px;">
+                                    <td class="align-middle">
+                                        <div class="itemside align-items-center">
+                                            <div class="aside"><img src="{{item.product.avatarUrl}}" class="img-sm" style="object-fit: cover;"></div>
+                                            <div class="info product-name"> <span class="title text-dark">{{item.product.name}}</span>
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                      {{(item.price / item.quantity).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                                    </td>
+                                    <td class="align-middle">
+                                      <input type="number"
+                                      class="product-cart__quantity"
+                                      min="1" max="{{item.product.quantity}}"
+                                      value="{{item.quantity}}"
+                                      (blur)="onChangeQuantity($event, item.product.id)"
+                                      name="quantity">
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="price-wrap"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
+                                    </td>
+                                    <td class=" align-middle" width="50px"> <span class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> <i class="fas fa-trash"></i></span> </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </aside>
+            <aside class="col-lg-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group"> <label>Nhập mã giảm giá:</label>
+                                <div class="input-group">
+                                  <input type="text" class="form-control coupon" value="{{voucherName}}" (input)="onChangeVoucher($event)" name="voucherName" placeholder="Coupon code">
+                                  <span class="input-group-append">
+                                    <button class="btn btn-primary btn-apply coupon" (click)="applyVoucher()">Áp dụng</button>
+                                  </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="">
+                      <dl class="dlist-align">
+                        <dt>Tổng sản phẩm</dt>
+                        <dd class="text-right ml-3">{{totalItem}}</dd>
+                    </dl>
+                        <dl class="dlist-align">
+                            <dt>Tạm tính:</dt>
+                            <dd class="text-right ml-3">{{totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Chiết khấu:</dt>
+                            <dd class="text-right text-danger ml-3">
+                              {{discount.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}} <p *ngIf="voucherData && voucherData.isPercent === true">(Giảm giá {{voucherData.percentage}}%)</p>
+                            </dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Tổng Thanh toán:</dt>
+                            <dd class="text-right text-dark b ml-3"><strong>{{totalPay.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></dd>
+                        </dl>
+
+                    </div>
+                    <button class="add-to-cart btn btn-default m-2"
+                        type="button"
+                        (click)="checkPaymentCart()"
+                        data-toggle="modal" data-target="#modal-lg"
+                        >Thanh toán <i class="far fa-credit-card"></i></button>
+                </div>
+            </aside>
+        </div>
+      </div>
+      <!-- model -->
+
+    </div>
+  </div>
+</div>
+
+
+
+

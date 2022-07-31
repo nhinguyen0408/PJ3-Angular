@@ -2,3 +2,20 @@ footer{
   margin: 0 !important;
   z-index: 1000;
 }
+.footer-user{
+  position: relative;
+  height: 250px;
+  background-color: #343a40;
+  padding: 50px 300px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.logo-footer{
+  position: absolute;
+  top: 70px;
+  left: 150px;
+  width: 100px;
+  height: 100px;
+}

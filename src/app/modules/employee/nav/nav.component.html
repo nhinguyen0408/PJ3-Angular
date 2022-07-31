@@ -14,7 +14,7 @@
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
         <img *ngIf="userAvt" src="{{userAvt}}" class="img-circle elevation-2" alt="User Image">
-        <img *ngIf="userAvt === ''" src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg" class="img-circle elevation-2" alt="User Image">
+        <img *ngIf="userAvt === ''" src="assets/dist/img/avatar-default.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
         <a class="d-block">{{username}}</a>
@@ -30,7 +30,7 @@
 
 
         <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
+          <a class="nav-link">
             <i class="nav-icon fas fa-copy"></i>
             <p>
               Tài khoản
@@ -47,7 +47,7 @@
           </ul>
         </li>
         <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
+          <a class="nav-link">
            <i class="nav-icon fab fa-product-hunt"></i>
             <p>
               Sản phẩm

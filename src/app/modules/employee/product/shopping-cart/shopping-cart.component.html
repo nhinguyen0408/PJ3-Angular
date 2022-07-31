@@ -31,7 +31,7 @@
                                 <input type="number"
                                 min="1" max="{{item.product.quantity}}"
                                 value="{{item.quantity}}"
-                                (input)="onChangeQuantity($event, item.quantity, i, item.product.id)"
+                                (blur)="onChangeQuantity($event, item.quantity, i, item.product.id)"
                                 name="quantity">
                               </td>
                               <td class="align-middle">

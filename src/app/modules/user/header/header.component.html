@@ -1,6 +1,6 @@
 <nav class="main-header navbar navbar-expand-md navbar-dark navbar-dark m-0">
   <div class="container">
-    <a href="" class="navbar-brand">
+    <a routerLink="/user" class="navbar-brand">
       <img src="assets/dist/img/logo.png" alt="AdminLTE Logo" class="logo-header brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">NHỊ QUÂN Store</span>
@@ -14,27 +14,39 @@
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a href="index3.html" class="nav-link">Home</a>
+          <a routerLink="/user/" class="nav-link">Home</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">Contact</a>
+          <a routerLink="/user/" class="nav-link">Contact</a>
         </li>
         <li class="nav-item dropdown">
-          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Danh mục sản phẩm</a>
+          <a id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Danh mục sản phẩm</a>
           <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu dropdown-menu-category border-0 shadow">
-            <li *ngFor="let item of category"><a href="#" class="dropdown-item"> {{item.name}} </a></li>
+            <li *ngFor="let item of category"><a href='/user/cate/{{item.id}}' class="dropdown-item"> {{item.name}} </a></li>
           </ul>
         </li>
       </ul>
 
       <!-- SEARCH FORM -->
       <form class="form-inline ml-0 ml-md-3">
-        <div class="input-group input-group-sm input-search">
-          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <div class="input-group input-group-sm input-search position-relative">
+          <input class="form-control form-control-navbar" autocomplete="off" type="search" [(ngModel)]="textSearch" name="search-header" (input)="searchProduct()" placeholder="Tìm kiếm sản phẩm" aria-label="Search">
           <div class="input-group-append">
-            <button class="btn btn-navbar" type="submit">
+            <a class="btn btn-navbar" href="/user/product/search?search={{textSearch}}">
               <i class="fas fa-search"></i>
-            </button>
+            </a>
+          </div>
+          <div class="search-result position-absolute">
+            <div *ngFor="let item of productList">
+              <div class="cart-product">
+                <div class="cart-product-image d-flex align-items-center justify-content-center">
+                  <img src="{{item.avatarUrl}}" alt="">
+                </div>
+                <a class="cart-product-name" style="cursor: pointer;" href="/user/product/details/{{item.id}}">
+                  {{item.name}}
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </form>
@@ -129,16 +141,23 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-user"></i> {{name}}
-          <span class="badge badge-danger navbar-badge">3</span>
+          <div class="image">
+            <img src="{{userAvt ? userAvt : 'assets/dist/img/avatar-default.jpg'}}" class="img-circle elevation-2" alt="User Image">
+            {{name}}
+          </div>
+
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a routerLink="/user/profile" class="dropdown-item">
             Thông tin cá nhân
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            abc
+          <a routerLink="/user/cart" class="dropdown-item">
+            Giỏ hàng của tôi
+          </a>
+          <div class="dropdown-divider"></div>
+          <a routerLink="/user/cart" class="dropdown-item">
+            Đơn hàng của tôi
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer" (click)="logoutUser()" >Log out</a>
@@ -148,6 +167,7 @@
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <!-- <i class="fas fa-th-large"></i> -->
           <i class="fas fa-shopping-cart"></i>
+          <span class="badge badge-danger navbar-badge">{{cartDetail ? cartDetail?.total : ''}}</span>
           <!-- <i class="fa-solid fa-cart-minus"></i> -->
         </a>
       </li>

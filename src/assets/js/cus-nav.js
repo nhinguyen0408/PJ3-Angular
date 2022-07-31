@@ -14,3 +14,5 @@ $('.product-image-thumb').click(function() {
   $('.product-image-thumb').removeClass('active');
   $(this).addClass('active')
 });
+
+

@@ -1,7 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Category } from 'src/app/models/Category.model';
 import { Product } from 'src/app/models/Product.model';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 import { CartService } from 'src/app/services/user/cart/cart.service';
@@ -10,11 +9,11 @@ import { ProductService } from 'src/app/services/user/product/product.service';
 import { ProductionService } from 'src/app/services/user/production/production.service';
 
 @Component({
-  selector: 'app-product-by-category',
-  templateUrl: './product-by-category.component.html',
-  styleUrls: ['./product-by-category.component.css']
+  selector: 'app-product-search',
+  templateUrl: './product-search.component.html',
+  styleUrls: ['./product-search.component.css']
 })
-export class ProductByCategoryComponent implements OnInit {
+export class ProductSearchComponent implements OnInit {
 
   constructor(
     private apiProduct: ProductService,
@@ -27,9 +26,11 @@ export class ProductByCategoryComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.getProductByCate()
-    this.getDetailsCate()
     this.getProduction()
+    this.actRoute.queryParams.subscribe(params => {
+      this.textSearch = params['search'];
+      this.getProduct()
+    });
     setTimeout(() => {
       this.fillFilterProduction()
     }, 500)
@@ -37,7 +38,7 @@ export class ProductByCategoryComponent implements OnInit {
   }
 
 
-  id = this.actRoute.snapshot.params['id']
+  textSearch: string = ''
   productList : Product[] = []
   cateDetails: any;
   production: any;
@@ -53,26 +54,22 @@ export class ProductByCategoryComponent implements OnInit {
   tableSizesArr = [4, 8, 12];
   tabSize(event: any){
     this.page = event;
-    this.getProductByCate();
+    this.getProduct();
   }
   tableData(event: any): void {
     this.tableSize = event.target.value;
     this.page = 1;
-    this.getProductByCate();
+    this.getProduct();
   }
 
-  getProductByCate = () => {
-    return this.apiProduct.getProductByCate(this.id).subscribe((res: any) => {
-      this.productList = res
-      console.log('this.productList',this.productList)
-    })
-  }
-
-  getDetailsCate = () => {
-    return this.apiCate.getById(this.id).subscribe((res: any) => {
-      this.cateDetails = res
-      console.log(res)
-    })
+  getProduct = () => {
+    if(this.textSearch.trim() != ''){
+      this.apiProduct.searchProductByName(this.textSearch).subscribe((res: any) => {
+        this.productList = res
+      })
+    } else {
+      this.productList = []
+    }
   }
 
   getProduction = () => {
@@ -100,18 +97,18 @@ export class ProductByCategoryComponent implements OnInit {
 
   filterProduct = () => {
     if(this.searchFilter.trim() != ''){
-      this.apiProduct.searchProductFilter(this.id, this.searchFilter).subscribe((res: any) => {
+      this.apiProduct.searchProductByName(this.searchFilter).subscribe((res: any) => {
         this.productList = res
         this.isFilter = true
         this.fillFilterProduction()
       })
 
     } else {
-      this.getProductByCate()
+      this.getProduct()
     }
   }
   cancelFilterProduct = () => {
-    this.getProductByCate()
+    this.getProduct()
     setTimeout(()=> { this.fillFilterProduction() }, 500)
     this.isFilter = false
     this.searchFilter = ''

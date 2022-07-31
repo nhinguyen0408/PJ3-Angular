@@ -13,6 +13,10 @@ import { NavComponent } from './nav/nav.component';
 import { CartComponent } from './cart/cart.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProductByCategoryComponent } from './product/product-by-category/product-by-category.component';
+import { ProductDetailsComponent } from './product/product-details/product-details.component';
+import { ProductSearchComponent } from './product/product-search/product-search.component';
+import { OrderComponent } from './order/order.component';
+
 
 
 @NgModule({
@@ -25,7 +29,10 @@ import { ProductByCategoryComponent } from './product/product-by-category/produc
     NavComponent,
     CartComponent,
     ProfileComponent,
-    ProductByCategoryComponent
+    ProductByCategoryComponent,
+    ProductDetailsComponent,
+    ProductSearchComponent,
+    OrderComponent,
   ],
   imports: [
     CommonModule,

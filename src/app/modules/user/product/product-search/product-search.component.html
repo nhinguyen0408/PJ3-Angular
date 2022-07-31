@@ -4,33 +4,17 @@
     <div class="content-body pb-3">
       <div class="row product-table shadow">
         <div class="col-12 m-b-30 m-t-30 cate-head">
-          <h3 class="pb-3 pt-3"> {{cateDetails?.name}} | <small style="font-size: 16px;">(Tổng {{productList.length}} sản phẩm)</small> </h3>
+          <h3 class="pb-3 pt-3"> Kết quả tìm kiếm cho: "{{textSearch}}" | <small style="font-size: 16px;">(Tổng {{productList.length}} sản phẩm)</small> </h3>
         </div>
         <div class="col-12 m-b-30">
 
           <div class="row">
             <div class="col-3 filter">
-              <h5>Lọc: </h5>
-              <input type="text" [(ngModel)]="searchFilter" name="" class="input-search-filter" placeholder="Nhập tên sản phẩm" id="">
-              <h6 class="filter-title" style="cursor: pointer;" (click)="filterProduct()">LỌC SẢN PHẨM</h6>
+              <!-- <h5>Lọc: </h5> -->
+              <!-- <input type="text" [(ngModel)]="searchFilter" name="" class="input-search-filter" placeholder="Nhập tên sản phẩm" id=""> -->
+              <h6 class="filter-title" style="cursor: pointer;">LỌC SẢN PHẨM</h6>
               <!-- <h6 *ngIf="isFilter == true" class="filter-title" style="cursor: pointer;" (click)="cancelFilterProduct()">HỦY LỌC</h6> -->
-              <h5 class="pt-3">Sắp xếp theo: </h5>
-              <!-- <select [(ngModel)]="model">
-                <option *ngFor="let item of list" [value]="item">{{item}}</option>
-              </select> -->
-              <select class="custom-select">
-                <option>===Không===</option>
-                <option>Mới nhất</option>
-                <option>Cũ nhất</option>
-                <option>Giá thấp đến cao</option>
-                <option>Giá cao đến thấp</option>
-              </select>
-              <h5 class="pt-3">Khoảng giá: </h5>
-              <div class="price-range">
-                Từ: <input type="text" class="price-from">
-                Đến: <input type="text" class="price-to">
-              </div>
-              <div class="pt-3">
+              <div class="pt-2">
                 <h5>Hãng sản xuất:</h5>
                 <span *ngFor="let item of production; index as i" class="text-bold">
                   <p *ngIf="item?.childProduct?.length > 0" style="cursor: pointer;"
@@ -108,11 +92,6 @@
 
           </div>
         </div>
-
-
-
-
-
       </div>
     </div>
   </div>

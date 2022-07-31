@@ -36,21 +36,21 @@ export class LoginComponent implements OnInit {
           if(result.responseMessage ==="SUCCESS"){
             this.auth.setRole(result.responseData.role);
             this.auth.setToken(result.responseData.token);
-            localStorage.setItem("name", result.responseData.profile.fistName + result.responseData.profile.lastName );
-            localStorage.setItem('avatar', result.responseData.profile.imageUrl)
             if(result.responseData.role == "EMPLOYEE"){
               localStorage.setItem("employeeId", result.responseData.profile.id)
               this.router.navigate(['employee/product']);
-              console.log("employee", result)
+              localStorage.setItem("name", result.responseData.profile.fistName + result.responseData.profile.lastName );
+              localStorage.setItem('avatar', result.responseData.profile.imageUrl)
             } else if (result.responseData.role == "SUPERADMIN"){
               localStorage.setItem("adminId", result.responseData.profile.id)
-              console.log("super admin", result)
-              console.log("adminId",localStorage.getItem("adminId"))
+              localStorage.setItem("name", result.responseData.profile.fistName + result.responseData.profile.lastName );
+              localStorage.setItem('avatar', result.responseData.profile.imageUrl)
               this.router.navigate(['admin/home']);
             } else if (result.responseData.role == "ADMIN"){
               this.router.navigate(['employee']);
               localStorage.setItem("employeeId", result.responseData.profile.id)
-              console.log("admin", result)
+            } else{
+              alert("Sai tên đăng nhập hoặc mật khẩu !!!")
             }
           }
         },

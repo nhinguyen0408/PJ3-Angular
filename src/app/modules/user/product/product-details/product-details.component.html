@@ -1,0 +1,227 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Chi tiết sản phẩm</h1>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <!-- Default box -->
+    <div class="card card-solid">
+      <div class="card-body">
+        <a (click)="back()" class="btn btn-outline-success btn-rounded mt-2">Back</a> <br>
+        <div class="row">
+
+          <h3 class="my-3">Mã sản phẩm: {{product.code}}</h3>
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-6">
+
+            <h3 class="d-inline-block d-sm-none">{{product.name}}</h3>
+            <div class="col-12">
+              <div class="d-flex sale" *ngIf="product.saleEntity">
+                <!-- <div class="sale-percent btn text-right">SALE {{product.saleEntity.sale}}%
+                  <br>  <p id="countdown">{{days}}:{{hours}}:{{minutes}}:{{seconds}}</p>
+                </div> -->
+                <div class="sale-percent btn">SALE {{product.saleEntity.sale}}% in
+                  <span class="countdown">{{days}}</span>:<span class="countdown">{{hours}}</span>:<span class="countdown">{{minutes}}</span>:<span class="countdown">{{seconds}}</span>
+                 </div>
+
+              </div>
+
+              <!-- <img src="{{product.avatarUrl}}" class="product-image" alt="Product Image"> -->
+              <!-- exmple -->
+              <div class="bootstrap-carousel">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                    <ol class="carousel-indicators">
+                      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                      <li data-target="#carouselExampleIndicators" *ngIf="product.listImage.length >=1" data-slide-to="1"></li>
+                      <li data-target="#carouselExampleIndicators" *ngIf="product.listImage.length >=2" data-slide-to="2"></li>
+                      <li data-target="#carouselExampleIndicators" *ngIf="product.listImage.length >=3" data-slide-to="3"></li>
+                      <li data-target="#carouselExampleIndicators" *ngIf="product.listImage.length >=4" data-slide-to="4"></li>
+                      <li data-target="#carouselExampleIndicators" *ngIf="product.listImage.length >=5" data-slide-to="5"></li>
+                  </ol>
+                      <div class="carousel-item active">
+                          <img class="d-block w-100 product-image" src="{{product.avatarUrl}}" alt="First slide">
+                      </div>
+                      <div class="carousel-item" *ngFor="let item of product.listImage; index as i">
+                          <img class="d-block w-100 product-image" src="{{item.imageUrl}}" alt="{{i}} slide">
+                      </div>
+                      <!-- <div class="carousel-item">
+                          <img class="d-block w-100 product-image" src="" alt="Third slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="d-block w-100 product-image" src="" alt="Third slide">
+                      </div> -->
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" data-slide="prev"><span class="carousel-control-prev-icon"></span> <span class="sr-only">Previous</span> </a><a class="carousel-control-next" href="#carouselExampleIndicators"
+                    data-slide="next"><span class="carousel-control-next-icon"></span> <span class="sr-only">Next</span></a>
+
+                  </div>
+              </div>
+              </div>
+              <!-- end example -->
+            </div>
+            <div class="col-12 product-image-thumbs" >
+              <div class="product-image-thumb" *ngFor="let item of product.listImage"><img src="{{item.imageUrl}}" alt="Product Image"></div>
+            </div>
+
+          </div>
+          <div class="col-12 col-sm-6">
+
+            <h3 class="my-3">{{product.name}}</h3>
+            <p class="card-text">
+              <!-- <small class="text-muted">Created by: {{product.createdByName}}</small> <br> -->
+              <!-- <small class="text-muted">Last updated {{product.modifiedDate | date :'short'}} By: {{product.modifiedByName}}</small> -->
+            </p>
+            <hr>
+            <h4>
+              <!-- <small>Số lượng trong kho: </small> {{product.quantity}} -->
+              <strong *ngIf="product.quantity > 0" class="text-success"><i class="fas fa-check"></i> Còn hàng</strong>
+              <strong *ngIf="product.quantity == 0" class="text-danger"><i class="fas fa-check"></i> Hết hàng</strong>
+            </h4>
+            <div class="bg-dark py-2 px-3 mt-4">
+              <h2 class="mb-0" *ngIf="product.saleEntity == null || product.saleEntity == 0">
+                {{product.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                <!-- {{product.salePrice}} -->
+              </h2>
+              <div *ngIf="product.saleEntity">
+                <h2 class="mb-0" >
+                  {{(product.salePrice - product.salePrice * product.saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                  <!-- {{product.salePrice}} -->
+                </h2>
+                <h4 class="mt-0">
+                  <!-- <small>Ex Tax: ${{(product.salePrice * 1.2)}} </small> -->
+                  <small>Ex Tax: $<del>{{(product.salePrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del> </small>
+                </h4>
+              </div>
+            </div>
+            <div class="add-cart bg-danger mt-3 mb-5 py-2 px-3 d-flex justify-content-center">
+              <div class="add-cart__button">
+                <p class="card-text">
+                  <a class="btn-add-card" (click)="addShoppingCart(id)"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                </p>
+              </div>
+            </div>
+
+
+
+            <!-- <div class="mt-4">
+              <div class="btn btn-primary btn-lg btn-flat">
+                <i class="fas fa-cart-plus fa-lg mr-2"></i>
+                Add to Cart
+              </div>
+
+              <div class="btn btn-default btn-lg btn-flat">
+                <i class="fas fa-heart fa-lg mr-2"></i>
+                Add to Wishlist
+              </div>
+            </div> -->
+
+
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-8 card">
+            <nav class="w-100">
+              <div class="nav nav-tabs" id="product-tab" role="tablist">
+                <a class="nav-item nav-link active" id="product-desc-tab" data-toggle="tab" href="#product-desc" role="tab" aria-controls="product-desc" aria-selected="true">Description</a>
+              </div>
+            </nav>
+            <div class="tab-content p-3" id="nav-tabContent">
+              <div class="textarea inline-editor" name="description" id="textareaInput">
+              </div>
+            </div>
+          </div>
+          <div class="col-3 infomation ml-5">
+            <h4 class="my-2">Thuộc tính sản phẩm:</h4>
+            <div class="btn-group btn-group-toggle w-100"  data-toggle="buttons">
+              <table class="table" width="100%">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Thuộc tính</th>
+                    <th>Nội dung</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Bảo hành</td>
+                    <td>{{product.warranty}} tháng</td>
+                  </tr>
+                  <tr *ngFor="let item of product.listInformation">
+                    <td>{{item.key}}</td>
+                    <td>{{item.value}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+    <!-- PRODUCT SANE -->
+    <div class="col-12 card m-b-30 p-3" *ngIf="productSameList?.length > 0">
+      <h4 class="my-3">Sản phẩm cùng thể loại |</h4>
+      <div class="row">
+        <div
+          class="col-md-6 col-lg-3"
+          *ngFor="let item of productSameList; index as i"
+        >
+          <div class="card border shadow" *ngIf="i <=3 && i >=0">
+              <img class="img-fluid card-img-top product-image-same" src="{{item.avatarUrl}}" alt="Card image cap">
+              <div class="card-body mb-0">
+                  <h5 class="card-title product-name-same"><a class="text-black name" routerLink="/user/product/details/{{item.id}}">
+                    {{item.name}}
+                  </a></h5> <br>
+                  <h6 class=" mt-3">
+                    Mã sản phẩm: {{item.code}} <br> <br>
+                    <strong *ngIf="item.quantity > 0" class="text-success"><i class="fas fa-check"></i> Còn hàng</strong>
+                    <strong *ngIf="item.quantity == 0" class="text-danger"><i class="fas fa-check"></i> Hết hàng</strong>
+                  </h6>
+
+              </div>
+              <div class="bg-dark py-2 px-3 price m-0">
+                <div >
+                  <h5 class="mb-0" *ngIf="item.saleEntity === null || item.saleEntity === 0 || item.saleEntity === undefined">
+                    {{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+
+                  </h5>
+                  <div *ngIf="item.saleEntity">
+                    <h5 class="mb-0" >
+                      {{(item.salePrice - item.salePrice * item.saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+
+                    </h5>
+                    <h5 class="mt-0">
+                      <small>Ex Tax: <del>{{(item.salePrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del> </small>
+                    </h5>
+                  </div>
+
+                </div>
+              </div>
+              <div class="mt-5">
+                <p class="card-text d-flex justify-content-center">
+                  <a class="btn mb-1 btn-success btn-add-card text-white mr-2 mt-2" (click)="addShoppingCart(item.id)">Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i></a>
+                </p>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- END PRODUCT SAME -->
+
+  </section>
+  <!-- /.content -->
+</div>

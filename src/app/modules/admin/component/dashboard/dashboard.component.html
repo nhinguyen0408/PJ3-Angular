@@ -521,9 +521,9 @@
             <div class="card-body p-10 d-flex align-center justify-content-center">
               <div>
                 <ul class="col-md-12  clearfix">
-                  <li *ngIf="dataBestEmp">
+                  <li *ngIf="dataBestEmp.length > 0">
                     <div >
-                      <img src="{{dataBestEmp[0].profileEntity.imageUrl}}" *ngIf="dataBestEmp[0].profileEntity.imageUrl" class="avatar-image" alt="User Image">
+                      <img src="{{dataBestEmp[0]?.profileEntity.imageUrl}}" *ngIf="dataBestEmp[0]?.profileEntity.imageUrl" class="avatar-image" alt="User Image">
                       <img src="assets/dist/img/avatar-default.jpg" *ngIf="dataBestEmp[0].profileEntity.imageUrl == null || dataBestEmp[0].profileEntity.imageUrl ==='' " alt="User Image" class="avatar-image">
                       <a class="users-list-name text-center" href="#">{{dataBestEmp[0].profileEntity.fistName + ' '+ dataBestEmp[0].profileEntity.lastName}}</a>
                       <span class="users-list-date text-center bg-success"><strong>Số đơn hàng đã bán: {{dataBestEmp[0].billCount}}</strong></span>

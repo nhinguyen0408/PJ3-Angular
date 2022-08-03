@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
+import { Bill } from 'src/app/models/Bill.model';
 import { CartUser } from 'src/app/models/CartUser.model';
 import { API_URL } from '../../api-const.type';
 
@@ -47,11 +48,23 @@ export class CartService {
       catchError(this.handleError)
     )
   }
-  removeToCart(productId: number, quantity: number):Observable<any>{
+  removeToCart(productId: number):Observable<any>{
     const a: any = {};
-    return this.http.post<any>(this.url+"/user/shoppingCart/remove?productId="+productId+"&quantity="+quantity, a, this.httpOptions).pipe(
+    return this.http.delete<any>(this.url+"/user/shoppingCart/remove?productId="+productId, this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )
   }
+  updateCart(cartUpdate: any):Observable<any>{
+    return this.http.put(this.url+"/user/shoppingCart/update", cartUpdate, this.httpOptions).pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+  createBillByUser(data: Bill):Observable<Bill>{
+    return this.http.post<Bill>(this.url+"/bill/user/create", data, this.httpOptions).pipe(
+      catchError(this.handleError)
+    )
+  }
+
 }

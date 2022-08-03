@@ -11,7 +11,7 @@ export class NotificationService {
   constructor(private http: HttpClient) { }
 
   url = API_URL
-  token: any = localStorage.getItem('user-token') ? localStorage.getItem('user-token') : '' ;
+  token: any = localStorage.getItem('token') ? localStorage.getItem('token') : '' ;
   httpOptions = {
     headers : new HttpHeaders({
       'Access-Control-Allow-Origin':'*',
@@ -39,14 +39,14 @@ export class NotificationService {
     )
   }
 
-  getReadNotification(id: number | string):Observable<any>{
+  readNotification(id: number | string):Observable<any>{
     return this.http.get<any>(this.url+"/notif/readNotification?id=" + id, this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )
   }
   countUnReadNotification():Observable<any>{
-    return this.http.get<any>(this.url+"/notif/countUnread=", this.httpOptions).pipe(
+    return this.http.get<any>(this.url+"/notif/countUnread", this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )

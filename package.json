@@ -24,6 +24,7 @@
     "admin-lte": "3.0.5",
     "chart.js": "^3.7.1",
     "firebase": "^9.6.3",
+    "javascript-time-ago": "^2.5.7",
     "ng2-charts": "^3.0.8",
     "ngx-pagination": "^5.1.1",
     "rxjs": "~7.4.0",

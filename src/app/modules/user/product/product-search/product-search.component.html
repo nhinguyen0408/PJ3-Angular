@@ -12,8 +12,22 @@
             <div class="col-3 filter">
               <!-- <h5>Lọc: </h5> -->
               <!-- <input type="text" [(ngModel)]="searchFilter" name="" class="input-search-filter" placeholder="Nhập tên sản phẩm" id=""> -->
-              <h6 class="filter-title" style="cursor: pointer;">LỌC SẢN PHẨM</h6>
+              <!-- <h6 class="filter-title" style="cursor: pointer;">LỌC SẢN PHẨM</h6> -->
               <!-- <h6 *ngIf="isFilter == true" class="filter-title" style="cursor: pointer;" (click)="cancelFilterProduct()">HỦY LỌC</h6> -->
+              <h5 class="pt-3">Sắp xếp theo: </h5>
+              <select class="custom-select" [(ngModel)]="sortBy">
+                <option value="">===Không===</option>
+                <option value="DATE|DESC">Mới nhất</option>
+                <option value="DATE|ASC">Cũ nhất</option>
+                <option value="SALEPRICE|DESC">Giá thấp đến cao</option>
+                <option value="SALEPRICE|ASC">Giá cao đến thấp</option>
+              </select>
+              <h5 class="pt-3">Khoảng giá: </h5>
+              <div class="price-range">
+                Từ: <input type="text" class="price-from" [(ngModel)]="priceFrom">
+                Đến: <input type="text" class="price-to" [(ngModel)]="priceTo">
+              </div>
+              <h6 class="filter-title mt-3" style="cursor: pointer;" (click)="filterProduct()">LỌC SẢN PHẨM</h6>
               <div class="pt-2">
                 <h5>Hãng sản xuất:</h5>
                 <span *ngFor="let item of production; index as i" class="text-bold">

@@ -45,7 +45,7 @@ export class ApiVoucherService {
   }
   getVoucherByKey(key: string):Observable<Voucher>{
     return this.http.get<Voucher>(this.url+"/voucher/getByKey?key=" + key).pipe(
-
+      catchError(this.handleError)
     )
   }
 

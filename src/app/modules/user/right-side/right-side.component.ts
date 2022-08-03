@@ -24,11 +24,12 @@ export class RightSideComponent implements OnInit {
         if(res){
           let total = 0;
           this.shopping_Cart = res;
-          // console.log(res)
-          this.shopping_Cart?.products.map((element: any)=> {
-            total += element.price
-          })
-          this.totalCart = total
+          if(this.shopping_Cart.products && this.shopping_Cart.products.length > 0){
+            this.shopping_Cart?.products.map((element: any)=> {
+              total += element.price
+            })
+            this.totalCart = total
+          }
         }
       })
     }, 1000)

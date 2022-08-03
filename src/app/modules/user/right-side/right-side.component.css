@@ -26,8 +26,31 @@
   background: none;
   top: -10px;
   border: 1px solid rgb(224, 224, 224);
+  width: 100%;
 }
 .cart-product-name{
   color: #000;
 
+}
+.group-btn-cart{
+  position: absolute;
+  bottom: -75px;
+  right: 40px;
+}
+.group-btn-cart h6{
+  border-radius: 5px;
+  padding: 8px;
+  color: #fff;
+  font-weight: 600;
+  margin: 0px 10px;
+}
+.group-btn-cart h6:hover{
+  opacity: 0.8;
+  transition: 0.7s;
+}
+.btn-go-cart{
+  background-color: rgb(113, 134, 36);
+}
+.btn-go-home{
+  background-color: rgb(58, 133, 255);
 }

@@ -94,17 +94,24 @@ export class ProductSearchComponent implements OnInit {
       })
     }
   }
+  sortBy: string = ''
+  priceFrom: string = ''
+  priceTo: string = ''
 
   filterProduct = () => {
-    if(this.searchFilter.trim() != ''){
-      this.apiProduct.searchProductByName(this.searchFilter).subscribe((res: any) => {
+    if(this.sortBy != ''){
+      const sortBySplit = this.sortBy.split('|')
+      this.apiProduct.searchProductFilter('', this.textSearch, sortBySplit[0], sortBySplit[1], this.priceFrom, this.priceTo).subscribe((res: any) => {
         this.productList = res
         this.isFilter = true
         this.fillFilterProduction()
       })
-
     } else {
-      this.getProduct()
+      this.apiProduct.searchProductFilter('', this.textSearch, '', '', this.priceFrom, this.priceTo).subscribe((res: any) => {
+        this.productList = res
+        this.isFilter = true
+        this.fillFilterProduction()
+      })
     }
   }
   cancelFilterProduct = () => {

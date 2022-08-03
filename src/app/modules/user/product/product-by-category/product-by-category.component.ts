@@ -46,6 +46,9 @@ export class ProductByCategoryComponent implements OnInit {
   isFilter: boolean = false
   productionChosed: any;
   isChoseProduction: boolean = false
+  sortBy: string = ''
+  priceFrom: string = ''
+  priceTo: string = ''
 
   page = 1;
   count = 0;
@@ -99,15 +102,19 @@ export class ProductByCategoryComponent implements OnInit {
   }
 
   filterProduct = () => {
-    if(this.searchFilter.trim() != ''){
-      this.apiProduct.searchProductFilter(this.id, this.searchFilter).subscribe((res: any) => {
+    if(this.sortBy != ''){
+      const sortBySplit = this.sortBy.split('|')
+      this.apiProduct.searchProductFilter(this.id, this.searchFilter, sortBySplit[0], sortBySplit[1], this.priceFrom, this.priceTo).subscribe((res: any) => {
         this.productList = res
         this.isFilter = true
         this.fillFilterProduction()
       })
-
     } else {
-      this.getProductByCate()
+      this.apiProduct.searchProductFilter(this.id, this.searchFilter, '', '', this.priceFrom, this.priceTo).subscribe((res: any) => {
+        this.productList = res
+        this.isFilter = true
+        this.fillFilterProduction()
+      })
     }
   }
   cancelFilterProduct = () => {

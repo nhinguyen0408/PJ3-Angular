@@ -212,7 +212,6 @@ export class ProductComponent implements OnInit {
   checkPayment(){
     if( this.shoppingCart.length > 0){
     } else {
-      // alert("Vui lòng chọn sản phẩm và thêm vào giỏ hàng trước khi thanh toán !!!!")
       this.toastsService.alert('Thông báo !!!', "Vui lòng chọn sản phẩm và thêm vào giỏ hàng trước khi thanh toán !!!!",'bg-warning');
     }
   }

@@ -51,16 +51,11 @@ export class ShoppingCartComponent implements OnInit {
       this.api.getVoucherByKey(this.voucherName).subscribe(res =>{
           this.voucherData = res;
           this.isVoucher = true;
-          // alert("Áp dụng mã Voucher: " + this.voucherData.name)
           this.toastsService.alert('Thông báo !!!', "Áp dụng mã Voucher: " + this.voucherData.name,'bg-info');
           let now = new Date();
           let startDate = new Date(this.voucherData.startDate);
           let endDate = new Date( this.voucherData.endDate);
           if(now.getTime() > startDate.getTime() && now.getTime() < endDate.getTime()){
-            // console.log(this.voucherData.startDate < this.voucherData.endDate)
-            // console.log(now)
-            // console.log(startDate)
-            // console.log(endDate)
             this.bill.voucherId = this.voucherData.id
             console.log(this.voucherData);
             if(this.voucherData.isPercent){
@@ -75,12 +70,10 @@ export class ShoppingCartComponent implements OnInit {
             this.totalPay = this.totalPrice - this.discount;
             this.bill.discountPrice = this.discount;
           } else {
-            // alert("Voucher đã hết hoặc chưa đến hạn áp dụng !!!!")
             this.toastsService.alert('Thông báo !!!', "Voucher đã hết hoặc chưa đến hạn áp dụng !!!!",'bg-warning');
             this.voucherData = null;
           }
       },(err:ErrorEvent) =>{
-        // alert('Không tồn tại Mã giảm giá này !!!!!');
         this.toastsService.alert('Thông báo !!!', "Không tồn tại Mã giảm giá này !!!!!",'bg-warning');
         this.voucherData = null;
         this.totalPay = this.totalPrice;
@@ -88,11 +81,7 @@ export class ShoppingCartComponent implements OnInit {
         this.bill.discountPrice = 0;
       })
 
-      // if(this.isVoucher === false){
-      //   alert('Không tồn tại Mã giảm giá này !!!!!')
-      // }
     } else {
-      // alert('Vui lòng chọn sản phẩm hoặc nhập mã giảm giá !!!!!')
       this.toastsService.alert('Thông báo !!!', "Vui lòng chọn sản phẩm hoặc nhập mã giảm giá !!!!!",'bg-warning');
     }
   }
@@ -111,7 +100,6 @@ export class ShoppingCartComponent implements OnInit {
       this.bill.billDetail = this.billDetail;
       this.bill.totalPrice = this.totalPrice;
       this.bill.profileId = Number(localStorage.getItem('employeeId'));
-      console.log("localStorage.getItem('employeeId')",localStorage.getItem('employeeId'))
       this.payment.emit(this.bill);
       this.discount = 0;
       this.voucherData = null;

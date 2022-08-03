@@ -1,52 +1,59 @@
 <aside class="control-sidebar control-sidebar-light">
   <!-- Control sidebar content goes here -->
   <div class="position-relative">
-    <table class="table table-cart" style="transform: scale(0.9);" width="100%">
-      <thead class="thead-dark">
-        <tr>
-          <th style="width: 10px">STT</th>
-          <th>Sản phẩm</th>
-          <th>SL</th>
-          <th>Đơn giá</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of shopping_Cart.products; index as idx">
-          <td class="align-middle">{{idx + 1}}</td>
-          <td >
-            <div class="cart-product">
-              <div class="cart-product-image">
-                <img src="{{item.product.avatarUrl}}" alt="">
+    <div class="table-cart">
+      <table class="table " style="transform: scale(0.9);" width="100%">
+        <thead class="thead-dark">
+          <tr>
+            <th style="width: 10px">STT</th>
+            <th>Sản phẩm</th>
+            <th>SL</th>
+            <th>Đơn giá</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="shopping_Cart && shopping_Cart.products && shopping_Cart.products.length > 0">
+          <tr *ngFor="let item of shopping_Cart.products; index as idx">
+            <td class="align-middle">{{idx + 1}}</td>
+            <td >
+              <div class="cart-product">
+                <div class="cart-product-image">
+                  <img src="{{item.product.avatarUrl}}" alt="">
+                </div>
+                <a class="cart-product-name" style="cursor: pointer;" href="/user/product/details/{{item.product.id}}">
+                  {{item.product.name}}
+                </a>
               </div>
-              <a class="cart-product-name" style="cursor: pointer;" href="/user/product/details/{{item.product.id}}">
-                {{item.product.name}}
-              </a>
-            </div>
-          </td>
-          <td class="align-middle">
-            {{item?.quantity && item?.quantity < 10 ? '0'+ item?.quantity : item?.quantity}}
-          </td>
-          <td class="align-middle ">
-            <span class="text-bold">
-              {{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3" class="text-bold align-middle">Tổng thoanh toán</td>
-          <td class="text-bold text-danger align-middle">{{totalCart.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
-        </tr>
-        <!-- <tr *ngFor="let item of productDetails.listInformation">
-          <td>{{item.key}}</td>
-          <td>{{item.value}}</td>
-        </tr> -->
-      </tbody>
-    </table>
-
-    <div>
-      <h4>
-        Đi tới giỏ hàng
-      </h4>
+            </td>
+            <td class="align-middle">
+              {{item?.quantity && item?.quantity < 10 ? '0'+ item?.quantity : item?.quantity}}
+            </td>
+            <td class="align-middle ">
+              <span class="text-bold">
+                {{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="text-bold align-middle">Tổng thoanh toán</td>
+            <td class="text-bold text-danger align-middle">{{totalCart.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
+          </tr>
+          <!-- <tr *ngFor="let item of productDetails.listInformation">
+            <td>{{item.key}}</td>
+            <td>{{item.value}}</td>
+          </tr> -->
+        </tbody>
+      </table>
+      <div class="group-btn-cart">
+        <h6 class="btn btn-go-cart" routerLink="/user/cart" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+          Đi tới giỏ hàng
+        </h6>
+        <h6 class="btn btn-go-home" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+          Tiếp tục mua hàng
+        </h6>
+      </div>
     </div>
+
+
+
   </div>
 </aside>

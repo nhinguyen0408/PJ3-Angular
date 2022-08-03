@@ -53,8 +53,8 @@ export class ProductService {
       retry(1),
     )
   }
-  searchProductFilter(idCate: number, name: string):Observable<Product>{
-    return this.http.get<Product>(this.url+"/product/getall?idCate=" + idCate + "&name=" + name, this.httpOptions).pipe(
+  searchProductFilter(idCate: number | string, name: string, sortBy: string, order: string, from: string, to: string):Observable<Product>{
+    return this.http.get<Product>(this.url+"/product/getall?idCate=" + idCate + "&name=" + name + '&sortBy=' + sortBy + '&order=' + order + '&minPrice=' + from + '&maxPrice=' + to , this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )

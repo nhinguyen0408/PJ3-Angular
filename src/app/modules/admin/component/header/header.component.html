@@ -30,6 +30,49 @@
     <!-- Messages Dropdown Menu -->
 
     <!-- Notifications Dropdown Menu -->
+    <!-- Notifications Dropdown Menu -->
+    <li class="nav-item dropdown">
+      <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="far fa-bell"></i>
+        <span class="badge badge-warning navbar-badge">{{countUnread}}</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="max-width: 700px !important; width: 500px;">
+        <span class="dropdown-header">{{countUnread}} Thông báo mới</span>
+        <div class="dropdown-divider"></div>
+        <div *ngFor="let item of notification; index as idx">
+          <a
+          class="dropdown-item position-relative notification--unread"
+          *ngIf="item.isRead == false"
+          (click)="readNotification(item.id)"
+          >
+            <h6 class="notification__title"><i class="fas fa-box mr-2"></i>{{item.title}}</h6>
+            <span class="notification__body text-bold" style="width: 400px;">{{item.body}}</span>
+            <span class="float-right text-muted small text-sm position-absolute creat-date">{{item.createdDate}}</span>
+            <span class="position-absolute unread-box"></span>
+          </a>
+          <a
+          class="dropdown-item"
+          *ngIf="item.isRead == true"
+          (click)="readNotification(item.id)"
+          >
+            <h6 class="notification__title"><i class="fas fa-box mr-2"></i>{{item.title}}</h6>
+            <span class="notification__body" style="width: 400px;">{{item.body}}</span>
+            <span class="float-right text-muted small text-sm position-absolute creat-date">{{item.createdDate}}</span>
+          </a>
+          <div class="dropdown-divider"></div>
+        </div>
+
+        <!-- <a href="#" class="dropdown-item">
+          <i class="fas fa-users mr-2"></i> 8 friend requests
+          <span class="float-right text-muted text-sm">12 hours</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">
+          <i class="fas fa-file mr-2"></i> 3 new reports
+          <span class="float-right text-muted text-sm">2 days</span>
+        </a> -->
+      </div>
+    </li>
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-user"></i> {{name}}

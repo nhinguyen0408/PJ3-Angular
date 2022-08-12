@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'user/login', component: LoginUserComponent },
   { path : 'user/register', component: RegisterUserComponent },
-  { path: '', redirectTo:'/user', pathMatch:'full' },
+  { path: '', redirectTo:'/user/product', pathMatch:'full' },
 
   { path: 'admin',
     canActivate: [AuthGuard],
@@ -25,7 +25,7 @@ const routes: Routes = [
     loadChildren: () => import ('./modules/employee/employee.module').then(m => m.EmployeeModule)
   },
   { path: 'user',
-    canActivate: [UserGuard],
+    // canActivate: [UserGuard],
     loadChildren: () => import ('./modules/user/user.module').then(m => m.UserModule)
   },
 

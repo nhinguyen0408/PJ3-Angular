@@ -26,7 +26,6 @@ export class SaleComponent implements OnInit {
   getSale(){
     this.api.getSale().subscribe((res: any) => {
       this.saleList = res
-      console.log(res)
     })
   }
   onDeleteSale(id: number){

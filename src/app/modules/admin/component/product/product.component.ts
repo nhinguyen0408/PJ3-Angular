@@ -7,6 +7,7 @@ import { ApiCategoryService } from 'src/app/services/admin/category/api-category
 import { ApiProductService } from 'src/app/services/admin/product/api-product.service';
 import { ApiProductionService } from 'src/app/services/admin/production/api-production.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
+import * as XLSX from 'xlsx';
 
 declare var jQuery: any;
 declare var Swal: any;
@@ -92,18 +93,14 @@ export class ProductComponent implements OnInit, AfterViewInit {
   updateStatus(product:Product){
     if(product.status === "ACTIVE"){
       product.status = "INACTIVE";
-      console.log(product)
       this.api.editProduct(product).subscribe(res =>{
-        console.log(res)
 
         this.getAll()
       })
       this.toastsService.alert("Thông báo!!!","Vô hiệu hóa sản phẩm thành công!!!","bg-success")
     } else if(product.status === "INACTIVE"){
       product.status = "ACTIVE";
-      console.log(product)
       this.api.editProduct(product).subscribe(res =>{
-        console.log(res)
 
         this.getAll()
       })
@@ -143,12 +140,32 @@ export class ProductComponent implements OnInit, AfterViewInit {
     if(categoryId=== 0 && productionId=== 0 && this.productCode === '' && this.productName===''){
 
     } else{
-      this.api.searchProduct(this.productCode, categoryId, productionId, this.productName, this.status).subscribe((res: any)=>{
+      this.api.searchProduct(this.productCode.toUpperCase(), categoryId, productionId, this.productName, 'ACTIVE').subscribe((res: any)=>{
         this.productList = res;
+        this.getCountDown();
+        let fns = (function ($) {
+          var table = $("#example1").DataTable()
+          table.clear().destroy();
+        })(jQuery);
+        setTimeout(()=>{
+          this.setDataTable()
+        },500)
+
         this.checkSearch = true;
       })
     }
   }
+  fileName= 'ExcelSheet' + new Date()+'.xlsx';
+  exportexcel(): void
+  {
+    let element = document.getElementById('example1');
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, this.fileName);
+
+  }
+
   onAbortSearch(){
     this.checkSearch = false;
     this.productCode = '';

@@ -10,10 +10,13 @@ import { API_URL } from '../../api-const.type';
 })
 export class CartService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+
+    ) { }
 
   url = API_URL
-  token: any = localStorage.getItem('user-token') ? localStorage.getItem('user-token') : '' ;
+  token: any = localStorage.getItem('user-token') ? localStorage.getItem('user-token') : 'none' ;
   httpOptions = {
     headers : new HttpHeaders({
       'Access-Control-Allow-Origin':'*',

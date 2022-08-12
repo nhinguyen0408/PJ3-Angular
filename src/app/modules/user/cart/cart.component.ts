@@ -106,7 +106,6 @@ export class CartComponent implements OnInit {
         let endDate = new Date( this.voucherData.endDate);
         if(now.getTime() > startDate.getTime() && now.getTime() < endDate.getTime()){
           this.bill.voucherId = this.voucherData.id
-          console.log(this.voucherData);
           if(this.voucherData.isPercent){
             const disCountRound = this.totalCart * (this.voucherData.percentage/100);
             this.discount = Math.round(disCountRound/10000)*10000;
@@ -162,6 +161,7 @@ export class CartComponent implements OnInit {
       this.bill.billDetail = this.billDetail;
       this.bill.totalPrice = this.totalCart;
       this.bill.profileId = Number(localStorage.getItem('userId'));
+      this.bill.type = 'COD'
       if(window.confirm("Xác nhận đặt hàng !!!!!!!")){
         this.apiCart.createBillByUser(this.bill).subscribe(res => {
           this.toastService.alert('Thông báo !!!', "Đặt hàng thành công !!!!!!",'bg-success');

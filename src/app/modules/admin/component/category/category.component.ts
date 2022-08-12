@@ -34,13 +34,11 @@ export class CategoryComponent implements OnInit {
     this.api.getCategory().subscribe((res: any) => {
       this.categoryList = res
     })
-    console.log(this.categoryList)
   }
 
   // delete(id: number){
   //   if(window.confirm("Are u sure????")){
   //     this.api.deleteCategory(id).subscribe(data => {
-  //       console.log(data)
   //       this.toastsService.alert('Thông báo !!!', 'Xóa thể loại thành công!!!','bg-warning');
   //       this.getAll()
   //     })

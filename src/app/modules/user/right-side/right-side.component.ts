@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/admin/auth/auth.service';
 import { CartService } from 'src/app/services/user/cart/cart.service';
 
 @Component({
@@ -10,10 +11,16 @@ export class RightSideComponent implements OnInit {
 
   constructor(
     private apiCart: CartService,
+    private auth: AuthService
   ) { }
 
   ngOnInit(): void {
-    this.getDataCart()
+    setTimeout(()=>{
+      if(this.auth.isUserLogedin() == true){
+        this.getDataCart()
+      }
+    }, 1000)
+
   }
 
   shopping_Cart: any = []

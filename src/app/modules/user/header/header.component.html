@@ -37,12 +37,12 @@
             </a>
           </div>
           <div class="search-result position-absolute">
-            <div *ngFor="let item of productList">
-              <div class="cart-product">
+            <div *ngFor="let item of productList; index as idx">
+              <div class="cart-product" *ngIf="idx < 4">
                 <div class="cart-product-image d-flex align-items-center justify-content-center">
                   <img src="{{item.avatarUrl}}" alt="">
                 </div>
-                <a class="cart-product-name" style="cursor: pointer;" href="/user/product/details/{{item.id}}">
+                <a class="cart-product-name" style="cursor: pointer; color: white;" href="/user/product/details/{{item.id}}">
                   {{item.name}}
                 </a>
               </div>
@@ -55,78 +55,43 @@
     <!-- Right navbar links -->
     <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
       <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="fas fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="../../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="../../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  John Pierce
-                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">I got your message bro</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="../../dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Nora Silvester
-                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">The subject goes here</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-        </div>
-      </li>
+
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+          <span class="badge badge-warning navbar-badge">{{countUnread}}</span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-header">15 Notifications</span>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="max-width: 700px !important; width: 500px;">
+          <span class="dropdown-header">{{countUnread}} Thông báo mới</span>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
+          <div *ngIf="notification && notification.length == 0">
+            <h6 class="m-3">Không có thông báo mới</h6>
+          </div>
+          <div *ngFor="let item of notification; index as idx">
+            <a
+            class="dropdown-item position-relative notification--unread"
+            *ngIf="item.isRead == false"
+            (click)="readNotification(item.id)"
+            >
+              <h6 class="notification__title"><i class="fas fa-box mr-2"></i>{{item.title}}</h6>
+              <span class="notification__body text-bold" style="width: 400px;">{{item.body}}</span>
+              <span class="float-right text-info text-bold small text-sm position-absolute creat-date">{{item.createdDate}}</span>
+              <span class="position-absolute unread-box"></span>
+            </a>
+            <a
+            class="dropdown-item position-relative"
+            *ngIf="item.isRead == true"
+            (click)="readNotification(item.id)"
+            >
+              <h6 class="notification__title"><i class="fas fa-box mr-2"></i>{{item.title}}</h6>
+              <span class="notification__body" style="width: 400px;">{{item.body}}</span>
+              <span class="float-right text-muted small text-sm position-absolute creat-date">{{item.createdDate}}</span>
+            </a>
+            <div class="dropdown-divider"></div>
+          </div>
+
+          <!-- <a href="#" class="dropdown-item">
             <i class="fas fa-users mr-2"></i> 8 friend requests
             <span class="float-right text-muted text-sm">12 hours</span>
           </a>
@@ -134,12 +99,11 @@
           <a href="#" class="dropdown-item">
             <i class="fas fa-file mr-2"></i> 3 new reports
             <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+          </a> -->
         </div>
       </li>
-      <li class="nav-item dropdown">
+      <!-- End Notifications Dropdown Menu -->
+      <li class="nav-item dropdown" *ngIf="isUserLogin == true">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <div class="image">
             <img src="{{userAvt ? userAvt : 'assets/dist/img/avatar-default.jpg'}}" class="img-circle elevation-2" alt="User Image">
@@ -156,15 +120,29 @@
             Giỏ hàng của tôi
           </a>
           <div class="dropdown-divider"></div>
-          <a routerLink="/user/cart" class="dropdown-item">
+          <a routerLink="/user/order" class="dropdown-item">
             Đơn hàng của tôi
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer" (click)="logoutUser()" >Log out</a>
         </div>
       </li>
+      <li class="nav-item" *ngIf="isUserLogin == false">
+        <a class="nav-link" routerLink="/user/login">
+          <!-- <i class="fas fa-th-large"></i> -->
+
+          <span class="">{{'Đăng nhập / Đăng ký'}}</span>
+          <!-- <i class="fa-solid fa-cart-minus"></i> -->
+        </a>
+      </li>
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+        <a class="nav-link" *ngIf="isUserLogin == false" (click)="checkUserLogined()">
+          <!-- <i class="fas fa-th-large"></i> -->
+          <i class="fas fa-shopping-cart"></i>
+          <span class="badge badge-danger navbar-badge">{{cartDetail ? cartDetail?.total : ''}}</span>
+          <!-- <i class="fa-solid fa-cart-minus"></i> -->
+        </a>
+        <a class="nav-link" *ngIf="isUserLogin == true" data-widget="control-sidebar" data-slide="true" href="#" role="button" (click)="checkUserLogined()">
           <!-- <i class="fas fa-th-large"></i> -->
           <i class="fas fa-shopping-cart"></i>
           <span class="badge badge-danger navbar-badge">{{cartDetail ? cartDetail?.total : ''}}</span>

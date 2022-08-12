@@ -39,7 +39,6 @@ export class DetailsProductComponent implements OnInit {
       this.editEditor(this.product.description);
       this.getCountDown();
     })
-    console.log(this.product);
 
   }
   editEditor(dataa: string){

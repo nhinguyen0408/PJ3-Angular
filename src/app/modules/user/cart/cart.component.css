@@ -3,6 +3,7 @@
   /* margin-left: 0px !important; */
   margin: 0px 150px !important;
   background: none !important;
+  min-height: 60vh;
 }
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 

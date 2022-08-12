@@ -81,7 +81,7 @@ export class ApiDashboardService {
     )
   }
   getBestEmployee():Observable<any>{
-    return this.http.get<any>(this.url+"/bill/getTopEmployee", this.httpOptions).pipe(
+    return this.http.get<any>(this.url+"/bill/getTopEmployee?profileRole=EMPLOYEE", this.httpOptions).pipe(
       catchError(this.handleError)
     )
   }

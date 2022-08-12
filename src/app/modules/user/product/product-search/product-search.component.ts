@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/models/Product.model';
+import { AuthService } from 'src/app/services/admin/auth/auth.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 import { CartService } from 'src/app/services/user/cart/cart.service';
 import { CategoryService } from 'src/app/services/user/category/category.service';
@@ -22,7 +23,9 @@ export class ProductSearchComponent implements OnInit {
     private actRoute: ActivatedRoute ,
     private apiCart: CartService,
     private toastsService: ToastService,
-    private location: Location
+    private location: Location,
+    private route: Router,
+    private auth: AuthService
     ) { }
 
   ngOnInit(): void {
@@ -31,6 +34,9 @@ export class ProductSearchComponent implements OnInit {
       this.textSearch = params['search'];
       this.getProduct()
     });
+    if(this.auth.isUserLogedin() == true){
+      this.isUserLogedin = true
+    }
     setTimeout(() => {
       this.fillFilterProduction()
     }, 500)
@@ -126,13 +132,21 @@ export class ProductSearchComponent implements OnInit {
     this.isFilter = true;
     this.productionChosed = this.production[index]?.name
   }
+  isUserLogedin: boolean = false
 
-  addShoppingCart = (productId: number) => {
-    if(window.confirm("Thêm sản phẩm này vào giỏ hàng ???"))
-    this.apiCart.addToCart(productId, 1).subscribe((res: any) => {
-      // this.getShoppingCart()
-      this.toastsService.alert('Thông báo !!!', "Đã thêm sản phẩm vào giỏ hàng !!!!!!",'bg-success');
-    })
+  addShoppingCart(productId: number){
+    //todo
+    if(this.isUserLogedin == true){
+      if(window.confirm("Thêm sản phẩm này vào giỏ hàng ???"))
+      this.apiCart.addToCart(productId, 1).subscribe((res: any) => {
+        // this.getShoppingCart()
+        this.toastsService.alert('Thông báo !!!', "Đã thêm sản phẩm vào giỏ hàng !!!!!!",'bg-success');
+      })
+    } else {
+      if(window.confirm("Vui lòng đăng nhập ???")){
+        this.route.navigate(['/user/login'])
+      }
+    }
   }
 
 

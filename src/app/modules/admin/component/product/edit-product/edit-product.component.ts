@@ -95,10 +95,8 @@ export class EditProductComponent implements OnInit {
         this.currentFileUpload.name = fileName;
         this.fileNamePreView = this.currentFileUpload.url;
         this.result = await this.uploadService.pushFileToStorage(this.currentFileUpload)
-        console.log('result:::',this.result)
         setTimeout(()=>{
           this.product.avatarUrl = this.result.url;
-          console.log('this.product.avatarUrl upload:::',this.product.avatarUrl)
           // console.log('this.currentFileUpload upload:::',this.currentFileUpload)
         },4000)
 
@@ -121,16 +119,13 @@ imgNamePreview: string [] = []
 
                 reader.readAsDataURL(event.target.files[i]);
         }
-        console.log(" this.selectedFilesArray ====", this.selectedFilesArray)
     }
   }
   setNewAvatarOpen(){
-    console.log("avtURL:::", this.avtUrl)
     this.avtUrl = false
 
   }
   setNewAvatarClose(){
-    console.log("avtURL:::", this.avtUrl)
     this.avtUrl = true
   }
   setOpenUploadFormToMoreImage = false;
@@ -154,7 +149,6 @@ imgNamePreview: string [] = []
         const files: File | null = this.selectedFilesArray[i];
         if(files){
           let newFileUpload = new FileUpload(files);
-          console.log('newFileUpload=====================', newFileUpload)
           const fileName = (Math.random() * new Date().getTime()).toString(36).replace(/\./g, '');
           newFileUpload.name = fileName;
           // const resultOfUpload = null;
@@ -166,10 +160,7 @@ imgNamePreview: string [] = []
         for(let i = 0; i < this.resultMul.length; i++){
           const image = new Image();
           image.imageUrl = this.resultMul[i].url;
-          console.log('this.image' + i ,image)
           this.product.listImage.push(image);
-          console.log('this.listImage:::',this.product.listImage)
-          console.log('this.product.avatarUrl upload:::' + i ,this.resultMul[i].url)
         }
         // this.resultMul = {};
       },4500 + 200*(this.selectedFilesArray.length))
@@ -183,8 +174,6 @@ imgNamePreview: string [] = []
       this.listImg = this.product.listImage
       this.aliases = res.listInformation;
       this.dataEditor = res.description;
-      console.log("aliases:::", this.aliases)
-      console.log("dataEditor:::", this.dataEditor)
       this.editEditor(this.dataEditor);
       // console.log(this.product);
     })
@@ -193,7 +182,6 @@ imgNamePreview: string [] = []
   }
   listImg: Image[] = []
   deleteImageInformation(id: number | null){
-    console.log("id:::",id)
     if(id){
       if(window.confirm("Bạn có chắc muốn xóa hình ảnh này !!!!! \nSau khi xóa sẽ không thể hoàn tác lại !!!")){
         this.apiProduct.deleteImageInformation(id).subscribe(res => {
@@ -202,7 +190,6 @@ imgNamePreview: string [] = []
         const index = this.listImg.findIndex(x => x.id === id)
         this.listImg.splice(index,1);
 
-        console.log("product listImg", this.listImg)
       }
     }
 
@@ -210,7 +197,6 @@ imgNamePreview: string [] = []
 
   addAlias() {
     this.product.listInformation = this.aliases
-    console.log("this.product.listInformation::::", this.product.listInformation)
     let productInfor = { productId: 0, key:'', value:''};
     // console.log("this.prduct", this.product)
     // console.log("this.aliases[0].productId", this.aliases[0].productId)
@@ -222,7 +208,6 @@ imgNamePreview: string [] = []
       // console.log(this.aliases[index])
       // console.log(index)
       if(this.aliases[index].id){
-        console.log(this.aliases[index].id);
         this.apiProduct.deleteProductInformation(this.aliases[index].id).subscribe(res => {
           this.toastsService.alert('Thông báo !!!', 'Xóa thuộc tính thành công!!!','bg-success');
         });
@@ -258,22 +243,18 @@ imgNamePreview: string [] = []
     if(window.confirm("Bạn có muốn thực thi những thay đổi??? Xác Nhận::::")){
       let categoryId = (function ($) {
         let se = $('#category').select2('data')[0]
-        console.log("selected category: ", se.id)
         return se.id
       })(jQuery);
       let productionId = (function ($) {
           let se = $('#production').select2('data')[0]
-          console.log("selected category: ", se.id)
           return se.id
       })(jQuery);
 
       let data = (function ($){
           let data = $('#textareaInput').summernote('code').toString();
-          console.log("selected: ", data)
 
           return data
       })(jQuery);
-      console.log("data: ", data)
 
       this.product.description = data ;
       this.product.categoryId = Number(categoryId);
@@ -295,7 +276,6 @@ imgNamePreview: string [] = []
 
 
         }
-        console.log("this.avtUrl===",this.avtUrl)
         if(this.avtUrl == false){
           this.product.avatarUrl = "";
           this.upload()
@@ -303,7 +283,6 @@ imgNamePreview: string [] = []
             this.uploadMultiple()
           }
           setTimeout(()=>{
-            console.log(" new avatar",this.product);
             this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
               this.toastsService.alert('Thông báo !!!', 'Sửa sản phẩm thành công!!!','bg-success');
               this.isLoading = false;
@@ -313,10 +292,8 @@ imgNamePreview: string [] = []
 
         } else {
           if(this.selectedFilesArray.length > 0){
-            console.log("this.product.listImage", this.product.listImage)
             this.uploadMultiple()
             setTimeout(()=>{
-              console.log(" new more image",this.product);
               this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
                 this.toastsService.alert('Thông báo !!!', 'Sửa sản phẩm thành công!!!','bg-success');
                 this.isLoading = false;
@@ -324,7 +301,6 @@ imgNamePreview: string [] = []
               })
             }, 5000)
           } else {
-            console.log("default",this.product);
             this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
               this.toastsService.alert('Thông báo !!!', 'Sửa sản phẩm thành công!!!','bg-success');
               this.isLoading = false;

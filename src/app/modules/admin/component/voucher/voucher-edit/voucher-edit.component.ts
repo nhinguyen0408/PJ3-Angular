@@ -69,25 +69,20 @@ export class VoucherEditComponent implements OnInit {
     else return null;
   }
   onSubmit(){
-    console.log("voucher:::::::", this.voucher)
     if(this.startDate){
       this.voucher.startDate = this.startDate
-      console.log(this.startDate)
     }
     if(this.endDate){
       this.voucher.endDate = this.endDate
-      console.log(this.endDate)
     }
     if(window.confirm("Bạn chắc chắn muốn thực hiện thay đổi !!!!")){
       this.api.updateVoucher(this.voucher).subscribe(res => {
-        console.log(res)
         this.toastsService.alert('Thông báo !!!', 'Sửa Voucher thành công !!!!','bg-success');
         this.route.navigate(['admin/voucher'])
       })
     }
   }
   onChange(event: any){
-    console.log("event:::::::", event.target.value)
     if(event.target.value === "TRUE"){
       this.voucher.discountPrice = null;
       this.voucher.isPercent = true;
@@ -101,7 +96,6 @@ export class VoucherEditComponent implements OnInit {
       this.onshow = null;
     }
 
-    console.log("this.onshow:::::::",this.onshow);
   }
 
 }

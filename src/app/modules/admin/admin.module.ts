@@ -40,6 +40,7 @@ import { CreateSaleComponent } from './component/sale/create-sale/create-sale.co
 import { UpdateSaleComponent } from './component/sale/update-sale/update-sale.component';
 import { WarrantyComponent } from './component/warranty/warranty.component';
 import { ImportProductComponent } from './component/import-product/import-product.component';
+import { OrderIsProcessingComponent } from './component/order/order-is-processing/order-is-processing.component';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { ImportProductComponent } from './component/import-product/import-produc
     UpdateSaleComponent,
     WarrantyComponent,
     ImportProductComponent,
+    OrderIsProcessingComponent,
   ],
   imports: [
     CommonModule,

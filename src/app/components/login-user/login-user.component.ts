@@ -27,8 +27,8 @@ export class LoginUserComponent implements OnInit {
   results: any;
   onSubmit(){
     if(this.loginForm.valid){
-      if(this.auth.getToken != null){
-        localStorage.removeItem('token')
+      if(this.auth.getUserToken != null){
+        localStorage.removeItem('user-token')
       }
       this.auth.login(this.loginForm.value).subscribe(
         (result) => {
@@ -38,7 +38,9 @@ export class LoginUserComponent implements OnInit {
             localStorage.setItem("username", result.responseData.profile.fistName + ' ' + result.responseData.profile.lastName );
             localStorage.setItem('user-avatar', result.responseData.profile.imageUrl)
             localStorage.setItem("userId", result.responseData.profile.id)
-            this.router.navigate(['user']);
+            this.router.navigate(['user/product']).then(() => {
+              window.location.reload();
+            });
           }
           else{
             alert(`Message : Sai tên đăng nhập hoặc mật khẩu`);           }

@@ -43,16 +43,18 @@
           <a
           class="dropdown-item position-relative notification--unread"
           *ngIf="item.isRead == false"
+          href="/admin/order?id={{item.params.billId}}"
           (click)="readNotification(item.id)"
           >
             <h6 class="notification__title"><i class="fas fa-box mr-2"></i>{{item.title}}</h6>
             <span class="notification__body text-bold" style="width: 400px;">{{item.body}}</span>
-            <span class="float-right text-muted small text-sm position-absolute creat-date">{{item.createdDate}}</span>
+            <span class="float-right text-muted small text-sm position-absolute creat-date text-info">{{item.createdDate}}</span>
             <span class="position-absolute unread-box"></span>
           </a>
           <a
-          class="dropdown-item"
+          class="dropdown-item position-relative"
           *ngIf="item.isRead == true"
+          href="/admin/order?id={{item.params.billId}}"
           (click)="readNotification(item.id)"
           >
             <h6 class="notification__title"><i class="fas fa-box mr-2"></i>{{item.title}}</h6>

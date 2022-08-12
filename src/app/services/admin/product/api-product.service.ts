@@ -56,20 +56,17 @@ export class ApiProductService {
   searchProduct(code: string, idCate: number, idProduction: number, name: string, status: string):Observable<Product>{
     if(code === ''){
       const url = this.url+"/product/getall?idCate="+ idCate +"&idProduction="+ idProduction +"&name=" + name + '&status='+status;
-      console.log("url no code:::", url)
       return this.http.get<Product>(url).pipe(
         retry(1),
       )
     }
 
     const url = this.url+"/product/getall?code="+code+"&idCate="+ idCate +"&idProduction="+ idProduction +"&name=" + name + '&status='+status;
-    console.log("url has code",url);
     return this.http.get<Product>(url, this.httpOptions).pipe(
       retry(1),
     )
   }
   getById(id: number):Observable<Product>{
-    console.log(this.token);
 
     return this.http.get<Product>(this.url+"/product/getdetail?id=" + id, this.httpOptions).pipe(
       retry(1),

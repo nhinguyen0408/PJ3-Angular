@@ -17,7 +17,6 @@ export class FileUploadService {
   pushFileToStorage(fileUpload: FileUpload) {
     return new Promise( resolve => {
     const filePath = `${this.basePath}/${fileUpload.name + fileUpload.file.name}`;
-    console.log("filePath",filePath)
     const storageRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, fileUpload.file);
     uploadTask.snapshotChanges().pipe(
@@ -26,7 +25,6 @@ export class FileUploadService {
           fileUpload.url = downloadURL;
           this.urlImage = downloadURL;
           fileUpload.name = fileUpload.file.name;
-          console.log(' fileUpload.url:::', fileUpload.url)
           this.saveFileData(fileUpload);
         });
       })
@@ -39,7 +37,6 @@ export class FileUploadService {
     let arrayUrl: string [] = []
     for(let i = 0 ; i < files.length; i ++){
       let results = this.pushFileToStorage(files[i]);
-      console.log("results", results)
     }
 
   }

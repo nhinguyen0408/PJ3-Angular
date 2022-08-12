@@ -4,9 +4,20 @@ import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Bill } from 'src/app/models/Bill.model';
 import { API_URL } from '../../api-const.type';
 
+interface UpdateBillType{
+  billId: number,
+  status: string,
+  reason?: string
+}
+interface CreateImeiType{
+  billDetailId: number,
+  imei: any[]
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApiBillService {
 
   constructor(private http: HttpClient) { }
@@ -65,6 +76,18 @@ export class ApiBillService {
   }
   searchBillWarranty(phone: string):Observable<Bill>{
     return this.http.get<Bill>(this.url+"/bill/getall?phone=" + phone, this.httpOptions).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  updateStatus(data: UpdateBillType):Observable<Bill>{
+    return this.http.put<any>(this.url+"/bill/updateStatus", data, this.httpOptions).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  createImei(data: CreateImeiType): Observable<any>{
+    return this.http.post<any>(this.url+"/imei/create", data, this.httpOptions).pipe(
       catchError(this.handleError)
     )
   }

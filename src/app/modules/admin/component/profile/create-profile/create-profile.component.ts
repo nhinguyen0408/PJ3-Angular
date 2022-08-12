@@ -30,7 +30,6 @@ export class CreateProfileComponent implements OnInit {
         && this.newProfile.address != "" && this.newProfile.role != ""){
           this.isLoading = true;
           this.newProfile.passWord = '123123';
-          console.log("Obj create::::::: ", this.newProfile)
           this.api.createProfile(this.newProfile).subscribe(data => {
             if(data.responseCode == '002'){
               this.toastsService.alert('Thông báo !!!', 'Số điện thoại đã được sử dụng !!!','bg-danger');

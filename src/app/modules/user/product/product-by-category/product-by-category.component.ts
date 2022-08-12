@@ -1,8 +1,9 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'src/app/models/Category.model';
 import { Product } from 'src/app/models/Product.model';
+import { AuthService } from 'src/app/services/admin/auth/auth.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 import { CartService } from 'src/app/services/user/cart/cart.service';
 import { CategoryService } from 'src/app/services/user/category/category.service';
@@ -23,20 +24,25 @@ export class ProductByCategoryComponent implements OnInit {
     private actRoute: ActivatedRoute ,
     private apiCart: CartService,
     private toastsService: ToastService,
-    private location: Location
+    private location: Location,
+    private route: Router,
+    private auth: AuthService
     ) { }
 
   ngOnInit(): void {
     this.getProductByCate()
     this.getDetailsCate()
     this.getProduction()
+    if(this.auth.isUserLogedin() == true){
+      this.isUserLogedin = true
+    }
     setTimeout(() => {
       this.fillFilterProduction()
     }, 500)
 
   }
 
-
+  isUserLogedin: boolean = false
   id = this.actRoute.snapshot.params['id']
   productList : Product[] = []
   cateDetails: any;
@@ -67,14 +73,12 @@ export class ProductByCategoryComponent implements OnInit {
   getProductByCate = () => {
     return this.apiProduct.getProductByCate(this.id).subscribe((res: any) => {
       this.productList = res
-      console.log('this.productList',this.productList)
     })
   }
 
   getDetailsCate = () => {
     return this.apiCate.getById(this.id).subscribe((res: any) => {
       this.cateDetails = res
-      console.log(res)
     })
   }
 
@@ -130,12 +134,17 @@ export class ProductByCategoryComponent implements OnInit {
     this.productionChosed = this.production[index]?.name
   }
 
-  addShoppingCart = (productId: number) => {
-    if(window.confirm("Thêm sản phẩm này vào giỏ hàng ???"))
-    this.apiCart.addToCart(productId, 1).subscribe((res: any) => {
-      // this.getShoppingCart()
-      this.toastsService.alert('Thông báo !!!', "Đã thêm sản phẩm vào giỏ hàng !!!!!!",'bg-success');
-    })
+  addShoppingCart(productId: number){
+    if(this.isUserLogedin == true){
+      if(window.confirm("Thêm sản phẩm này vào giỏ hàng ???"))
+      this.apiCart.addToCart(productId, 1).subscribe((res: any) => {
+        this.toastsService.alert('Thông báo !!!', "Đã thêm sản phẩm vào giỏ hàng !!!!!!",'bg-success');
+      })
+    } else {
+      if(window.confirm("Vui lòng đăng nhập ???")){
+        this.route.navigate(['/user/login'])
+      }
+    }
   }
 
 

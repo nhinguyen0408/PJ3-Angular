@@ -79,7 +79,6 @@ export class MyProfileComponent implements OnInit {
         // console.log('result:::',this.result)
         setTimeout(()=>{
           // this.product.avatarUrl = this.result.url;
-          console.log('this.result.url:::',this.result.url)
           this.myProfile.imageUrl = this.result.url;
         },4000)
 
@@ -105,20 +104,20 @@ export class MyProfileComponent implements OnInit {
   //localStorage.getItem("adminId")
 
   onSubmitUpdate(){
-    console.log("profile update======== ", this.myProfile);
     if(window.confirm("Chắc chắn bạn muốn thực hiện thay đổi ????")){
       if(this.selectedFiles != null && this.selectedFiles != undefined){
         this.upload();
         setTimeout(()=>{
-          console.log("Mydata",this.myProfile)
           this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
             this.toastsService.alert("Thông báo !!!!", "Cập nhật thông tin thành công !!!", "bg-success");
+            localStorage.setItem('name',this.myProfile.fistName + " " + this.myProfile.lastName )
             this.getMydata()
           });
         },4300)
       } else {
         this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
           this.toastsService.alert("Thông báo !!!!", "Cập nhật thông tin thành công !!!", "bg-success");
+          localStorage.setItem('name',this.myProfile.fistName + " " + this.myProfile.lastName )
           this.getMydata()
         });
       }
@@ -132,7 +131,6 @@ export class MyProfileComponent implements OnInit {
         const newPass = this.changePassForm.value.newPass;
         const myId = localStorage.getItem("employeeId");
         const objChangePass = {oldPass,newPass,myId}
-        console.log("objChangePass===== ", objChangePass)
         this.api.updatePassword(objChangePass).subscribe(data =>{
           // window.alert("Đổi mật khẩu thành công !!!!!");
           this.toastsService.alert("Thông báo !!!!", "Đổi mật khẩu thành công !!!!!", "bg-success");

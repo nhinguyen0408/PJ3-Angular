@@ -33,7 +33,7 @@ export class ProfileService {
   getProfileById(id:number):Observable<Profile>{
     return this.http.get<Profile>(this.url+"/profile/getById?id=" + id, this.httpOptions).pipe(
       retry(1),
-      catchError(this.handleError)
+      // catchError(this.handleError)
     )
   }
 

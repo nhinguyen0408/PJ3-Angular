@@ -96,7 +96,7 @@
                 </div>
               </div>
               <div class="col-lg-12">
-                <div class="d-flex align-center justify-content-center">
+                <div class="d-flex align-center justify-content-center" *ngIf="productList?.length != 0">
                   <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="tabSize($event)">
                   </pagination-controls>
                 </div>

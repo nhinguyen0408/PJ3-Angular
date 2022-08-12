@@ -455,7 +455,7 @@
           </div>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-9" *ngIf="countNewProfile && countNewProfile?.data && countNewProfile?.data?.length > 0">
           <!-- USERS LIST -->
           <div class="card">
             <div class="card-header bg-black">
@@ -471,17 +471,6 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body p-0">
-              <!-- <ul class="col-md-4 users-list clearfix">
-                <li *ngIf="dataBestEmp">
-                  <div >
-                    <img src="{{dataBestEmp[0].profileEntity.imageUrl}}" *ngIf="dataBestEmp[0].profileEntity.imageUrl" class="avatar-image" alt="User Image">
-                    <img src="assets/dist/img/pngtree-man-default-avatar-png-image_2813122.jpg" *ngIf="dataBestEmp[0].profileEntity.imageUrl == null || dataBestEmp[0].profileEntity.imageUrl ==='' " alt="User Image" class="avatar-image">
-                    <a class="users-list-name" href="#">{{dataBestEmp[0].profileEntity.fistName + ' '+ dataBestEmp[0].profileEntity.lastName}}</a>
-                    <span class="users-list-date">Số đơn hàng đã bán: {{dataBestEmp[0].billCount}}</span>
-                  </div>
-                </li>
-
-              </ul> -->
               <ul class="col-md-12 users-list clearfix">
                 <li *ngFor="let item of countNewProfile?.data; index as i">
                   <div *ngIf="i<8">
@@ -518,7 +507,7 @@
               </div>
             </div>
             <!-- /.card-header -->
-            <div class="card-body p-10 d-flex align-center justify-content-center">
+            <div class="card-body p-10 d-flex align-center justify-content-center" *ngIf="dataBestEmp && dataBestEmp.length > 0">
               <div>
                 <ul class="col-md-12  clearfix">
                   <li *ngIf="dataBestEmp.length > 0">
@@ -580,7 +569,7 @@
                   <tbody>
                     <tr *ngFor="let item of listBill; index as i">
                       <td class="align-middle" *ngIf="i<7"> {{i + 1}} </td>
-                      <th class="align-middle" *ngIf="i<7"> HD00{{item.id}} </th>
+                      <th class="align-middle" *ngIf="i<7"> {{item.code}} </th>
                       <td class="align-middle" *ngIf="i<7">
                         Tên khách hàng: <strong>{{item.ownerName}}</strong> <br>
                         Số điện thoại: <strong>{{item.phone}}</strong> <br>

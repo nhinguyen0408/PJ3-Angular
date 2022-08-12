@@ -113,7 +113,8 @@
                     </div>
                 </div>
               </div> -->
-            <table id="example1" class="table table-bordered table-striped">
+              <button class="btn btn-success" (click)="exportexcel()">Export</button>
+            <table id="example1" class="table table-bordered table-striped"*ngIf="productList && productList.length > 0">
               <thead>
                 <tr>
                   <th style="width: 10px">#</th>

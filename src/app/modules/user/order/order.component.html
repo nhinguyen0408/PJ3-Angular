@@ -1,1 +1,276 @@
-<p>order works!</p>
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="content-body pb-3">
+      <h4>Đơn hàng của tôi</h4>
+      <div class="content-container cart">
+        <div class="row mt-4">
+          <nav class="w-100">
+            <div class="nav nav-tabs" id="product-tab" role="tablist">
+              <a class="nav-item nav-link active" id="product-desc-tab" data-toggle="tab" href="#product-desc" role="tab" aria-controls="product-desc" aria-selected="true">Đơn hàng chờ xác nhận({{veryfyingOrder.length}})</a>
+              <a class="nav-item nav-link" id="product-desc-2-tab" data-toggle="tab" href="#product-desc-2" role="tab" aria-controls="product-desc-2" aria-selected="true">Đơn hàng chờ vận chuyển({{veryfiedOrder.length}})</a>
+              <a class="nav-item nav-link" id="product-comments-tab" data-toggle="tab" href="#product-comments" role="tab" aria-controls="product-comments" aria-selected="false">Đơn hàng đang vận chuyển({{isProcessingOrder.length}})</a>
+              <a class="nav-item nav-link" id="product-rating-tab" data-toggle="tab" href="#product-rating" role="tab" aria-controls="product-rating" aria-selected="false">Đơn hàng đã mua({{bougthOrder.length}})</a>
+              <a class="nav-item nav-link" id="product-rating-2-tab" data-toggle="tab" href="#product-rating-2" role="tab" aria-controls="product-rating-2" aria-selected="false">Đơn hàng đã hủy({{abortOrder.length}})</a>
+            </div>
+          </nav>
+          <div class="tab-content p-3" id="nav-tabContent" style="width: 100% !important;">
+            <div class="tab-pane fade show active" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab">
+              <div *ngIf="veryfyingOrder.length == 0">
+                <h6>Chưa có đơn hàng nào</h6>
+              </div>
+              <div>
+                <div class="card" *ngFor="let item of veryfyingOrder; let idx = index">
+                  <div class="m-3 card-header position-relative">
+                    <span class="badge badge-warning p-2 position-absolute" *ngIf="item.status == 'VERIFYING' || item.status == 'VERIFIED' " style="right: 20px; top: 10px;">Đang chờ xác nhận</span>
+                    <span class="badge badge-warning p-2 position-absolute" *ngIf="item.status == 'CANCELED_REQUEST'" style="right: 20px; top: 10px;">Đang chờ xác nhận hủy đơn</span>
+                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span>
+                  </div>
+
+                  <div class="row card-body p-3">
+                    <div class="col-md-12">
+                      <div *ngFor="let prod of item.billDetail">
+                        <div class="cart-product m-2 position-relative">
+                          <div class="cart-product-image">
+                            <img src="{{prod.productAvatar}}" alt="">
+                          </div>
+                          <a class="cart-product-name" style="cursor: pointer;" href="/user/product/details/{{prod.productId}}">
+                            {{prod.productName}}
+                          </a>
+                          <small class="text-bold product-price position-absolute">
+                            <span style="float: right;">x{{prod.quantity}} </span><br>
+                            {{(prod.price * prod.quantity).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                          </small>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="float: right; padding: 20px;">
+                          <span>Tổng thanh toán: <strong>{{item.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
+                          <div *ngIf="item.status == 'VERIFYING' || item.status == 'VERIFIED'">
+                            <button data-toggle="modal" data-target="#modal-default" class="btn-abortOrder" style="float: right;" (click)="setBillId(item.id)">Yêu cầu hủy đơn</button>
+                          </div>
+                          <div *ngIf="item.status == 'CANCELED_REQUEST'">
+                            <button class="btn-abortOrder--wait">Yêu cầu đang được xử lý ...</button> <br>
+                            <button class="btn-abortOrder--abort" (click)="unAbortOrder(item.id)">Hủy yêu cầu</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal fade" id="modal-default" *ngIf="billId != null">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Vui lòng chọn lý do hủy đơn</h4>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onClose()">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="" style="width: 100%;">
+                                <p>Lý do hủy đơn</p>
+                                <label class="col-12 col-form-label">
+                                  <input type="radio" name="reson" value="1" (change)="onChangeReason($event)"> Thay đổi địa chỉ giao hàng
+                                </label> <br>
+                                <label class="col-12 col-form-control">
+                                  <input type="radio" name="reson" value="2" (change)="onChangeReason($event)"> Thay đổi số điện thoại
+                                </label> <br>
+                                <label class="col-12 col-form-control">
+                                  <input type="radio" name="reson" value="3" (change)="onChangeReason($event)"> Đơn hàng bị trùng lặp
+                                </label> <br>
+                                <label class="col-12 col-form-control">
+                                  <input type="radio" name="reson" value="4" (change)="onChangeReason($event)"> Muốn mua hàng trực tiếp tại shop
+                                </label> <br>
+                                <label class="col-12 col-form-control">
+                                  <input type="radio" name="reson" value="5" (change)="onChangeReason($event)"> Khác
+                                  <div *ngIf="isOtherReason == true">
+                                    Lý do khác: <input type="text" class="form-control" [(ngModel)]="reason" name="reason">
+                                  </div>
+                                </label>
+                              </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                              <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Hủy</button>
+                              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="requestAbortOrder()">Xác nhận hủy đơn</button>
+                            </div>
+                          </div>
+                          <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="product-desc-2" role="tabpanel" aria-labelledby="product-desc-2-tab">
+              <div *ngIf="veryfiedOrder.length == 0">
+                <h6>Chưa có đơn hàng nào</h6>
+              </div>
+              <div>
+                <div class="card" *ngFor="let item of veryfiedOrder; let idx = index">
+                  <div class="m-3 card-header position-relative">
+                    <span class="badge badge-warning p-2 position-absolute" *ngIf="item.status == 'VERIFIED'" style="right: 20px; top: 10px;">Đang chờ lấy hàng</span>
+                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span>
+                  </div>
+
+                  <div class="row card-body p-3">
+                    <div class="col-md-12">
+                      <div *ngFor="let prod of item.billDetail">
+                        <div class="cart-product m-2 position-relative">
+                          <div class="cart-product-image">
+                            <img src="{{prod.productAvatar}}" alt="">
+                          </div>
+                          <a class="cart-product-name" style="cursor: pointer;" href="/user/product/details/{{prod.productId}}">
+                            {{prod.productName}}
+                          </a>
+                          <small class="text-bold product-price position-absolute">
+                            <span style="float: right;">x{{prod.quantity}} </span><br>
+                            {{(prod.price * prod.quantity).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                          </small>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="float: right; padding: 20px;">
+                          <span>Tổng thanh toán: <strong>{{item.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab">
+              <div *ngIf="isProcessingOrder.length == 0">
+                <h6>Chưa có đơn hàng nào</h6>
+              </div>
+              <div>
+                <div class="card" *ngFor="let item of isProcessingOrder; let idx = index">
+                  <div class="m-3 card-header position-relative">
+                    <span class="badge badge-info p-2 position-absolute" style="right: 20px; top: 10px;">Đang được vận chuyển</span>
+                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span>
+                  </div>
+                  <div class="row card-body p-3">
+                    <div class="col-md-12">
+                      <div *ngFor="let prod of item.billDetail">
+                        <div class="cart-product m-2 position-relative">
+                          <div class="cart-product-image">
+                            <img src="{{prod.productAvatar}}" alt="">
+                          </div>
+                          <a class="cart-product-name" style="cursor: pointer;" href="/user/product/details/{{prod.productId}}">
+                            {{prod.productName}}
+                          </a>
+                          <small class="text-bold product-price position-absolute">
+                            <span style="float: right;">x{{prod.quantity}} </span><br>
+                            {{(prod.price * prod.quantity).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                          </small>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="float: right; padding: 20px;">
+                          <span>Tổng thanh toán: <strong>{{item.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
+                          <div>
+                            <div>
+                              <button class="btn-reviced" style="float: right;" (click)="revicedOrder(item.id)">Đã nhận hàng</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="product-rating" role="tabpanel" aria-labelledby="product-rating-tab">
+              <div *ngIf="bougthOrder.length == 0">
+                <h6>Chưa có đơn hàng nào</h6>
+              </div>
+              <div>
+                <div class="card" *ngFor="let item of bougthOrder; let idx = index">
+                  <div class="m-3 card-header position-relative">
+                    <span class="badge badge-success p-2 position-absolute" style="right: 20px; top: 10px;">Đã mua</span>
+                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span>
+                  </div>
+
+                  <div class="row card-body p-3">
+                    <div class="col-md-12">
+                      <div *ngFor="let prod of item.billDetail">
+                        <div class="cart-product m-2 position-relative">
+                          <div class="cart-product-image">
+                            <img src="{{prod.productAvatar}}" alt="">
+                          </div>
+                          <a class="cart-product-name" style="cursor: pointer;" href="/user/product/details/{{prod.productId}}">
+                            {{prod.productName}}
+                          </a>
+                          <small class="text-bold product-price position-absolute">
+                            <span style="float: right;">x{{prod.quantity}} </span><br>
+                            {{(prod.price * prod.quantity).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                          </small>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="float: right; padding: 20px;">
+                          <span>Tổng thanh toán: <strong>{{item.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
+                          <div>
+                            <button class="btn-buyAgainOrder" style="float: right;">Mua lại</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="product-rating-2" role="tabpanel" aria-labelledby="product-rating-2-tab">
+              <div *ngIf="abortOrder.length == 0">
+                <h6>Chưa có đơn hàng nào</h6>
+              </div>
+              <div>
+                <div class="card" *ngFor="let item of abortOrder; let idx = index">
+                  <div class="m-3 card-header position-relative">
+                    <span class="badge badge-danger p-2 position-absolute" style="right: 20px; top: 10px;">Đã hủy</span>
+                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span>
+                  </div>
+
+                  <div class="row card-body p-3">
+                    <div class="col-md-12">
+                      <div *ngFor="let prod of item.billDetail">
+                        <div class="cart-product m-2 position-relative">
+                          <div class="cart-product-image">
+                            <img src="{{prod.productAvatar}}" alt="">
+                          </div>
+                          <a class="cart-product-name" style="cursor: pointer;" href="/user/product/details/{{prod.productId}}">
+                            {{prod.productName}}
+                          </a>
+                          <small class="text-bold product-price position-absolute">
+                            <span style="float: right;">x{{prod.quantity}} </span><br>
+                            {{(prod.price * prod.quantity).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                          </small>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="float: right; padding: 20px;">
+                          <span>Tổng thanh toán: <strong>{{item.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
+                          <div>
+                            <button class="btn-buyAgainOrder" style="float: right;">Mua lại</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- model -->
+
+    </div>
+  </div>
+</div>
+
+
+
+

@@ -79,7 +79,6 @@ export class MyProfileComponent implements OnInit {
         // console.log('result:::',this.result)
         setTimeout(()=>{
           // this.product.avatarUrl = this.result.url;
-          console.log('this.result.url:::',this.result.url)
           this.myProfile.imageUrl = this.result.url;
         },4000)
 
@@ -105,7 +104,6 @@ export class MyProfileComponent implements OnInit {
   //localStorage.getItem("adminId")
 
   onSubmitUpdate(){
-    console.log("profile update======== ", this.myProfile);
     if(this.myProfile.fistName === "" || this.myProfile.lastName === "" || this.myProfile.email === ""|| this.myProfile.address === ""){
       this.toastsService.alert("Thông báo !!!!", "Vui lòng nhập đủ thông tin !!!","bg-warning");
     } else {
@@ -114,7 +112,6 @@ export class MyProfileComponent implements OnInit {
         if(this.selectedFiles != null && this.selectedFiles != undefined){
           this.upload();
           setTimeout(()=>{
-            console.log("Mydata",this.myProfile)
             this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
               this.isLoading = false;
               this.toastsService.alert("Thông báo !!!!", "Sửa tài khoản thành công !!!","bg-success");

@@ -11,7 +11,7 @@ export class Bill{
   address: string = "";
   status: string = "";
   type: string = "";
-  billDetail: {'productId': number, 'quantity': number, 'price': number} [] = []
+  billDetail: any [] = []
   createdDate: Date = new Date();
   modifiedDate: Date = new Date();
 }

@@ -4,11 +4,11 @@ import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 
 declare var jQuery: any
 @Component({
-  selector: 'app-order-confired',
-  templateUrl: './order-confired.component.html',
-  styleUrls: ['./order-confired.component.css']
+  selector: 'app-order-is-processing',
+  templateUrl: './order-is-processing.component.html',
+  styleUrls: ['./order-is-processing.component.css']
 })
-export class OrderConfiredComponent implements OnInit {
+export class OrderIsProcessingComponent implements OnInit {
 
   constructor(
     private apiBill: ApiBillService,
@@ -37,6 +37,8 @@ export class OrderConfiredComponent implements OnInit {
                 dataImei[i] = {data: imei}
               }
               this.listBillIMEI[index] = {billDetailId: e.id, imei: dataImei}
+              // this.bill.billDetail[index].imei = dataImei
+
             }
           })
         }
@@ -57,28 +59,13 @@ export class OrderConfiredComponent implements OnInit {
   getAllBill(){
     this.apiBill.getBill().subscribe((res: any) =>{
       if(res && res.length > 0){
-        this.listBill = res.filter((e: any) => e.status == 'VERIFIED');
+        this.listBill = res.filter((e: any) => e.status == 'INPROGRESS');
       }
     })
   }
 
   onClose = () => {
     this.bill = null;
-  }
-
-  updateStatusBill = (id: number) => {
-    if(window.confirm('Xác nhận đã gửi hàng cho bên vận chuyển ???')){
-      const data = {billId: id, status: 'INPROGRESS'}
-      this.apiBill.updateStatus(data).subscribe((res: any) =>{
-        if(res){
-          this.getAllBill()
-          this.listBillIMEI = []
-          this.toastService.alert('Thông báo !!!', "Xác nhận đã gửi đơn hàng " + this.bill.code + " thành công !!!!",'bg-success');
-          this.bill = null
-        }
-      })
-
-    }
   }
 
 }

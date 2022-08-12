@@ -34,21 +34,22 @@ export class HeaderComponent implements OnInit {
   notification: any = []
   countUnread: any
   getNotification = () => {
-    setInterval(() => {
+    // setInterval(() => {
       this.apiNotification.getAllNotification().subscribe((res: any) => {
         this.notification = res
         if(this.notification && this.notification.length > 0){
           const data = this.notification.map((element: any) => {
-            return {...element, createdDate: this.timeAgo.format(new Date(element.createdDate))}
+            const param = element.params ? JSON.parse(element.params) : null;
+            return {...element, createdDate: this.timeAgo.format(new Date(element.createdDate)), params: param}
           })
-          console.log(data)
+
           this.notification = data
         }
       })
       this.apiNotification.countUnReadNotification().subscribe((res: any) => {
         this.countUnread = res
       })
-    }, 1000)
+    // }, 1000)
   }
 
   readNotification = (id: number | string) => {

@@ -88,7 +88,7 @@
 </div>
 <!-- model -->
 <div class="modal fade" id="modal-lg" *ngIf="shopping_Cart.length > 0">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-xl" style="max-width: 90vw !important; width: 85vw !important;">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Hóa đơn thanh toán</h4>
@@ -96,133 +96,178 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" id="bill">
-        <h5 class="mb-3">Thông tin Khách hàng:</h5>
-        <div class="tab-pane" id="activity">
-          <form class="form-horizontal">
-            <div class="form-group row">
-              <label for="firstName" class="col-sm-2 col-form-label">Họ tên</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="firstName"
-                [(ngModel)]="bill.ownerName"
-                required #lastName="ngModel"
-                name="ownerName">
-                <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
-                  class="alert"
-                  style="background: rgb(248, 131, 131); border-radius: 0%;"
-                  >
+      <div class="modal-body row">
+        <div class="col-md-7" id="bill">
+          <h5 class="mb-3">Thông tin Khách hàng:</h5>
+          <div class="tab-pane" id="activity">
+            <form class="form-horizontal">
+              <div class="form-group row">
+                <label for="firstName" class="col-sm-2 col-form-label">Họ tên</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="firstName"
+                  [(ngModel)]="bill.ownerName"
+                  required #lastName="ngModel"
+                  name="ownerName">
+                  <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+                    class="alert"
+                    style="background: rgb(248, 131, 131); border-radius: 0%;"
+                    >
 
-                  <div *ngIf="lastName.errors?.['required']">
-                    Tên không được để trống !!!
+                    <div *ngIf="lastName.errors?.['required']">
+                      Tên không được để trống !!!
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="form-group row">
-              <label for="lastName" class="col-sm-2 col-form-label">Số điện thoại</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="lastName"
-                [(ngModel)]="bill.phone" name="phone"
-                required [pattern]="phoneValidate" #phone="ngModel">
-                <div *ngIf="phone.invalid && (phone.dirty || phone.touched)"
-                  class="alert"
-                  style="background: rgb(248, 131, 131); border-radius: 0%;"
-                  >
+              <div class="form-group row">
+                <label for="lastName" class="col-sm-2 col-form-label">Số điện thoại</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="lastName"
+                  [(ngModel)]="bill.phone" name="phone"
+                  required [pattern]="phoneValidate" #phone="ngModel">
+                  <div *ngIf="phone.invalid && (phone.dirty || phone.touched)"
+                    class="alert"
+                    style="background: rgb(248, 131, 131); border-radius: 0%;"
+                    >
 
-                  <div *ngIf="phone.errors?.['required']">
-                    Số điện thoại không được để trống !!!!
-                  </div>
+                    <div *ngIf="phone.errors?.['required']">
+                      Số điện thoại không được để trống !!!!
+                    </div>
 
-                  <div *ngIf="phone.errors?.['pattern']">
-                    Số điện thoại không phù hợp !!!!
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- <div class="form-group row">
-              <label for="lastName" class="col-sm-2 col-form-label">Email</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="lastName" [(ngModel)]="bill.phone" name="phone" placeholder="Phone number">
-              </div>
-            </div> -->
-            <!-- <div class="form-group row">
-              <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
-              <div class="col-sm-10">
-                <input type="email" class="form-control" id="phone" placeholder="Name">
-              </div>
-            </div> -->
-            <div class="form-group row">
-              <label for="inputName2" class="col-sm-2 col-form-label">Địa chỉ</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputName2"
-                [(ngModel)]="bill.address" name="address"
-                required #address="ngModel">
-                <div *ngIf="address.invalid && (address.dirty || address.touched)"
-                  class="alert"
-                  style="background: rgb(248, 131, 131); border-radius: 0%;"
-                  >
-
-                  <div *ngIf="address.errors?.['required']">
-                    Địa chỉ không được để trống !!!!
+                    <div *ngIf="phone.errors?.['pattern']">
+                      Số điện thoại không phù hợp !!!!
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- Thông tin sản phẩm -->
-            <div class="card-title">
-              <h5 class="mb-3">Thông tin sản phẩm:</h5>
+              <!-- <div class="form-group row">
+                <label for="lastName" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="lastName" [(ngModel)]="bill.phone" name="phone" placeholder="Phone number">
+                </div>
+              </div> -->
+              <!-- <div class="form-group row">
+                <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" id="phone" placeholder="Name">
+                </div>
+              </div> -->
+              <div class="form-group row">
+                <label for="inputName2" class="col-sm-2 col-form-label">Địa chỉ</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputName2"
+                  [(ngModel)]="bill.address" name="address"
+                  required #address="ngModel">
+                  <div *ngIf="address.invalid && (address.dirty || address.touched)"
+                    class="alert"
+                    style="background: rgb(248, 131, 131); border-radius: 0%;"
+                    >
 
-            </div>
-            <div class="btn-group btn-group-toggle w-100"  data-toggle="buttons">
-              <table class="table" width="100%">
-                <thead class="thead-dark">
-                  <tr>
-                    <th>STT</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Mã</th>
-                    <th>Số lượng</th>
-                    <th>Thành tiền</th>
+                    <div *ngIf="address.errors?.['required']">
+                      Địa chỉ không được để trống !!!!
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Thông tin sản phẩm -->
+              <div class="card-title">
+                <h5 class="mb-3">Thông tin sản phẩm:</h5>
+
+              </div>
+              <div class="btn-group btn-group-toggle w-100"  data-toggle="buttons">
+                <table class="table" width="100%">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên sản phẩm</th>
+                      <th>Mã</th>
+                      <th>Số lượng</th>
+                      <th>Thành tiền</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of shopping_Cart; index as i">
+                      <td class="align-middle">{{i + 1}}</td>
+                      <td class="align-middle">
+                          <figure class="itemside align-items-center">
+                              <figcaption class="info product-name"> <a href="#" class="title text-dark" data-abc="true">{{item.product.name}}</a>
+
+                              </figcaption>
+                          </figure>
+                      </td>
+                      <td class="align-middle">{{item.product.code}}</td>
+                      <td class="align-middle">
+                       {{item.quantity}}
+                      </td>
+                      <td class="align-middle">
+                          <div class="price-wrap"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
+                      </td>
+                      <!-- <td class="text-right d-none d-md-block"> <a class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> <i class="fas fa-trash"></i></a> </td> -->
                   </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of shopping_Cart; index as i">
-                    <td class="align-middle">{{i + 1}}</td>
-                    <td class="align-middle">
-                        <figure class="itemside align-items-center">
-                            <figcaption class="info product-name"> <a href="#" class="title text-dark" data-abc="true">{{item.product.name}}</a>
+                  <tr>
+                    <th colspan="4">Tổng tiền hàng: </th>
+                    <td><strong>{{totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                  </tr>
+                  <tr>
+                    <th colspan="4">Chiết khấu: </th>
+                    <td>{{discount.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
+                  </tr>
+                  <tr>
+                    <th colspan="4">Tổng Thanh toán: </th>
+                    <td><strong class="text-danger">{{totalPay.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- End thông tin sản phẩm -->
 
-                            </figcaption>
-                        </figure>
-                    </td>
-                    <td class="align-middle">{{item.product.code}}</td>
-                    <td class="align-middle">
-                     {{item.quantity}}
-                    </td>
-                    <td class="align-middle">
-                        <div class="price-wrap"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
-                    </td>
-                    <!-- <td class="text-right d-none d-md-block"> <a class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> <i class="fas fa-trash"></i></a> </td> -->
-                </tr>
-                <tr>
-                  <th colspan="4">Tổng tiền hàng: </th>
-                  <td><strong>{{totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
-                </tr>
-                <tr>
-                  <th colspan="4">Chiết khấu: </th>
-                  <td>{{discount.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
-                </tr>
-                <tr>
-                  <th colspan="4">Tổng Thanh toán: </th>
-                  <td><strong class="text-danger">{{totalPay.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
-                </tr>
-                </tbody>
-              </table>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-4 imei__container">
+          <h5 class="mb-3">Nhập IMEI sản phẩm</h5>
+          <small class="text-danger">
+            (Lưu ý: Sản phẩm bắt buộc có imei để nhận được bảo hành !!!)*
+          </small>
+          <div>
+            <div *ngFor="let item of shopping_Cart; let idx = index">
+              <div *ngIf="item.product.warranty > 0">
+                <strong>{{idx + 1}}. Sản phẩm {{idx + 1}}:</strong>
+                <div class="ml-2">
+                  <div class="d-flex align-items-center justify-content-center" >
+                    <img src="{{item.product.avatarUrl}}" class="img-imei" alt="">
+                    <h6 class="ml-2">{{item.product.name}}</h6>
+                  </div>
+                  <div>
+                    <div class="mt-2" *ngFor="let itemChild of listBillIMEI[idx].imei; let childIdx = index;">
+                      IMEI {{childIdx + 1}}:
+                      <input
+                        type="text"
+                        placeholder="Nhập IMEI"
+                        class="form-control"
+                        value="{{itemChild.data}}"
+                        (blur)="onBlurIMEI(idx, childIdx, $event)"
+                        name="key-{{idx}}-{{childIdx}}"
+                      >
+                      <!-- <input type="text" class="form-control" id="firstName"
+                        [(ngModel)]="listBillIMEI[idx].imei[childIdx]"
+                        #lastName="ngModel"
+                        value="{{itemChild}}"
+                        (blur)="onBlurIMEI(idx, childIdx, $event)"
+                        name="key-[{{idx}}]-[{{childIdx}}]"> -->
+                      <!-- [(ngModel)]="listBillIMEI[idx].imei[childIdx]"
+                      name="key-[{{idx}}]-[{{childIdx}}]" -->
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
             </div>
-            <!-- End thông tin sản phẩm -->
-
-          </form>
+          </div>
         </div>
       </div>
+
       <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onPrint()" ><i class="fas fa-print"></i></button>

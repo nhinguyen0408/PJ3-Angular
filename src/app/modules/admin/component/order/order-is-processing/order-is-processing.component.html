@@ -7,7 +7,7 @@
       <div class="col-md-12 m-b-30">
         <div class="d-flex justify-content-between mt-3">
           <div class="">
-            <h4 class="d-inline mb-5">Đơn hàng Chờ vận chuyển</h4>
+            <h4 class="d-inline mb-5">Đơn hàng đang vận chuyển</h4>
           </div>
         </div>
       </div>
@@ -49,11 +49,12 @@
                     <span class="badge badge-warning px-2" *ngIf="item.status == 'VERIFYING'">{{item.status}}</span>
                     <span class="badge badge-danger px-2" *ngIf="item.status == 'CANCELED'">{{item.status}}</span>
                     <span class="badge badge-warning px-2" *ngIf="item.status == 'VERIFIED'">{{item.status}}</span>
+                    <span class="badge badge-info px-2" *ngIf="item.status == 'INPROGRESS'">{{item.status}}</span>
                   </td>
                   <td class="align-middle">{{item.createdDate | date: "medium"}}</td>
                   <td class="align-middle">
                     <!-- <small class="btn mr-2 shadow text-primary" data-toggle="modal" data-target="#modal-lg" (click)="getDataDetail(item.id)"><i class="far fa-eye"></i></small> -->
-                    <small class="btn mr-2 shadow btn-success text-white" data-toggle="modal" data-target="#modal-xl" (click)="getDataDetail(item.id)">Xác nhận gửi hàng</small>
+                    <small class="btn mr-2 shadow text-primary" data-toggle="modal" data-target="#modal-xl" (click)="getDataDetail(item.id)"><i class="far fa-eye"></i></small>
                   </td>
                 </tr>
 
@@ -175,9 +176,6 @@
               </div>
               <div class="col-md-4 imei__container">
                 <h5 class="mb-3">Nhập IMEI sản phẩm</h5>
-                <small class="text-danger">
-                  (Lưu ý: Hãy chuyển hàng cho bộ phận vận chuyển trước khi xác nhận !!!)*
-                </small>
                 <div>
                   <div *ngFor="let item of bill.billDetail; let idx = index">
                     <div *ngIf="item.warrantyEndDate != null">
@@ -214,8 +212,6 @@
 
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Close</button>
-              <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fas fa-print"></i></button>
-              <button type="button" class="btn btn-success" data-dismiss="modal" (click)="updateStatusBill(bill.id)">Xác nhận đơn hàng</button>
             </div>
           </div>
 

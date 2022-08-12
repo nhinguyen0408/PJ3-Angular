@@ -102,7 +102,6 @@ export class CreateProductComponent implements OnInit {
 
                 reader.readAsDataURL(event.target.files[i]);
         }
-        console.log(" this.selectedFilesArray ====", this.selectedFilesArray)
     }
   }
   async uploadMultiple(){
@@ -111,7 +110,6 @@ export class CreateProductComponent implements OnInit {
         const files: File | null = this.selectedFilesArray[i];
         if(files){
           let newFileUpload = new FileUpload(files);
-          console.log('newFileUpload=====================', newFileUpload)
           const fileName = (Math.random() * new Date().getTime()).toString(36).replace(/\./g, '');
           newFileUpload.name = fileName;
           // const resultOfUpload = null;
@@ -123,10 +121,7 @@ export class CreateProductComponent implements OnInit {
         for(let i = 0; i < this.resultMul.length; i++){
           const image = new Image();
           image.imageUrl = this.resultMul[i].url;
-          console.log('this.image' + i ,image)
           this.listImage.push(image);
-          console.log('this.listImage:::',this.listImage)
-          console.log('this.product.avatarUrl upload:::' + i ,this.resultMul[i].url)
         }
         // this.resultMul = {};
       },4500 + 100*(this.selectedFilesArray.length))
@@ -147,7 +142,6 @@ export class CreateProductComponent implements OnInit {
           // console.log('result:::',this.result)
           setTimeout(()=>{
             this.product.avatarUrl = this.result.url;
-            console.log('this.product.avatarUrl upload:::',this.product.avatarUrl)
           },4000)
 
         }
@@ -228,7 +222,6 @@ export class CreateProductComponent implements OnInit {
         this.product.listImage = this.listImage;
         this.apiProduct.createProduct(this.product).subscribe((data:{})=>{
           this.toastsService.alert('Thông báo !!!', 'Thêm sản phẩm thành công!!!','bg-success');
-          console.log(this.product)
           this.isLoading = false
           this.route.navigate(['/admin/product'])
         })

@@ -23,7 +23,6 @@ export class EditCategoryComponent implements OnInit {
     })
   }
   onSubmit(){
-    console.log(this.category)
     if(this.category.name == ""){
       this.toastsService.alert("Thông báo!!!!",'Vui lòng điền tên thể loại !!!!', 'bg-warning')
     } else {
@@ -37,7 +36,6 @@ export class EditCategoryComponent implements OnInit {
 
   }
   toggleEditable(e: any){
-    console.log(e)
     if ( e.target.checked ) {
       this.category.status = "ENABLE";
       this.toastsService.alert("Thông báo!!!!",'Đổi trạng thái qua hoạt động !!!!', 'bg-info')

@@ -25,7 +25,6 @@ export class VoucherCreateComponent implements OnInit {
   numberValidate = "^[0-9]*$";
   onshow: boolean | null = null;
   onSubmit(){
-    console.log("Voucher:::::::", this.voucher)
     if(this.voucher.isPercent == true){
       if(this.voucher.name != "" && this.voucher.key != "" && this.voucher.percentage!= null ){
         this.voucher.key.toUpperCase();
@@ -63,7 +62,6 @@ export class VoucherCreateComponent implements OnInit {
 
   }
   onChange(event: any){
-    console.log("event:::::::", event.target.value)
     if(event.target.value === "TRUE"){
       this.voucher.discountPrice = null;
       this.voucher.isPercent = true;
@@ -77,7 +75,6 @@ export class VoucherCreateComponent implements OnInit {
       this.onshow = null;
     }
 
-    console.log("this.onshow:::::::",this.onshow);
   }
 
 

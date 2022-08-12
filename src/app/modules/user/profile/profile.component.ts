@@ -80,7 +80,6 @@ export class ProfileComponent implements OnInit {
         // console.log('result:::',this.result)
         setTimeout(()=>{
           // this.product.avatarUrl = this.result.url;
-          console.log('this.result.url:::',this.result.url)
           this.myProfile.imageUrl = this.result.url;
         },4400)
 
@@ -99,7 +98,6 @@ export class ProfileComponent implements OnInit {
     const userId = Number(localStorage.getItem("userId"));
     this.api.getProfileById(userId).subscribe((data: any)=>{
       this.myProfile = data;
-      console.log("data===== ", data)
       // console.log(this.myProfile)
     })
 
@@ -115,7 +113,6 @@ export class ProfileComponent implements OnInit {
         if(this.selectedFiles != null && this.selectedFiles != undefined){
           this.upload();
           setTimeout(()=>{
-            console.log("Mydata",this.myProfile)
             this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
               this.isLoading = false;
               this.toastsService.alert("Thông báo !!!!", "Sửa tài khoản thành công !!!","bg-success");
@@ -125,8 +122,9 @@ export class ProfileComponent implements OnInit {
         } else {
           this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
             this.isLoading = false;
+            localStorage.setItem('username',this.myProfile.fistName + ' ' + this.myProfile.lastName)
             window.location.reload;
-            this.toastsService.alert("Thông báo !!!!", "Sửa tài khoản thành công !!!","bg-success");
+            this.toastsService.alert("Thông báo !!!!", "Sửa tài khoản thành công !!! Nếu chưa thấy thay đổi, hãy tải lại trang !!!","bg-success");
           });
         }
       }
@@ -142,7 +140,6 @@ export class ProfileComponent implements OnInit {
         const newPass = this.changePassForm.value.newPass;
         const myId = localStorage.getItem("userId");
         const objChangePass = {oldPass,newPass,myId}
-        console.log("objChangePass===== ", objChangePass)
         this.api.updatePassword(objChangePass).subscribe(data =>{
           // window.alert("Đổi mật khẩu thành công !!!!!");
           this.isLoading = false;

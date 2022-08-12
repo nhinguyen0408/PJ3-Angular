@@ -84,16 +84,13 @@ export class ProductComponent implements OnInit {
     }
   }
   updateQuantityCart(dataUpdate: any){
-    console.log('dataUpdate== ',dataUpdate);
     const product = this.productList.find(x => x.id === dataUpdate.productId);
     if(product && product.quantity >= dataUpdate.quantityUpdate){
       const productShopping = this.shoppingCart[dataUpdate.shoppingCartIndex]
       productShopping.quantity = dataUpdate.newQuantity;
       productShopping.price = product.salePrice * productShopping.quantity;
-      console.log("in here",dataUpdate.quantityUpdate)
       if(dataUpdate.newQuantity == '' || dataUpdate.newQuantity == undefined || dataUpdate.newQuantity == null){
         this.shoppingCart.splice(dataUpdate.shoppingCartIndex,1)
-        console.log("in here")
       }
       this.api.updateQuantity({'productId': dataUpdate.productId, 'action': dataUpdate.action, 'number':  dataUpdate.quantityUpdate}).subscribe(res => {
         this.getAll();
@@ -107,7 +104,6 @@ export class ProductComponent implements OnInit {
   }
   addShoppingCart(id: number){
     const product = this.productList.find(x => x.id === id);
-    console.log("product",product)
     if(product && product.quantity > 0){
       if(!this.shoppingCart.find(x => x.product.id === id)){
         const productShopping = new ShoppingCart()
@@ -164,7 +160,6 @@ export class ProductComponent implements OnInit {
       // alert("Sản phẩm đã hết hàng!!!!!!")
       this.toastsService.alert('Thông báo !!!', "Sản phẩm đã hết hàng!!!!!!",'bg-warning');
     }
-    console.log("shoppingCart",this.shoppingCart)
   }
   removeProduct(productShoppingId:number){
     if(window.confirm("Are u sure??" + productShoppingId)){
@@ -304,10 +299,8 @@ export class ProductComponent implements OnInit {
   minutes: any;
   seconds: any;
   onGetProductDetails(id: number){
-    console.log("id::", id)
     this.clearEditor()
     this.api.getById(id).subscribe(res => {
-      console.log(res)
       let des = '';
       des = res.description;
       this.productDetails = res;
@@ -366,12 +359,10 @@ export class ProductComponent implements OnInit {
   tableSizesArr = [4, 8, 12];
   tabSize(event: any){
     this.page = event;
-    this.getAll();
   }
   tableData(event: any): void {
     this.tableSize = event.target.value;
     this.page = 1;
-    this.getAll();
   }
 
 }

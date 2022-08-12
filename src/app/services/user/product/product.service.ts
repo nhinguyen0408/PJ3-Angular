@@ -48,7 +48,6 @@ export class ProductService {
     }
 
     const url = this.url+"/product/getall?code="+code+"&idCate="+ idCate +"&idProduction="+ idProduction +"&name=" + name + '&status='+status;
-    console.log("url has code",url);
     return this.http.get<Product>(url, this.httpOptions).pipe(
       retry(1),
     )

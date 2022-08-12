@@ -169,13 +169,45 @@
           </ul>
         </li>
         <li class="nav-item has-treeview">
-          <a routerLink="/admin/order" class="nav-link">
+          <a class="nav-link">
             <i class="nav-icon fas fa-edit"></i>
             <p>
               Quản lý Đơn Hàng
-
+              <i class="right fas fa-angle-left"></i>
             </p>
           </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a  routerLink="/admin/order" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tất cả đơn hàng</p>
+              </a>
+            </li>
+            <!-- <li class="nav-item">
+              <a [routerLink]="['order/confirmation']" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Đơn hàng chờ xác nhận</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['order/confirmed']" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Chờ lấy hàng</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['order/is-processing']" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Đang vận chuyển</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['order/aborted']" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Đã hủy</p>
+              </a>
+            </li> -->
+          </ul>
           <!-- <ul class="nav nav-treeview">
             <li class="nav-item">
               <a routerLink="/admin/order" class="nav-link">

@@ -44,7 +44,6 @@ export class ProductionComponent implements OnInit {
     this.api.getProduction().subscribe((res: any) => {
       this.productionList = res
     })
-    console.log(this.productionList)
     // this.loadDataTable()
   }
 

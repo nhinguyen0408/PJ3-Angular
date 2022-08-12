@@ -7,7 +7,11 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { EmployeeManagerComponent } from './component/employee-manager/employee-manager.component';
 import { HomeComponent } from './component/home/home.component';
 import { ImportProductComponent } from './component/import-product/import-product.component';
+import { OrderAbortComponent } from './component/order/order-abort/order-abort.component';
+import { OrderConfiredComponent } from './component/order/order-confired/order-confired.component';
+import { OrderConfirmationComponent } from './component/order/order-confirmation/order-confirmation.component';
 import { OrderDetailsComponent } from './component/order/order-details/order-details.component';
+import { OrderIsProcessingComponent } from './component/order/order-is-processing/order-is-processing.component';
 import { OrderComponent } from './component/order/order.component';
 import { CreateProductComponent } from './component/product/create-product/create-product.component';
 import { DetailsProductComponent } from './component/product/details-product/details-product.component';
@@ -50,15 +54,16 @@ const routes: Routes = [
       {path: 'production', component: ProductionComponent},
       {path: 'production/create', component: CreateProductionComponent},
       {path: 'production/edit/:id', component: EditProductionComponent},
-      {path: 'order', component: OrderComponent},
       {path: 'upload', component: UploadExampleComponent},
       {path: 'voucher', component: VoucherComponent},
       {path: 'voucher/create', component: VoucherCreateComponent},
       {path: 'voucher/edit/:id', component: VoucherEditComponent},
-      // {path: 'order-confirmation', component: OrderConfirmationComponent},
+      {path: 'order', component: OrderComponent},
+      {path: 'order/confirmation', component: OrderConfirmationComponent},
       {path: 'order/details/:id', component: OrderDetailsComponent},
-      // {path: 'order/confirmed', component: OrderConfirmedComponent},
-      // {path: 'order/aborted', component: OrderAbortedComponent},
+      {path: 'order/confirmed', component: OrderConfiredComponent},
+      {path: 'order/is-processing', component: OrderIsProcessingComponent},
+      {path: 'order/aborted', component: OrderAbortComponent},
       {path: 'warranty', component: WarrantyComponent},
       {path: 'import-product', component: ImportProductComponent},
       {path: '', redirectTo:'/admin/home', pathMatch:'full' },

@@ -25,7 +25,6 @@ export class ImportProductComponent implements OnInit {
   getImportPr(){
     this.api.getImportProduct().subscribe((data: any) => {
       this.importList = data;
-      console.log(data)
     })
   }
   setDataTable(){

@@ -35,16 +35,33 @@ export class ShoppingCartComponent implements OnInit {
 
   phoneValidate: string = '^(84|0[3|5|7|8|9])+([0-9]{8})$'
   ngOnInit(): void {
-
+    this.setListIMEI()
   }
   bill = new Bill();
-  billDetail: {'productId': number, 'quantity': number, 'price': number}[] = [];
+  billDetail: any[] = [];
   voucherName: string | null = null;
   isVoucher: boolean = false;
   voucherData: any;
+  listBillIMEI: any[] = []
+
+  setListIMEI = () => {
+    if(this.shopping_Cart && this.shopping_Cart.length > 0){
+      this.shopping_Cart.map((elm: any, index: number) => {
+        if(elm.product.warranty != null && elm.product.warranty > 0){
+          const dataImei: any[] = []
+          for(let i = 0; i < elm.quantity ; i++)
+          {
+            const imei = ' '
+            dataImei[i] = {data: imei}
+          }
+          this.listBillIMEI[index] = {imei: dataImei}
+        }
+      })
+    }
+  }
+
   onChangeVoucher(event: any){
     this.voucherName = event.target.value;
-    console.log(' event.target.value', event.target.value)
   }
   applyVoucher(){
     if(this.voucherName != null && this.shopping_Cart.length > 0){
@@ -57,7 +74,6 @@ export class ShoppingCartComponent implements OnInit {
           let endDate = new Date( this.voucherData.endDate);
           if(now.getTime() > startDate.getTime() && now.getTime() < endDate.getTime()){
             this.bill.voucherId = this.voucherData.id
-            console.log(this.voucherData);
             if(this.voucherData.isPercent){
               this.discount = this.totalPrice * (this.voucherData.percentage/100);
             } else {
@@ -93,8 +109,14 @@ export class ShoppingCartComponent implements OnInit {
     // localStorage.removeItem("shopping-cart")
     if(this.bill.ownerName != "" && this.bill.phone != "" && this.bill.address != ""){
       this.billDetail = []
-      this.shopping_Cart.forEach(x => {
-        const data =  {'productId': x.product.id, 'quantity': x.quantity, 'price': x.price}
+      this.shopping_Cart.map((x: any, index: number) => {
+        const dataImei : string[] = []
+        if(this.listBillIMEI[index] && this.listBillIMEI[index].imei && this.listBillIMEI[index].imei.length > 0){
+          this.listBillIMEI[index].imei.map((e: any) => {
+            dataImei.push(e.data)
+          })
+        }
+        const data =  {'productId': x.product.id, 'quantity': x.quantity, 'price': x.price, imei: dataImei}
         this.billDetail.push(data)
       })
       this.bill.billDetail = this.billDetail;
@@ -116,8 +138,6 @@ export class ShoppingCartComponent implements OnInit {
     this.onCheckPayment.emit()
   }
   onChangeQuantity(e: any, quantityOld: number, index: number, productId: number){
-    console.log(e.target.value);
-    console.log('shopping_Cart=== ',this.shopping_Cart);
     const newQuantity = e.target.value;
     const quantityUpdate = newQuantity - quantityOld;
     if(quantityUpdate > 0){
@@ -125,6 +145,7 @@ export class ShoppingCartComponent implements OnInit {
     } else {
       this.onUpdateQuantity.emit({'newQuantity': newQuantity, 'quantityUpdate': - quantityUpdate, 'action': '+' , 'shoppingCartIndex': index, 'productId': productId})
     }
+    this.setListIMEI()
 
   }
   onPrint(){
@@ -142,5 +163,8 @@ export class ShoppingCartComponent implements OnInit {
             },200)
 
     })(jQuery);
+  }
+  onBlurIMEI= (idxParent: number, idxChild: number, e: any) => {
+    this.listBillIMEI[idxParent].imei[idxChild].data = e.target.value;
   }
 }

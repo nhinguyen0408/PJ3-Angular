@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Bill } from 'src/app/models/Bill.model';
 import { Category } from 'src/app/models/Category.model';
 import { CountDown } from 'src/app/models/CountDown.model';
@@ -29,19 +30,27 @@ export class ProductComponent implements OnInit {
     private apiProfile: ProfileService,
     private auth: AuthService,
     private apiCart: CartService,
+    private route: Router,
     ) { }
 
   ngOnInit(): void {
     this.getAll();
     this.getCate();
     this.getProduction();
-    this.getShoppingCart();
+    setTimeout(()=>{
+      if(this.auth.isUserLogedin() == true){
+        this.isUserLogedin = true
+        this.getShoppingCart();
+      }
+    }, 1000)
+
   }
   ngAfterViewInit(): void {
     setTimeout(()=>{
       this.setDataTable()
     },500)
   }
+  isUserLogedin: boolean = false
   productList: any[] = [];
   categoryList: Category[] = [];
   productionList: Production[] = [];
@@ -92,11 +101,17 @@ export class ProductComponent implements OnInit {
   }
   addShoppingCart(productId: number){
     //todo
-    if(window.confirm("Thêm sản phẩm này vào giỏ hàng ???"))
-    this.apiCart.addToCart(productId, 1).subscribe((res: any) => {
-      this.getShoppingCart()
-      this.toastsService.alert('Thông báo !!!', "Đã thêm sản phẩm vào giỏ hàng !!!!!!",'bg-success');
-    })
+    if(this.isUserLogedin == true){
+      if(window.confirm("Thêm sản phẩm này vào giỏ hàng ???"))
+      this.apiCart.addToCart(productId, 1).subscribe((res: any) => {
+        this.getShoppingCart()
+        this.toastsService.alert('Thông báo !!!', "Đã thêm sản phẩm vào giỏ hàng !!!!!!",'bg-success');
+      })
+    } else {
+      if(window.confirm("Vui lòng đăng nhập ???")){
+        this.route.navigate(['/user/login'])
+      }
+    }
   }
   removeProduct(productShoppingId:number){
     //todo
@@ -195,10 +210,8 @@ export class ProductComponent implements OnInit {
   minutes: any;
   seconds: any;
   onGetProductDetails(id: number){
-    console.log("id::", id)
     this.clearEditor()
     this.api.getById(id).subscribe(res => {
-      console.log(res)
       let des = '';
       des = res.description;
       this.productDetails = res;

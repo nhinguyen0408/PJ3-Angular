@@ -33,12 +33,14 @@ export class AuthService {
   getToken(){
     return localStorage.getItem('token')
   }
+  getUserToken(){
+    return localStorage.getItem('user-token')
+  }
   getRole(){
     return localStorage.getItem('role')
   }
 
   isLogedin():boolean{
-    console.log("isLogedin",this.getToken())
     return this.getToken() !== null;
   }
 
@@ -52,13 +54,14 @@ export class AuthService {
     localStorage.removeItem('adminId');
     localStorage.removeItem('employeeId');
     localStorage.removeItem('name');
-    console.log("this.result",this.result)
     this.router.navigate(['login']);
   }
   logoutUser(){
     localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    localStorage.removeItem('user-token');
     localStorage.removeItem('user-role');
-    this.router.navigate(['user/login']);
+    this.router.navigate(['/user/login']);
   }
   result: any;
   login(dataLogin:Login):Observable<any>{

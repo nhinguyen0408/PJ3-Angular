@@ -106,7 +106,6 @@ export class DashboardComponent implements OnInit {
       this.getOutOfStockSoon()
       for(let i = 0; i< this.productList.length; i++){
         this.sumPr += Number(this.productList[i]?.quantity);
-        console.log('this.productList[i]?.quantity',this.productList[i]?.quantity)
       }
     })
 

@@ -23,7 +23,6 @@ export class EditProductionComponent implements OnInit {
     })
   }
   onSubmit(){
-    console.log(this.production)
     if(this.production.name =="" || this.production.company == ""){
       this.toastsService.alert('Thông báo !!!', 'Vui lòng điền đủ thông tin!!!','bg-warning');
     } else {
@@ -37,7 +36,6 @@ export class EditProductionComponent implements OnInit {
 
   }
   toggleEditable(e: any){
-    console.log(e)
     if ( e.target.checked ) {
       this.production.status = "ENABLE";
       this.toastsService.alert("Thông báo!!!!",'Đổi trạng thái qua hoạt động !!!!', 'bg-info')

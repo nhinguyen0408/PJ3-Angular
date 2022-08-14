@@ -41,7 +41,7 @@ export class ProductionComponent implements OnInit {
   }
   productionList: Production[] = [];
   getAll(){
-    this.api.getProduction().subscribe((res: any) => {
+    this.api.getProduction('DATE').subscribe((res: any) => {
       this.productionList = res
     })
     // this.loadDataTable()

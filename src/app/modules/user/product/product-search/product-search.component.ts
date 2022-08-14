@@ -79,7 +79,7 @@ export class ProductSearchComponent implements OnInit {
   }
 
   getProduction = () => {
-    return this.apiProduction.getProductionEnable() .subscribe((res : any) => {
+    return this.apiProduction.getProductionEnable('NAME') .subscribe((res : any) => {
       this.production = res
     })
   }

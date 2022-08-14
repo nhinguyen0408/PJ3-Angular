@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
+import { CartService } from 'src/app/services/user/cart/cart.service';
 import { OrderService } from 'src/app/services/user/order/order.service';
 
 const AbortType = [
@@ -33,7 +34,8 @@ export class OrderComponent implements OnInit {
 
   constructor(
     private apiOrder: OrderService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private apiCart: CartService
   ) { }
 
   ngOnInit(): void {
@@ -61,6 +63,7 @@ export class OrderComponent implements OnInit {
             })
           })
         }
+        console.log('this.veryfyingOrder',this.veryfyingOrder)
         if(this.veryfiedOrder && this.veryfiedOrder.length > 0){
           this.veryfiedOrder.map((element: any, index: number) => {
             this.apiOrder.getOrderDetails(element.id).subscribe(res => {
@@ -153,6 +156,22 @@ export class OrderComponent implements OnInit {
           this.toastService.alert('Thông báo !!!', "Xác nhận đã nhận hàng thành công !!!!",'bg-success');
         }
       })
+    }
+  }
+
+  buyAgain = (billDetail: any[]) => {
+    if(window.confirm("Thêm những sản phẩm này vào giỏ hàng ????")){
+      if(billDetail && billDetail.length > 0){
+        billDetail.map((e: any) => {
+          this.apiCart.addToCart(e.productId, e.quantity).subscribe(res => {
+            this.toastService.alert('Thông báo !!!', "Thêm sản phẩm vào giỏ hàng thành công !!!!",'bg-success')
+          },
+          (err:ErrorEvent) => {
+            this.toastService.alert('Thông báo !!!', "Sản phẩm đã hết !!!!",'bg-warning')
+          }
+          )
+        })
+      }
     }
   }
   onClose = () =>{

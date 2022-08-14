@@ -133,12 +133,12 @@ export class ProductComponent implements OnInit {
     //todo
   }
   getCate(){
-    this.apiCate.getCategory().subscribe((res: any) =>{
+    this.apiCate.getCategoryEnable('NAME').subscribe((res: any) =>{
       this.categoryList = res;
     })
   }
   getProduction(){
-    this.apiProduction.getProduction().subscribe((res: any)=>{
+    this.apiProduction.getProductionEnable('NAME').subscribe((res: any)=>{
       this.productionList = res;
     })
   }

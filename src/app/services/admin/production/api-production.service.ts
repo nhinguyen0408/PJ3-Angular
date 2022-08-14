@@ -32,14 +32,14 @@ export class ApiProductionService {
     window.alert(errorMessage);
     return throwError(errorMessage);
   }
-  getProduction():Observable<Production>{
-    return this.http.get<Production>(this.url+"/production/getall").pipe(
+  getProduction(sortBy: 'NAME' | 'DATE'):Observable<Production>{
+    return this.http.get<Production>(this.url+"/production/getall?sortBy=" + sortBy, this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )
   }
-  getProductionEnable():Observable<Production>{
-    return this.http.get<Production>(this.url+"/production/getall?status=ENABLE").pipe(
+  getProductionEnable(sortBy: 'NAME' | 'DATE'):Observable<Production>{
+    return this.http.get<Production>(this.url+"/production/getall?status=ENABLE&sortBy="+ sortBy, this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )

@@ -220,14 +220,14 @@ imgNamePreview: string [] = []
   //Get data Production
   productionList : any;
   getAllProduction(){
-    this.apiProduction.getProductionEnable().subscribe((res: any) => {
+    this.apiProduction.getProductionEnable('NAME').subscribe((res: any) => {
       this.productionList = res
     })
   }
   //Get data Category
   categoryList : any;
   getAllCategory(){
-    this.apiCategory.getCategoryEnable().subscribe((res: any) => {
+    this.apiCategory.getCategoryEnable('NAME').subscribe((res: any) => {
       this.categoryList = res
     })
   }

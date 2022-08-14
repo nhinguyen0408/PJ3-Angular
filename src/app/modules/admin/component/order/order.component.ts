@@ -130,7 +130,7 @@ export class OrderComponent implements OnInit {
       }
     })
   }
-  listBillIMEI : {billDetailId: number, imei: any[]}[] = []
+  listBillIMEI : {billDetailId: number, imei: any[], isError: boolean}[] = []
   reason: string = ''
   isUserRequest: boolean = false
   resonValue: any
@@ -148,7 +148,7 @@ export class OrderComponent implements OnInit {
                 const imei = ' '
                 dataImei[i] = {data: imei}
               }
-              this.listBillIMEI[index] = {billDetailId: e.id, imei: dataImei}
+              this.listBillIMEI[index] = {billDetailId: e.id, imei: dataImei, isError: false}
             }
           })
         }
@@ -160,22 +160,37 @@ export class OrderComponent implements OnInit {
       }
     })
   }
+  isErrorImei: boolean = false;
   onBlurIMEI= (idxParent: number, idxChild: number, e: any) => {
-    this.listBillIMEI[idxParent].imei[idxChild].data = e.target.value;
+    const data = e.target.value.trim()
+    this.api.checkImei(data).subscribe((res: any) => {
+      console.log("deraefefe============================",res);
+      if(res == false){
+        this.listBillIMEI[idxParent].imei[idxChild].isError = false;
+        this.listBillIMEI[idxParent].imei[idxChild].data = e.target.value;
+      } else {
+        this.listBillIMEI[idxParent].imei[idxChild].isError = true;
+        this.isErrorImei = true
+        this.toastsService.alert('Thông báo !!!', "Imei đã tồn tại, vui lòng kiểm tra lại !!!!",'bg-warning');
+      }
+    })
   }
   verifyBill = (id: number) => {
     if(window.confirm('Xác nhận đơn hàng này ???')){
-      const data = {billId: id, status: 'VERIFIED'}
-      this.api.updateStatus(data).subscribe((res: any) =>{
-        if(res){
-          this.createIMEI()
-          this.getAllBill()
-          this.listBillIMEI = []
-          this.bill = null
-          this.toastsService.alert('Thông báo !!!', "Xác nhận đơn hàng thành công !!!!",'bg-success');
-        }
-      })
-
+      if(this.isErrorImei == true){
+        this.toastsService.alert('Thông báo !!!', "Có lỗi đã xảy ra trong quá trình nhập imei !!!!",'bg-warning');
+      } else {
+        const data = {billId: id, status: 'VERIFIED'}
+        this.api.updateStatus(data).subscribe((res: any) =>{
+          if(res){
+            this.createIMEI()
+            this.getAllBill()
+            this.listBillIMEI = []
+            this.bill = null
+            this.toastsService.alert('Thông báo !!!', "Xác nhận đơn hàng thành công !!!!",'bg-success');
+          }
+        })
+      }
     }
   }
   createIMEI = () => {
@@ -184,7 +199,7 @@ export class OrderComponent implements OnInit {
         const dataImei : string[] = []
         if(e.imei && e.imei.length > 0){
           e.imei.map((element: any) => {
-            dataImei.push(element.data)
+            dataImei.push(element.data.trim())
           })
         }
         const data = {billDetailId: e.billDetailId, imei: dataImei}

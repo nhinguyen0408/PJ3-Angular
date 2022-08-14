@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
   notification: any = []
   countUnread: any
   getNotification = () => {
-    // setInterval(() => {
+    setInterval(() => {
       this.apiNotification.getAllNotification().subscribe((res: any) => {
         this.notification = res
         if(this.notification && this.notification.length > 0){
@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit {
       this.apiNotification.countUnReadNotification().subscribe((res: any) => {
         this.countUnread = res
       })
-    // }, 1000)
+    }, 1000)
   }
 
   readNotification = (id: number | string) => {

@@ -217,12 +217,12 @@ export class ProductComponent implements OnInit {
     // subject.next('changed'); this.shoppingCart = JSON.parse(localStorage.getItem('cart'));
   }
   getCate(){
-    this.apiCate.getCategory().subscribe((res: any) =>{
+    this.apiCate.getCategory('DATE').subscribe((res: any) =>{
       this.categoryList = res;
     })
   }
   getProduction(){
-    this.apiProduction.getProduction().subscribe((res: any)=>{
+    this.apiProduction.getProduction('DATE').subscribe((res: any)=>{
       this.productionList = res;
     })
   }

@@ -3,94 +3,198 @@
 <div class="content-wrapper">
   <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-3 col-xl-3">
+        <div class="col-lg-4 col-xl-4">
             <div class="card">
                 <div class="card-body">
                   <h3 class="card-title">Tra cứu Bảo hành</h3><br>
                   <!-- <a routerLink="/admin/voucher" class="btn btn-success mt-2">Back</a> -->
-                  <p><code>Nhập số điện thoại khách hàng</code></p>
+                  <p><code>Nhập số điện thoại hoặc IMEI để tìm kiếm</code></p>
                 <div class="input-group input-group-sm">
-                  <input type="text" class="form-control" [(ngModel)]="phone" name="phone">
+                  <input type="text" class="form-control" value="{{textSearch}}" (input)="onBlurSearch($event)" name="phone">
                   <span class="input-group-append">
-                    <button type="button" class="btn btn-info btn-flat" (click)="searchWarranty(phone)">Tìm kiếm</button>
+                    <button type="button" class="btn btn-info btn-flat" (click)="searchWarranty(textSearch)">{{textBtn}}</button>
                   </span>
                 </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-9 col-xl-9">
+        <div class="col-lg-8 col-xl-8">
             <div class="card">
-
+              <div class="card-header">
+                <h3 class="card-title">Thông tin bảo hành</h3> <br>
+              </div>
                 <div class="card-body">
-                    <h3 class="card-title">Thông tin Hóa đơn & Bảo hành</h3> <br>
-                    <!-- <form action="#" class="form-profile" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-                        <div class="form-group">
-                          <input type="text" class="form-control input-default" formControlName='name' placeholder="Tên thể loại">
+                    <div *ngIf="isShowData == true">
+                      <div class="" *ngIf="listWarranty && isPhone == true">
+                        <!-- <button class="btn btn-success" style="float: right;">Thêm dữ liệu bảo hành</button> -->
+                        <div class=" p-3 " *ngIf="listWarranty.length == 0 ">
+                          <h6 class="my-5">Không có dữ liệu bảo hành</h6>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control input-default" formControlName='title' placeholder="Tiêu đề">
+                        <div *ngIf="listWarranty.length > 0 ">
+                          <h5>Các thiết bị từng bảo hành</h5>
+                          <div>
+                            <div class="card" *ngFor="let item of listWarranty; index as idx">
+                              <div class="d-flex align-items-center "
+                              style="cursor: pointer;" data-toggle="modal" data-target="#modal-lg"
+                              (click)="setDataWarranty(idx)"
+                              >
+                                <div class="cart-product-image">
+                                  <img src="{{item.product.avatarUrl}}" alt="">
+                                </div>
+                                <a class="cart-product-name" style="cursor: pointer;">
+                                  {{item.product.name}}
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal fade" id="modal-lg" *ngIf="dataWarrantyHistory">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Lịch sử bảo hành</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <section class="content">
+                                    <div class="container-fluid">
+                                      <div class="row">
+                                        <div class="col-md-12">
+                                          <div class="timeline">
+                                              <div class="time-label">
+                                                <span class="bg-info">Lịch sử bảo hành: {{dataWarrantyHistory.imei}}</span>
+                                              </div>
+                                              <div *ngFor="let item of dataWarrantyHistory.data; index as i">
+                                                <i class="fa bg-warning" *ngIf="item.status == 'INPROGRESS'"></i>
+                                                <i class="fa bg-success" *ngIf="item.status == 'RESOLVED'"></i>
+                                                <div class="timeline-item">
+                                                  <span class="time text-bold"><i class="fas fa-clock"></i> {{item.createdDate | date: 'dd/MM/yyyy'}}</span>
+                                                  <h3 class="timeline-header">
+                                                    <span class="badge badge-warning p-2" *ngIf="item.status == 'INPROGRESS'">Khách hàng mang tới bảo hành</span>
+                                                    <span class="badge badge-success p-2" *ngIf="item.status == 'RESOLVED'">Đã trả lại khách</span>
+                                                  </h3>
+
+                                                  <!-- <h3 class="timeline-header">{{item.status == 'INPROGRESS' ? 'Khách hàng mang tới bảo hành' : 'Đã trả lại khách'}}</h3> -->
+                                                  <div class="timeline-body position-relative">
+                                                    <label class="col-4" for="productCondition">Tình trạng thiết bị:</label>
+                                                    <div *ngIf="item.isEdit == undefined || item.isEdit == false">
+                                                      <span class="col-8">{{item.productCondition}} </span><br>
+                                                      <a class="position-absolute" style="top: 10px; right: 10px; cursor: pointer;" (click)="onEditProductCondition(i)"><i class="fas fa-pen text-warning"></i></a>
+                                                    </div>
+
+                                                    <div *ngIf="item.isEdit == true">
+                                                      <a class="position-absolute" style="top: 10px; right: 10px; cursor: pointer;" (click)="onAbortEditProductCondition(i)"><i class="fas fa-times text-danger"></i></a>
+                                                      <textarea name="" value="{{item.productCondition}}" (input)="onInputEditCondition($event)" id="productCondition" class="col-12" rows="2" ></textarea>
+                                                      <button class="btn-edit-condition" (click)="onSubmitEditProductCondition(item.id, i)">Xác nhận</button>
+                                                    </div>
+
+                                                  </div>
+                                                </div>
+                                              </div>
+
+
+                                            <!-- END timeline item -->
+                                            <div>
+                                              <i class="fas fa-clock bg-gray"></i>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                  </section>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                              <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                          </div>
                         </div>
-
-                        <div class="d-flex align-items-center">
-
-                            <button class="btn btn-primary px-3">Submit</button>
-                        </div>
-                    </form> -->
-                    <div class="" *ngIf="listBill && listBill.length >0">
-                      <div class=" p-3 ">
-                        <table id="example1" class="table table-bordered table-striped ">
-                          <thead class="bg-dark">
-                            <tr>
-                              <th style="width: 10px">#</th>
-                              <th>Số Hóa đơn</th>
-                              <th>Khách hàng</th>
-                              <th>Tổng chiết khấu</th>
-                              <th>Tổng thanh toán</th>
-                              <!-- <th>Hình thức thanh toán</th> -->
-                              <th>Ngày tạo lập </th>
-                              <th>Thao tác</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let item of listBill; index as i">
-                              <td class="align-middle"> {{i + 1}} </td>
-                              <th class="align-middle"> {{item.code}} </th>
-                              <td class="align-middle">
-                                Tên khách hàng: <strong>{{item.ownerName}}</strong> <br>
-                                Số điện thoại: <strong>{{item.phone}}</strong> <br>
-                                Địa chỉ: <strong>{{item.address}}</strong>
-                              </td>
-                              <th class="align-middle">{{item.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}} </th>
-                              <th class="align-middle">
-                                <p class="text-danger mt-1">{{(item.totalPrice - item.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</p>
-                              </th>
-                              <!-- <td class="align-middle">
-                                <span class="badge badge-success px-2">{{item.type}}</span> &nbsp;
-                                <span class="badge badge-success px-2">{{item.status}}</span>
-                              </td> -->
-                              <td class="align-middle">{{item.createdDate |  date: "HH:mm dd/MM/YYYY"}}</td>
-                              <td class="align-middle">
-                                <a  class="btn mr-2 shadow text-primary" data-toggle="modal" data-target="#modal-lg" (click)="getDataDetail(item.id)"><i class="far fa-eye"></i></a>
-                              </td>
-                            </tr>
-
-                          </tbody>
-                          <!-- <tfoot>
-                             <tr>
-                              <th style="width: 10px">#</th>
-                              <th>Số Hóa đơn</th>
-                              <th>Khách hàng</th>
-                              <th>Tổng chiết khấu</th>
-                              <th>Tổng thanh toán</th>
-
-                              <th>Ngày tạo lập </th>
-                              <th>Thao tác</th>
-                            </tr>
-                          </tfoot> -->
-                        </table>
                       </div>
-
+                      <div class="" *ngIf="listBill && isPhone == false">
+                        <div class=" p-3 " *ngIf="listBill.length == 0 ">
+                          <h6 class="my-5">IMEI không tồn tại, Vui lòng thử lại !!!</h6>
+                        </div>
+                        <div class=" px-3 " *ngIf="listBill && listBill.length > 0 ">
+                          <h6 class="my-3">Thông tin sản phẩm và đơn hàng</h6>
+                          <div *ngIf="product" >
+                            <div class="d-flex align-items-center">
+                              <div class="cart-product-image">
+                                <img src="{{product[0].productAvatar}}" alt="">
+                              </div>
+                              <a class="cart-product-name" style="cursor: pointer;" href="/admin/product/details/{{product[0].productId}}">
+                                {{product[0].productName}}
+                              </a>
+                            </div>
+                            <div class="pt-3 position-relative">
+                              <div class="position-absolute" style="right: 60px;top: 50px;">
+                                <div *ngIf="testWarranty == true" class="apply-warranty d-flex align-items-center position-relative mr-5">
+                                  <i class="fas fa-check text-success position-absolute" style="bottom: 110px; right: 76px; font-size: 40px;"></i>
+                                  <small class="position-absolute text-center text-success text-bold" style="bottom: 37px; right: 1px; font-size: 21px;">Chấp nhận bảo hành</small>
+                                </div>
+                                <div *ngIf="testWarranty == false" style="border-color: red ;" class="apply-warranty d-flex align-items-center position-relative mr-5">
+                                  <i class="fas fa-times text-danger position-absolute" style="bottom: 110px; right: 81px; font-size: 40px;"></i>
+                                  <small class="position-absolute text-center text-danger text-bold" style="bottom: 59px; right: 9px; font-size: 21px;">Không chấp nhận</small>
+                                </div>
+                              </div>
+                              <p>IMEI sản phẩm: <strong>{{product[0].imei}}</strong> </p>
+                              <p>Mã đơn hàng: <strong>{{listBill[0].code}}</strong> </p>
+                              <p>Tên khách hàng: <strong>{{listBill[0].ownerName}}</strong></p>
+                              <p>Số điện thoại: <strong>{{listBill[0].phone}}</strong></p>
+                              <p>Địa chỉ: <strong>{{listBill[0].address}}</strong></p>
+                              <p>Thời gian mua: <strong>{{listBill[0].createdDate | date: 'dd/MM/yyyy'}}</strong>  </p>
+                              <p>Thời gian còn hạn bảo hành: <strong>{{product[0].warrantyEndDate | date: 'dd/MM/yyyy'}}</strong>  </p>
+                              <div *ngIf="testWarranty == true">
+                                <button class="btn btn-success" data-toggle="modal" data-target="#modal-default">Thêm lịch sử bảo hành</button>
+                              </div>
+                              <div *ngIf="testWarranty == true && owner" class="modal fade" id="modal-default">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4 class="modal-title">Thông tin bảo hành</h4>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <div class="" style="width: 100%;">
+                                        <label class="col-5" for="">IMEI sản phẩm:</label>
+                                        <input class="col-7" type="text" value="{{owner.imei}}" disabled> <br>
+                                        <label class="col-5" for="">Tên khách hàng:</label>
+                                        <input class="col-7" type="text" value="{{owner.userName}}" disabled> <br>
+                                        <label class="col-5" for="">Số điện thoại:</label>
+                                        <input class="col-7"  type="text" value="{{owner.userPhone}}" disabled> <br>
+                                        <label class="col-5" for="">Địa chi:</label>
+                                        <input class="col-7"  type="text" value="{{owner.userAddress}}" disabled> <br>
+                                        <label class="col-5" for="">Hình thức:</label>
+                                        <select [(ngModel)]="owner.status">
+                                          <option value="" selected disabled>Chọn</option>
+                                          <option value="INPROGRESS">Khách mang đến</option>
+                                          <option value="RESOLVED">Đã xử lý</option>
+                                        </select> <br>
+                                        <label class="col-12" for="">Trạng thái sản phẩm:</label>
+                                        <textarea class="col-12" type="text" [(ngModel)]="owner.productCondition"></textarea> <br>
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal" >Hủy</button>
+                                      <button type="button" class="btn btn-info" data-dismiss="modal" (click)="creatWarranty()">Chấp nhận</button>
+                                    </div>
+                                  </div>
+                                  <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+
                 </div>
 
 

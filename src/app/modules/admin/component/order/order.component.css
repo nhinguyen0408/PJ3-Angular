@@ -8,3 +8,6 @@
   height: 50px;
   object-fit: cover;
 }
+.error-imei{
+  border-color: #be1717;
+}

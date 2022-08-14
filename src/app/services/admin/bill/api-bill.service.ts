@@ -91,4 +91,11 @@ export class ApiBillService {
       catchError(this.handleError)
     )
   }
+
+  checkImei(imei: string): Observable<any>{
+    const data: any = {}
+    return this.http.post<any>(this.url+"/imei/isExist?imei=" + imei,data ,this.httpOptions).pipe(
+      catchError(this.handleError)
+    )
+  }
 }

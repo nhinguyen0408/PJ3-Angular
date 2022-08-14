@@ -24,7 +24,8 @@
                   <div class="m-3 card-header position-relative">
                     <span class="badge badge-warning p-2 position-absolute" *ngIf="item.status == 'VERIFYING' || item.status == 'VERIFIED' " style="right: 20px; top: 10px;">Đang chờ xác nhận</span>
                     <span class="badge badge-warning p-2 position-absolute" *ngIf="item.status == 'CANCELED_REQUEST'" style="right: 20px; top: 10px;">Đang chờ xác nhận hủy đơn</span>
-                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span>
+                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span> <br>
+                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span>
                   </div>
 
                   <div class="row card-body p-3">
@@ -45,7 +46,8 @@
                       </div>
                       <div>
                         <div style="float: right; padding: 20px;">
-                          <span>Tổng thanh toán: <strong>{{item.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
+                          <span>Chiết khấu: <strong style="float: right;">{{item.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span> <br>
+                          <span>Tổng thanh toán: <strong style="float: right;">{{((item.totalPrice - item.discountPrice) - item.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
                           <div *ngIf="item.status == 'VERIFYING' || item.status == 'VERIFIED'">
                             <button data-toggle="modal" data-target="#modal-default" class="btn-abortOrder" style="float: right;" (click)="setBillId(item.id)">Yêu cầu hủy đơn</button>
                           </div>
@@ -109,7 +111,8 @@
                 <div class="card" *ngFor="let item of veryfiedOrder; let idx = index">
                   <div class="m-3 card-header position-relative">
                     <span class="badge badge-warning p-2 position-absolute" *ngIf="item.status == 'VERIFIED'" style="right: 20px; top: 10px;">Đang chờ lấy hàng</span>
-                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span>
+                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span> <br>
+                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span>
                   </div>
 
                   <div class="row card-body p-3">
@@ -130,7 +133,8 @@
                       </div>
                       <div>
                         <div style="float: right; padding: 20px;">
-                          <span>Tổng thanh toán: <strong>{{item.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
+                          <span>Chiết khấu: <strong style="float: right;">{{item.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span> <br>
+                          <span>Tổng thanh toán: <strong style="float: right;">{{(item.totalPrice - item.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
 
 
                         </div>
@@ -148,7 +152,8 @@
                 <div class="card" *ngFor="let item of isProcessingOrder; let idx = index">
                   <div class="m-3 card-header position-relative">
                     <span class="badge badge-info p-2 position-absolute" style="right: 20px; top: 10px;">Đang được vận chuyển</span>
-                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span>
+                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span> <br>
+                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span>
                   </div>
                   <div class="row card-body p-3">
                     <div class="col-md-12">
@@ -168,7 +173,8 @@
                       </div>
                       <div>
                         <div style="float: right; padding: 20px;">
-                          <span>Tổng thanh toán: <strong>{{item.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
+                          <span>Chiết khấu: <strong style="float: right;">{{item.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span> <br>
+                          <span>Tổng thanh toán: <strong style="float: right;">{{(item.totalPrice - item.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
                           <div>
                             <div>
                               <button class="btn-reviced" style="float: right;" (click)="revicedOrder(item.id)">Đã nhận hàng</button>
@@ -189,7 +195,8 @@
                 <div class="card" *ngFor="let item of bougthOrder; let idx = index">
                   <div class="m-3 card-header position-relative">
                     <span class="badge badge-success p-2 position-absolute" style="right: 20px; top: 10px;">Đã mua</span>
-                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span>
+                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span> <br>
+                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span>
                   </div>
 
                   <div class="row card-body p-3">
@@ -210,9 +217,10 @@
                       </div>
                       <div>
                         <div style="float: right; padding: 20px;">
-                          <span>Tổng thanh toán: <strong>{{item.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
+                          <span>Chiết khấu: <strong style="float: right;">{{item.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span> <br>
+                          <span>Tổng thanh toán: <strong style="float: right;">{{(item.totalPrice - item.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
                           <div>
-                            <button class="btn-buyAgainOrder" style="float: right;">Mua lại</button>
+                            <button class="btn-buyAgainOrder" style="float: right;" (click)="buyAgain(item.billDetail)">Mua lại</button>
                           </div>
                         </div>
                       </div>
@@ -229,7 +237,8 @@
                 <div class="card" *ngFor="let item of abortOrder; let idx = index">
                   <div class="m-3 card-header position-relative">
                     <span class="badge badge-danger p-2 position-absolute" style="right: 20px; top: 10px;">Đã hủy</span>
-                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span>
+                    <span >Mã đơn hàng: <strong>{{item.code}}</strong></span> <br>
+                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span>
                   </div>
 
                   <div class="row card-body p-3">
@@ -250,9 +259,10 @@
                       </div>
                       <div>
                         <div style="float: right; padding: 20px;">
-                          <span>Tổng thanh toán: <strong>{{item.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
+                          <span>Chiết khấu: <strong style="float: right;">{{item.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span> <br>
+                          <span>Tổng thanh toán: <strong style="float: right;">{{(item.totalPrice - item.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></span>
                           <div>
-                            <button class="btn-buyAgainOrder" style="float: right;">Mua lại</button>
+                            <button class="btn-buyAgainOrder" style="float: right;" (click)="buyAgain(item.billDetail)">Mua lại</button>
                           </div>
                         </div>
                       </div>

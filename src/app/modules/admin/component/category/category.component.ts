@@ -31,7 +31,7 @@ export class CategoryComponent implements OnInit {
   }
   categoryList: Category[] = [];
   getAll(){
-    this.api.getCategory().subscribe((res: any) => {
+    this.api.getCategory('DATE').subscribe((res: any) => {
       this.categoryList = res
     })
   }

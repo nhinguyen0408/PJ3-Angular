@@ -34,14 +34,14 @@ export class ProductionService {
     window.alert(errorMessage);
     return throwError(errorMessage);
   }
-  getProduction():Observable<Production>{
-    return this.http.get<Production>(this.url+"/production/getall", this.httpOptions).pipe(
+  getProduction(sortBy: 'NAME' | 'DATE'):Observable<Production>{
+    return this.http.get<Production>(this.url+"/production/getall?sortBy=" + sortBy, this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )
   }
-  getProductionEnable():Observable<Production>{
-    return this.http.get<Production>(this.url+"/production/getall?status=ENABLE", this.httpOptions).pipe(
+  getProductionEnable(sortBy: 'NAME' | 'DATE'):Observable<Production>{
+    return this.http.get<Production>(this.url+"/production/getall?status=ENABLE&sortBy="+ sortBy, this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )

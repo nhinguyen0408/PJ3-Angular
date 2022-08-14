@@ -66,7 +66,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getAllCate = () => {
-    this.cate.getCategoryEnable().subscribe((res) => {
+    this.cate.getCategoryEnable('NAME').subscribe((res) => {
       this.category = res
     })
   }

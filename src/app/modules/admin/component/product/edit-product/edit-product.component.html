@@ -206,7 +206,7 @@
                   <label for="exampleInputFile">Ảnh đại diện</label>
                   <div class="input-group">
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="exampleInputFile" (change)="selectFile($event)">
+                      <input type="file" accept="image/png, image/gif, image/jpeg" class="custom-file-input" id="exampleInputFile" (change)="selectFile($event)">
                       <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                     </div>
 
@@ -238,7 +238,7 @@
                     <label for="exampleInputFile">Chọn ảnh</label>
                     <div class="input-group">
                       <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="exampleInputFile" multiple (change)="onFileChange($event)">
+                        <input type="file" accept="image/png, image/gif, image/jpeg" class="custom-file-input" id="exampleInputFile" multiple (change)="onFileChange($event)">
                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                       </div>
 

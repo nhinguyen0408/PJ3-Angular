@@ -35,14 +35,14 @@ export class CategoryService {
     this.toastsService.alert("Thông báo!!!!",errorMessage, 'bg-danger')
     return throwError(err);
   }
-  getCategory():Observable<Category>{
-    return this.http.get<Category>(this.url+"/category/getall", this.httpOptions).pipe(
+  getCategory(sortBy: 'NAME' | 'DATE'):Observable<Category>{
+    return this.http.get<Category>(this.url+"/category/getall?sortBy=" + sortBy, this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )
   }
-  getCategoryEnable():Observable<Category>{
-    return this.http.get<Category>(this.url+"/category/getall?status=ENABLE", this.httpOptions).pipe(
+  getCategoryEnable(sortBy: 'NAME' | 'DATE'):Observable<Category>{
+    return this.http.get<Category>(this.url+"/category/getall?status=ENABLE&sortBy="+sortBy, this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     )

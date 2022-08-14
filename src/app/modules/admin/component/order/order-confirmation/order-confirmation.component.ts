@@ -167,7 +167,14 @@ export class OrderConfirmationComponent implements OnInit {
   }
 
   onBlurIMEI= (idxParent: number, idxChild: number, e: any) => {
-    this.listBillIMEI[idxParent].imei[idxChild].data = e.target.value;
+    console.log("deraefefe============================");
+    this.apiBill.checkImei(e.target.value).subscribe((res: any) => {
+      if(res == false){
+        this.listBillIMEI[idxParent].imei[idxChild].data = e.target.value;
+      } else {
+        this.toastService.alert('Thông báo !!!', "Imei đã tồn tại, vui lòng kiểm tra lại !!!!",'bg-warning');
+      }
+    })
   }
 
   reason: string = ''

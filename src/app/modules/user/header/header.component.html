@@ -71,6 +71,7 @@
           <div *ngFor="let item of notification; index as idx">
             <a
             class="dropdown-item position-relative notification--unread"
+            routerLink="/user/order"
             *ngIf="item.isRead == false"
             (click)="readNotification(item.id)"
             >
@@ -81,6 +82,7 @@
             </a>
             <a
             class="dropdown-item position-relative"
+            routerLink="/user/order"
             *ngIf="item.isRead == true"
             (click)="readNotification(item.id)"
             >

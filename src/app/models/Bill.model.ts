@@ -1,5 +1,6 @@
 import { ShoppingCart } from "./ShoppingCart.model";
 export class Bill{
+  id: number|null = null
   profileId: number = 0;
   voucherId: number| null = null;
   description: string = "";
@@ -11,6 +12,7 @@ export class Bill{
   address: string = "";
   status: string = "";
   type: string = "";
+  code: string| null = ''
   billDetail: any [] = []
   createdDate: Date = new Date();
   modifiedDate: Date = new Date();

@@ -137,11 +137,17 @@ export class ProductComponent implements OnInit, AfterViewInit {
     if(categoryId == 0){
       categoryId = '';
     }
-    if(categoryId=== 0 && productionId=== 0 && this.productCode === '' && this.productName===''){
+    if(categoryId=== 0 && productionId=== 0 && this.productCode === '' && this.productName==='' && this.status===''){
 
     } else{
-      this.api.searchProduct(this.productCode.toUpperCase(), categoryId, productionId, this.productName, 'ACTIVE').subscribe((res: any)=>{
+      const status = this.status == 'EARLYEMPTY' ? 'ACTIVE' : this.status
+      this.api.searchProduct(this.productCode.toUpperCase(), categoryId, productionId, this.productName, status).subscribe((res: any)=>{
         this.productList = res;
+        if(this.status == 'EARLYEMPTY'){
+          console.log("asfasfasf hẻ ");
+
+          this.productList = this.productList.filter((element: any) => element.quantity < 5)
+        }
         this.getCountDown();
         let fns = (function ($) {
           var table = $("#example1").DataTable()
@@ -155,14 +161,15 @@ export class ProductComponent implements OnInit, AfterViewInit {
       })
     }
   }
-  fileName= 'ExcelSheet' + new Date()+'.xlsx';
+
   exportexcel(): void
   {
-    let element = document.getElementById('example1');
+    const fileName= 'Danhsachsanpham' + this.status + '_' + (new Date().toISOString()) +'.xlsx';
+    let element = document.getElementById('table-hidden');
     const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, this.fileName);
+    XLSX.writeFile(wb, fileName);
 
   }
 

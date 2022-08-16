@@ -5,6 +5,7 @@ import { Profile } from 'src/app/models/Profile.model';
 import { ApiBillService } from 'src/app/services/admin/bill/api-bill.service';
 import { ApiProfileService } from 'src/app/services/admin/profile/api-profile.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
+import * as XLSX from 'xlsx';
 
 declare var jQuery: any;
 
@@ -103,7 +104,9 @@ export class OrderComponent implements OnInit {
     }
   }
 
+  typeBillSearch: string = ''
   filtByType = (type: string) => {
+    this.typeBillSearch = type
     this.api.getBill().subscribe((res: Bill) =>{
       this.listBill = res;
       if(type == 'COD' || type == 'OFFLINE'){
@@ -120,7 +123,7 @@ export class OrderComponent implements OnInit {
   }
 
   getAllProfile(){
-    this.apiProfile.getProfile().subscribe((res: any) =>{
+    this.apiProfile.getProfile('EMPLOYEE,SUPERADMIN').subscribe((res: any) =>{
       if(res.length > 0){
         res.forEach( (element: any) => {
           if(element.role === "EMPLOYEE"){
@@ -343,6 +346,18 @@ export class OrderComponent implements OnInit {
             },400)
 
     })(jQuery);
+  }
+
+
+  exportexcel(): void
+  {
+    const fileName= 'Danhsachdonhang' + this.typeBillSearch + '_' + (new Date().toISOString()) +'.xlsx';
+    let element = document.getElementById('table-hidden');
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, fileName);
+
   }
 
 }

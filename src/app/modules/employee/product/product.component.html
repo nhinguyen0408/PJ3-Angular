@@ -15,6 +15,7 @@
           <div class="card">
             <app-shopping-cart
             [shopping_Cart]="shoppingCart"
+            [listBillIMEI]="listBillIMEI"
             [totalPrice]="totalPrice"
             [discount]="discount"
             [totalItem]="totalItem"
@@ -179,7 +180,7 @@
                             <h5 class="card-title product-name"><a class="text-black name" data-toggle="modal" data-target="#modal-xl" (click)="onGetProductDetails(item.id)">
                               {{item.name}}
                             </a></h5> <br>
-                            <h6 class=" mt-3">Mã sản phẩm: {{item.code}} <br> <br> <strong>Số lượng tồn kho: {{item.quantity}}</strong></h6>
+                            <h6 class=" mt-3">Mã sản phẩm: {{item.code}} <br> <br> <strong >{{item.quantity == 0 ? "Hết hàng" : 'Số lượng tồn kho: ' +item.quantity }}</strong></h6>
 
                         </div>
                         <div class="bg-dark py-2 px-3 price m-0">

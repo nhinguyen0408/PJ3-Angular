@@ -13,6 +13,7 @@ declare var jQuery: any;
 export class ShoppingCartComponent implements OnInit {
 
   @Input() shopping_Cart: ShoppingCart[];
+  @Input() listBillIMEI: any[];
   @Input() totalItem: number;
   @Input() totalPrice: number;
   @Input() discount: number;
@@ -27,6 +28,7 @@ export class ShoppingCartComponent implements OnInit {
 
     ) {
     this.shopping_Cart = [];
+    this.listBillIMEI = []
     this.totalItem = 0;
     this.totalPrice = 0;
     this.discount = 0;
@@ -35,30 +37,16 @@ export class ShoppingCartComponent implements OnInit {
 
   phoneValidate: string = '^(84|0[3|5|7|8|9])+([0-9]{8})$'
   ngOnInit(): void {
-    this.setListIMEI()
+    // setTimeout( () => {
+    // },200)
+
   }
   bill = new Bill();
   billDetail: any[] = [];
   voucherName: string | null = null;
   isVoucher: boolean = false;
   voucherData: any;
-  listBillIMEI: any[] = []
 
-  setListIMEI = () => {
-    if(this.shopping_Cart && this.shopping_Cart.length > 0){
-      this.shopping_Cart.map((elm: any, index: number) => {
-        if(elm.product.warranty != null && elm.product.warranty > 0){
-          const dataImei: any[] = []
-          for(let i = 0; i < elm.quantity ; i++)
-          {
-            const imei = ' '
-            dataImei[i] = {data: imei}
-          }
-          this.listBillIMEI[index] = {imei: dataImei}
-        }
-      })
-    }
-  }
 
   onChangeVoucher(event: any){
     this.voucherName = event.target.value;
@@ -145,7 +133,6 @@ export class ShoppingCartComponent implements OnInit {
     } else {
       this.onUpdateQuantity.emit({'newQuantity': newQuantity, 'quantityUpdate': - quantityUpdate, 'action': '+' , 'shoppingCartIndex': index, 'productId': productId})
     }
-    this.setListIMEI()
 
   }
   onPrint(){

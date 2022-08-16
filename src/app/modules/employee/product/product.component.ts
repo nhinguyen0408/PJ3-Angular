@@ -53,7 +53,7 @@ export class ProductComponent implements OnInit {
   productName: string  = '';
   checkSearch: boolean = false;
   getAll(){
-    this.api.getProductEnable().subscribe((res: any) => {
+    this.api.getProductEnableEmployee().subscribe((res: any) => {
       this.productList = res;
       this.getCountDown();
     })
@@ -74,18 +74,41 @@ export class ProductComponent implements OnInit {
   }
   shoppingCart: ShoppingCart [] =  [];
   dataLocal: any;
+  listBillIMEI: any[] = []
+
+  setListIMEI = () => {
+    if(this.shoppingCart && this.shoppingCart.length > 0){
+      this.shoppingCart.map((elm: any, index: number) => {
+        if(elm.product.warranty != null && elm.product.warranty > 0){
+          const dataImei: any[] = []
+          for(let i = 0; i < elm.quantity ; i++)
+          {
+            const imei = ' '
+            dataImei[i] = {data: imei}
+          }
+          this.listBillIMEI[index] = {imei: dataImei}
+        }
+      })
+      console.log('listBillIMEI',this.listBillIMEI);
+
+    }
+  }
   getShoppingCart(){
     if(localStorage.getItem('cart') != null && localStorage.getItem('cart') != undefined){
       // this.shoppingCart = JSON.parse(localStorage.getItem('cart'));
       this.dataLocal = localStorage.getItem('cart') ? localStorage.getItem('cart') : '' ;
       this.shoppingCart = JSON.parse(this.dataLocal);
+      this.setListIMEI()
       this.getTotal()
       // console.log("shoppingCart======== ",localStorage.getItem('cart') )
     }
   }
   updateQuantityCart(dataUpdate: any){
+    console.log('dataUpdate', dataUpdate);
+
     const product = this.productList.find(x => x.id === dataUpdate.productId);
-    if(product && product.quantity >= dataUpdate.quantityUpdate){
+    console.log('product', product);
+    if((product && dataUpdate.action == '+') || (product && product.quantity >= dataUpdate.quantityUpdate )){
       const productShopping = this.shoppingCart[dataUpdate.shoppingCartIndex]
       productShopping.quantity = dataUpdate.newQuantity;
       productShopping.price = product.salePrice * productShopping.quantity;
@@ -95,6 +118,7 @@ export class ProductComponent implements OnInit {
       this.api.updateQuantity({'productId': dataUpdate.productId, 'action': dataUpdate.action, 'number':  dataUpdate.quantityUpdate}).subscribe(res => {
         this.getAll();
         this.storeShoppingCart(this.shoppingCart);
+        this.setListIMEI()
       })
       this.getTotal();
     }else{
@@ -122,6 +146,7 @@ export class ProductComponent implements OnInit {
             this.getAll();
           }
           this.storeShoppingCart(this.shoppingCart);
+          this.setListIMEI()
         })
         this.getTotal();
         // localStorage.setItem("shopping-cart", JSON.stringify(this.shoppingCart));
@@ -144,6 +169,7 @@ export class ProductComponent implements OnInit {
                 this.getAll();
               }
               this.storeShoppingCart(this.shoppingCart);
+              this.setListIMEI()
             })
             this.getTotal();
 
@@ -171,6 +197,7 @@ export class ProductComponent implements OnInit {
       this.shoppingCart.splice(index,1);
       this.getTotal()
       this.storeShoppingCart(this.shoppingCart);
+      this.setListIMEI()
     }
   }
   totalPrice: number = 0 ;
@@ -191,6 +218,7 @@ export class ProductComponent implements OnInit {
       this.billApi.createBill(bill).subscribe(res => {
         this.toastsService.alert('Thông báo !!!', "Thanh toán thành công !!!!!!",'bg-success');
         this.shoppingCart = []
+        this.listBillIMEI = []
         this.totalItem = 0;
         this.totalPay = 0;
         this.totalPrice = 0;

@@ -42,7 +42,7 @@
 
                     </div>
                   </td>
-                  <td class="align-middle">{{item.fistName + item.lastName }}</td>
+                  <td class="align-middle">{{item.fistName + item.lastName }} <span *ngIf="item.id == idAdmin">(tôi)</span></td>
                   <td class="align-middle">{{item.gender}}</td>
                   <td class="align-middle">{{item.phone}}</td>
                   <td class="align-middle">{{item.email}}</td>

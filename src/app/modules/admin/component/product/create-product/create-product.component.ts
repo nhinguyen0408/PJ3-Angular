@@ -205,28 +205,37 @@ export class CreateProductComponent implements OnInit {
       this.toastsService.alert('Thông báo !!!', 'Vui lòng điền đầy đủ các trường thông tin','bg-warning');
     }else {
       if(this.aliases.length > 0){
-      this.aliases.forEach(element => {
-        if(element.key == '' || element.value == ''){
-          // alert("Vui lòng điền đủ trường thông tin Đặc điểm!!!")
-          this.toastsService.alert('Thông báo !!!', 'Vui lòng điền đủ trường thông tin Đặc điểm!!!','bg-warning');
+        this.aliases.forEach(element => {
+          if(element.key == '' || element.value == ''){
+            // alert("Vui lòng điền đủ trường thông tin Đặc điểm!!!")
+            this.toastsService.alert('Thông báo !!!', 'Vui lòng điền đủ trường thông tin Đặc điểm!!!','bg-warning');
+          }
+        });
+        this.upload()
+        if(this.selectedFilesArray.length > 0){
+          this.uploadMultiple()
         }
-      });
-      this.upload()
-      if(this.selectedFilesArray.length > 0){
-        this.uploadMultiple()
-      }
-
-
-      // console.log(this.product);
-      setTimeout(()=>{
-        this.product.listImage = this.listImage;
-        this.apiProduct.createProduct(this.product).subscribe((data:{})=>{
-          this.toastsService.alert('Thông báo !!!', 'Thêm sản phẩm thành công!!!','bg-success');
-          this.isLoading = false
-          this.route.navigate(['/admin/product'])
-        })
-      },4600 + 100*(this.selectedFilesArray.length))
-
+        setTimeout(()=>{
+          this.product.listImage = this.listImage;
+          this.apiProduct.createProduct(this.product).subscribe((data:{})=>{
+            this.toastsService.alert('Thông báo !!!', 'Thêm sản phẩm thành công!!!','bg-success');
+            this.isLoading = false
+            this.route.navigate(['/admin/product'])
+          })
+        },4600 + 100*(this.selectedFilesArray.length))
+      } else {
+        this.upload()
+        if(this.selectedFilesArray.length > 0){
+          this.uploadMultiple()
+        }
+        setTimeout(()=>{
+          this.product.listImage = this.listImage;
+          this.apiProduct.createProduct(this.product).subscribe((data:{})=>{
+            this.toastsService.alert('Thông báo !!!', 'Thêm sản phẩm thành công!!!','bg-success');
+            this.isLoading = false
+            this.route.navigate(['/admin/product'])
+          })
+        },4600 + 100*(this.selectedFilesArray.length))
       }
     }
   }

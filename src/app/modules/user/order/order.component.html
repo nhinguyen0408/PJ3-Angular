@@ -25,7 +25,8 @@
                     <span class="badge badge-warning p-2 position-absolute" *ngIf="item.status == 'VERIFYING' || item.status == 'VERIFIED' " style="right: 20px; top: 10px;">Đang chờ xác nhận</span>
                     <span class="badge badge-warning p-2 position-absolute" *ngIf="item.status == 'CANCELED_REQUEST'" style="right: 20px; top: 10px;">Đang chờ xác nhận hủy đơn</span>
                     <span >Mã đơn hàng: <strong>{{item.code}}</strong></span> <br>
-                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span>
+                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span> <br>
+                    <span>Ngày đặt hàng: <strong>{{item.createdDate | date: 'dd/MM/yyyy'}}</strong></span>
                   </div>
 
                   <div class="row card-body p-3">
@@ -112,7 +113,8 @@
                   <div class="m-3 card-header position-relative">
                     <span class="badge badge-warning p-2 position-absolute" *ngIf="item.status == 'VERIFIED'" style="right: 20px; top: 10px;">Đang chờ lấy hàng</span>
                     <span >Mã đơn hàng: <strong>{{item.code}}</strong></span> <br>
-                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span>
+                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span> <br>
+                    <span>Ngày chuyển hàng: <strong>{{item.modifiedDate | date: 'dd/MM/yyyy'}}</strong></span>
                   </div>
 
                   <div class="row card-body p-3">
@@ -153,7 +155,8 @@
                   <div class="m-3 card-header position-relative">
                     <span class="badge badge-info p-2 position-absolute" style="right: 20px; top: 10px;">Đang được vận chuyển</span>
                     <span >Mã đơn hàng: <strong>{{item.code}}</strong></span> <br>
-                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span>
+                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span><br>
+                    <span>Ngày chuyển hàng: <strong>{{item.modifiedDate | date: 'dd/MM/yyyy'}}</strong></span>
                   </div>
                   <div class="row card-body p-3">
                     <div class="col-md-12">
@@ -196,7 +199,8 @@
                   <div class="m-3 card-header position-relative">
                     <span class="badge badge-success p-2 position-absolute" style="right: 20px; top: 10px;">Đã mua</span>
                     <span >Mã đơn hàng: <strong>{{item.code}}</strong></span> <br>
-                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span>
+                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span><br>
+                    <span>Ngày nhận hàng: <strong>{{item.modifiedDate | date: 'dd/MM/yyyy'}}</strong></span>
                   </div>
 
                   <div class="row card-body p-3">
@@ -238,7 +242,8 @@
                   <div class="m-3 card-header position-relative">
                     <span class="badge badge-danger p-2 position-absolute" style="right: 20px; top: 10px;">Đã hủy</span>
                     <span >Mã đơn hàng: <strong>{{item.code}}</strong></span> <br>
-                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span>
+                    <span>Địa chỉ nhận hàng: {{item.ownerName}}, <strong>{{item.phone}}</strong>, {{item.address}} </span><br>
+                    <span>Ngày hủy đơn: <strong>{{item.modifiedDate | date: 'dd/MM/yyyy'}}</strong></span>
                   </div>
 
                   <div class="row card-body p-3">

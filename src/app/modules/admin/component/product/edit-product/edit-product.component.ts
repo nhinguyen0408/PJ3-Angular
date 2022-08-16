@@ -268,13 +268,9 @@ imgNamePreview: string [] = []
         if(this.aliases.length > 0){
         this.aliases.forEach(element => {
           if(element.key == '' || element.value == ''){
-            // alert("Vui lòng điền đủ trường thông tin Đặc điểm!!!")
             this.toastsService.alert('Thông báo !!!', 'Vui lòng điền đủ trường thông tin Đặc điểm!!!','bg-warning');
           }
         });
-
-
-
         }
         if(this.avtUrl == false){
           this.product.avatarUrl = "";
@@ -288,7 +284,7 @@ imgNamePreview: string [] = []
               this.isLoading = false;
               this.route.navigate(['/admin/product/details/'+ this.product.id])
             })
-          }, 5000)
+          }, 4600 + 200*(this.selectedFilesArray.length))
 
         } else {
           if(this.selectedFilesArray.length > 0){
@@ -299,7 +295,7 @@ imgNamePreview: string [] = []
                 this.isLoading = false;
                 this.route.navigate(['/admin/product/details/'+ this.product.id])
               })
-            }, 5000)
+            }, 4600 + 200*(this.selectedFilesArray.length))
           } else {
             this.apiProduct.editProduct(this.product).subscribe((data: {})=>{
               this.toastsService.alert('Thông báo !!!', 'Sửa sản phẩm thành công!!!','bg-success');

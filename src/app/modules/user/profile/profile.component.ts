@@ -123,9 +123,9 @@ export class ProfileComponent implements OnInit {
           this.api.updateMyProfile(this.myProfile).subscribe((data:{})=>{
             this.isLoading = false;
             localStorage.setItem('username',this.myProfile.fistName + ' ' + this.myProfile.lastName)
-            window.location.reload;
+
             this.toastsService.alert("Thông báo !!!!", "Sửa tài khoản thành công !!! Nếu chưa thấy thay đổi, hãy tải lại trang !!!","bg-success");
-          });
+          })
         }
       }
     }

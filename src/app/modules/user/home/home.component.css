@@ -2,3 +2,7 @@
 .user-container__content{
   background-color: aliceblue;
 }
+#toastsContainerTopRight{
+  top: 77px !important;
+}
+

@@ -60,8 +60,8 @@ export class ApiDashboardService {
       catchError(this.handleError)
     )
   }
-  countNewProfile():Observable<any>{
-    return this.http.get<any>(this.url+"/profile/countNewProfile", this.httpOptions).pipe(
+  countNewProfile(role: string):Observable<any>{
+    return this.http.get<any>(this.url+"/profile/countNewProfile?role=" + role, this.httpOptions).pipe(
       catchError(this.handleError)
     )
   }

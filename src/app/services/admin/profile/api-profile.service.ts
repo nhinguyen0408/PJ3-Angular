@@ -23,8 +23,8 @@ export class ApiProfileService {
     })
   }
 
-  getProfile():Observable<Profile>{
-    return this.http.get<Profile>(this.url+"/profile/getall").pipe(
+  getProfile(role: string):Observable<Profile>{
+    return this.http.get<Profile>(this.url+"/profile/getall?roles=" + role).pipe(
       retry(1),
       catchError(this.handleError)
     )

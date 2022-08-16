@@ -5,7 +5,9 @@
         <div class="col-12 m-b-30">
           <div class="d-flex justify-content-between mt-3">
             <div class="card-header">
-              <h4 class="d-inline ">Danh sách Nhân viên</h4>
+              <h4 class="d-inline " style="text-decoration: underline; cursor: pointer;" (click)="getAllProfile()">Danh sách Nhân viên</h4>
+              <h4 class="d-inline "> / </h4>
+              <h4 class="d-inline " style="text-decoration: underline; cursor: pointer;" (click)="getAllUser()">Danh sách Khách hàng</h4>
             </div>
 
             <div class="">
@@ -37,14 +39,17 @@
                       <img class="profile-user-img img-fluid img-circle" *ngIf="item.imageUrl=== null || item.imageUrl ===''"
                            src="assets/dist/img/avatar-default.jpg"
                            alt="User profile picture">
-                      <img class="profile-user-img img-fluid img-circle" *ngIf="item.imageUrl"
+                      <img class="profile-user-img img-fluid img-circle" *ngIf="item.imageUrl && item.id != idAdmin"
+                      src="{{item.imageUrl}}"
+                      alt="User profile picture">
+                      <img class="profile-user-img img-fluid img-circle" style="border: 3px solid rgb(11, 148, 45);" *ngIf="item.imageUrl && item.id == idAdmin"
                            src="{{item.imageUrl}}"
                            alt="User profile picture">
 
                     </div>
                   </td>
-                  <td class="align-middle">{{item.fistName + ' ' + item.lastName }}</td>
-                  <td class="align-middle">{{item.gender}}</td>
+                  <td class="align-middle">{{item.fistName + ' ' + item.lastName }}<span class="text-success" *ngIf="item.id == idAdmin"> (Me)</span></td>
+                  <td class="align-middle">{{item.gender == 'FEMALE' ? 'Nữ' : 'Nam'}}</td>
                   <td class="align-middle">{{item.phone}}</td>
                   <td class="align-middle">{{item.email}}</td>
                   <td class="align-middle">{{item.role}}</td>
@@ -56,21 +61,36 @@
                       <span class="badge badge-danger px-2">Inactive</span>
                     </div>
                   </td>
-                  <td class="align-middle justify-content-center">
-                    <a *ngIf="item.role != 'SUPERADMIN' && item.block == false " class="btn shadow text-danger btn-outline-danger mr-2"
+                  <td *ngIf="item.role == 'SUPERADMIN'">
+
+                  </td>
+                  <td class="align-middle justify-content-center" *ngIf="item.role == 'EMPLOYEE'">
+                    <a *ngIf="item.block == false " class="btn shadow text-danger btn-outline-danger mr-2"
+                    (click)="blockEmployee(item.id)"
+                    >
+                      <i class="fas fa-ban"> Block</i>
+                    </a>
+                    <a *ngIf="item.block == true " class="btn shadow text-success btn-outline-success mr-2"
+                    (click)="unBlockEmployee(item.id)"
+                    >
+                      <i class="fas fa-ban"> Unblock</i>
+                    </a>
+                    <a class="btn shadow text-danger btn-outline-danger"
+                    (click)="resetPass('SUPERADMIN',item.id)"
+                    >
+                      <i class="fas fa-clock">Reset Password</i>
+                    </a>
+                  </td>
+                  <td class="align-middle justify-content-center" *ngIf="item.role == 'USER'">
+                    <a *ngIf="item.block == false " class="btn shadow text-danger btn-outline-danger mr-2"
                     (click)="blockUser(item.id)"
                     >
                       <i class="fas fa-ban"> Block</i>
                     </a>
-                    <a *ngIf="item.role != 'SUPERADMIN' && item.block == true " class="btn shadow text-success btn-outline-success mr-2"
+                    <a *ngIf="item.block == true " class="btn shadow text-success btn-outline-success mr-2"
                     (click)="unBlockUser(item.id)"
                     >
                       <i class="fas fa-ban"> Unblock</i>
-                    </a>
-                    <a *ngIf="item.role != 'SUPERADMIN' " class="btn shadow text-danger btn-outline-danger"
-                    (click)="resetPass('SUPERADMIN',item.id)"
-                    >
-                      <i class="fas fa-clock">Reset Password</i>
                     </a>
                   </td>
                 </tr>

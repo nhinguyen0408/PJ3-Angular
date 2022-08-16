@@ -24,4 +24,5 @@ export class Product{
   modifiedBy: number = 0;
   createdDate: Date = new Date();
   modifiedDate: Date = new Date();
+  createdByName: string|null = ''
 }

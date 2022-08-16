@@ -81,9 +81,9 @@
         <div class="col-12 col-sm-6 col-md-3">
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3>{{countNewProfile?.count }}</h3>
+              <h3>{{countNewProfile?.count }} <small>Khách hàng mới</small></h3>
 
-              <p>Nhân viên đăng ký mới</p>
+              <p>Tổng: {{listUser.length}} Khách hàng đã đăng ký</p>
             </div>
             <div class="icon">
               <i class="fas fa-user-plus"></i>
@@ -113,8 +113,8 @@
                     <i class="fas fa-wrench"></i>
                   </button>
                   <div class="dropdown-menu dropdown-menu-right" role="menu">
-                    <a id="chart-year" class="dropdown-item">Theo Năm</a>
-                    <a id="chart-month" class="dropdown-item">Đơn hàng theo Tháng</a>
+                    <a id="chart-year" class="dropdown-item">Đơn hàng theo tháng</a>
+                    <a id="chart-month" class="dropdown-item">Đơn hàng trong tháng này</a>
                   </div>
                 </div>
                 <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
@@ -228,56 +228,42 @@
           </div>
           <!-- /.card -->
         </div>
-        <div class="card col-md-4 p-0">
-          <div class="card-header bg-black">
-            <h3 class="card-title"><strong>Sản phẩm bán chạy trong tháng</strong></h3>
+        <div class="col-md-4 p-0">
+          <div class="card">
+            <div class="card-header bg-black">
+              <h3 class="card-title"><strong>Tổng quan đơn hàng</strong></h3>
 
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button> -->
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button> -->
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+              <div class="p-3 text-bold">
+                Tổng đơn hàng trong tháng: {{countNewBill?.count}}
+              </div>
+              <canvas id="donutChart" style="min-height: 360px; height: 360px; max-height: 360px; max-width: 100%;"></canvas>
             </div>
           </div>
-          <!-- /.card-header -->
-          <div class="card-body p-0">
-            <ul class="products-list product-list-in-card pl-2 pr-2">
-              <div *ngFor="let item of productSold ; index as i">
-                <li class="item" *ngIf="i < 6">
-                  <div >
 
-                    <div class="product-img">
-                      <img src="{{item.avatarUrl ? item.avatarUrl : ''}}" alt="Product Image" class="img-size-50">
-                    </div>
-                    <div class="product-info">
-                      <a class="product-title product-name"> {{item.productName}}</a>
-                      <span class="badge badge-warning float-right">{{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</span> &nbsp;
-                      <span class="badge badge-success float-right">Đã bán: {{item.sold}}</span>&nbsp;
-                    </div>
-                  </div>
-                </li>
-              </div>
-
-              <!-- /.item -->
-
-
-            </ul>
-          </div>
         </div>
         <!-- /.col -->
       </div>
       <!-- /.row -->
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <!-- USERS LIST -->
           <div class="card">
             <div class="card-header bg-black">
               <h3 class="card-title"><strong>Sản phẩm mới</strong></h3>
 
               <div class="card-tools">
-                <span class="badge badge-danger">5 latest</span>
+                <span class="badge badge-danger">4 latest</span>
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                 </button>
                 <!-- <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
@@ -302,7 +288,7 @@
                           </div>
 
                         </div>
-                          <img class="d-block w-100 product-image" src="{{productLatest?.[0].avatarUrl}}" alt="First slide">
+                          <a routerLink="/admin/product/details/{{productLatest?.[0]?.id}}"><img class="d-block w-100 product-image" src="{{productLatest?.[0].avatarUrl}}" alt="First slide"></a>
                           <div class="bg-black">
                             <p class="product-name"><strong>{{productLatest?.[0].name}}</strong></p>
                             <span *ngIf="productLatest?.[0]?.saleEntity">
@@ -328,7 +314,7 @@
                           </div>
 
                         </div>
-                          <img class="d-block w-100 product-image" src="{{productLatest?.[1].avatarUrl}}" alt="Second slide">
+                        <a routerLink="/admin/product/details/{{productLatest?.[1]?.id}}"><img class="d-block w-100 product-image" src="{{productLatest?.[1].avatarUrl}}" alt="First slide"></a>
                           <div class="bg-black">
                             <p class="product-name"><strong>{{productLatest?.[1].name}}</strong></p>
                             <span *ngIf="productLatest?.[1]?.saleEntity">
@@ -354,7 +340,7 @@
                           </div>
 
                         </div>
-                          <img class="d-block w-100 product-image" src="{{productLatest[2].avatarUrl}}" alt="Third slide">
+                        <a routerLink="/admin/product/details/{{productLatest?.[2]?.id}}"><img class="d-block w-100 product-image" src="{{productLatest?.[2].avatarUrl}}" alt="First slide"></a>
                           <div class="bg-black">
                             <p class="product-name"><strong>{{productLatest[2].name}}</strong></p>
                             <span *ngIf="productLatest[2]?.saleEntity">
@@ -380,7 +366,7 @@
                           </div>
 
                         </div>
-                        <img class="d-block w-100 product-image" src="{{productLatest[3].avatarUrl}}" alt="Third slide">
+                        <a routerLink="/admin/product/details/{{productLatest?.[3]?.id}}"><img class="d-block w-100 product-image" src="{{productLatest?.[3].avatarUrl}}" alt="First slide"></a>
                         <div class="bg-black">
                           <p class="product-name"><strong>{{productLatest[3].name}}</strong></p>
                           <span *ngIf="productLatest[3]?.saleEntity">
@@ -416,50 +402,135 @@
           <!--/.card -->
         </div>
 
-        <div class="card col-md-6 p-0">
-          <div class="card-header bg-black">
-            <h3 class="card-title"><strong>Sản phẩm Sắp hết hàng</strong></h3>
+        <div class=" col-md-4">
+          <div class="card">
+            <div class="card-header bg-black">
+              <h3 class="card-title"><strong>Sản phẩm bán chạy trong tháng</strong></h3>
 
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button> -->
+              <div class="card-tools">
+                <button (click)="exportexcel('Sanphambanchay','table-product-sold')"><i class="fas fa-download"></i></button>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+
+                <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button> -->
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+              <ul class="products-list product-list-in-card pl-2 pr-2">
+                <div *ngFor="let item of productSold ; index as i">
+                  <li class="item" *ngIf="i < 7">
+                    <div >
+
+                      <div class="product-img">
+                        <img src="{{item.avatarUrl ? item.avatarUrl : ''}}" alt="Product Image" class="img-size-50">
+                      </div>
+                      <div class="product-info">
+                        <a class="product-title product-name text-dark" routerLink="/admin/product/details/{{item.productId}}"> {{item.productName}}</a>
+                        <span class="badge badge-warning float-right">{{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</span> &nbsp;
+                        <span class="badge badge-success float-right">Đã bán: {{item.sold}}</span>&nbsp;
+                      </div>
+                    </div>
+                  </li>
+                </div>
+                <div class="d-none">
+                  <table id="table-product-sold">
+                    <thead>
+                      <tr>
+                        <th>Tên sản phẩm </th>
+                        <th>Giá</th>
+                        <th>Đã bán</th>
+                        <th>Còn trong kho</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of productSold ; index as i">
+                          <td *ngIf="i < 7">{{item.productName}}</td>
+                          <td *ngIf="i < 7">{{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
+                          <td *ngIf="i < 7">{{item.sold}}</td>
+                          <td *ngIf="i < 7">{{item.quantity}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- /.item -->
+
+
+              </ul>
             </div>
           </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <ul class="products-list product-list-in-card pl-2 pr-2">
-              <div *ngFor="let item of productOutOfStockSoonList ; index as i">
-                <li class="item" *ngIf="i < 6">
-                  <div >
 
-                    <div class="product-img">
-                      <img src="{{item.avatarUrl}}" alt="Product Image" class="img-size-50">
-                    </div>
-                    <div class="product-info">
-                      <a class="product-title product-name"> {{item.name}}</a>
-                      <span class="badge badge-warning float-right">{{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</span> &nbsp;
-                      <span class="badge badge-success float-right">Còn lại: {{item.quantity}}</span>&nbsp;
-                    </div>
-                  </div>
-                </li>
-              </div>
-
-              <!-- /.item -->
-
-
-            </ul>
-          </div>
         </div>
 
-        <div class="col-md-9" *ngIf="countNewProfile && countNewProfile?.data && countNewProfile?.data?.length > 0">
+        <div class=" col-md-4">
+          <div class="card">
+            <div class="card-header bg-black">
+              <h3 class="card-title"><strong>Sản phẩm Sắp hết hàng</strong></h3>
+
+              <div class="card-tools">
+                <button (click)="exportexcel('Sanphamsaphethang','table-product-out')"><i class="fas fa-download"></i></button>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button> -->
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <ul class="products-list product-list-in-card pl-2 pr-2">
+                <div *ngFor="let item of productOutOfStockSoonList ; index as i">
+                  <li class="item" *ngIf="i < 7">
+                    <div >
+
+                      <div class="product-img">
+                        <img src="{{item.avatarUrl}}" alt="Product Image" class="img-size-50">
+                      </div>
+                      <div class="product-info">
+                        <a class="product-title product-name text-dark" routerLink="/admin/product/details/{{item.id}}"> {{item.name}}</a>
+                        <span class="badge badge-warning float-right">{{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</span> &nbsp;
+                        <span class="badge badge-success float-right">Còn lại: {{item.quantity}}</span>&nbsp;
+                      </div>
+                    </div>
+                  </li>
+                </div>
+
+                <!-- /.item -->
+                <div class="d-none">
+                  <table id="table-product-out">
+                    <thead>
+                      <tr>
+                        <th>Tên sản phẩm </th>
+                        <th>Giá</th>
+                        <th>Còn trong kho</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of productOutOfStockSoonList ; index as i">
+                          <td *ngIf="i < 7">{{item.name}}</td>
+                          <td *ngIf="i < 7">{{item.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
+                          <td *ngIf="i < 7">{{item.quantity}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-9" *ngIf="countNewEmployee && countNewEmployee?.data && countNewEmployee?.data?.length > 0">
           <!-- USERS LIST -->
           <div class="card">
             <div class="card-header bg-black">
-              <h3 class="card-title"><strong>Nhân viên mới</strong></h3>
+              <h3 class="card-title"><strong>Nhân viên mới ({{countNewProfile?.count}})</strong></h3>
 
               <div class="card-tools">
                 <span class="badge badge-danger">Latest</span>
@@ -472,7 +543,7 @@
             <!-- /.card-header -->
             <div class="card-body p-0">
               <ul class="col-md-12 users-list clearfix">
-                <li *ngFor="let item of countNewProfile?.data; index as i">
+                <li *ngFor="let item of countNewEmployee?.data; index as i">
                   <div *ngIf="i<8">
                     <img src="{{item.imageUrl}}" *ngIf="item.imageUrl" class="avatar-image" alt="User Image">
                     <img src="assets/dist/img/avatar-default.jpg" *ngIf="item.imageUrl == null || item.imageUrl ==='' " alt="User Image" class="avatar-image">
@@ -509,17 +580,17 @@
             <!-- /.card-header -->
             <div class="card-body p-10 d-flex align-center justify-content-center" *ngIf="dataBestEmp && dataBestEmp.length > 0">
               <div>
-                <ul class="col-md-12  clearfix">
-                  <li *ngIf="dataBestEmp.length > 0">
+                <div class="col-md-12  clearfix">
+                  <div *ngIf="dataBestEmp.length > 0">
                     <div >
                       <img src="{{dataBestEmp[0]?.profileEntity.imageUrl}}" *ngIf="dataBestEmp[0]?.profileEntity.imageUrl" class="avatar-image" alt="User Image">
                       <img src="assets/dist/img/avatar-default.jpg" *ngIf="dataBestEmp[0].profileEntity.imageUrl == null || dataBestEmp[0].profileEntity.imageUrl ==='' " alt="User Image" class="avatar-image">
                       <a class="users-list-name text-center" href="#">{{dataBestEmp[0].profileEntity.fistName + ' '+ dataBestEmp[0].profileEntity.lastName}}</a>
                       <span class="users-list-date text-center bg-success"><strong>Số đơn hàng đã bán: {{dataBestEmp[0].billCount}}</strong></span>
                     </div>
-                  </li>
+                  </div>
 
-                </ul>
+                </div>
               </div>
 
 
@@ -569,7 +640,9 @@
                   <tbody>
                     <tr *ngFor="let item of listBill; index as i">
                       <td class="align-middle" *ngIf="i<7"> {{i + 1}} </td>
-                      <th class="align-middle" *ngIf="i<7"> {{item.code}} </th>
+                      <th class="align-middle" *ngIf="i<7">
+                        <a href="admin/order?id={{item.id}}"><span class="text-underline" style="text-decoration: underline; cursor: pointer;">{{item.code}}</span></a>
+                      </th>
                       <td class="align-middle" *ngIf="i<7">
                         Tên khách hàng: <strong>{{item.ownerName}}</strong> <br>
                         Số điện thoại: <strong>{{item.phone}}</strong> <br>
@@ -595,8 +668,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-              <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a>
-              <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+              <a routerLink="/admin/order" class="btn btn-sm btn-secondary float-right">Đi tới đơn hàng</a>
             </div>
             <!-- /.card-footer -->
           </div>

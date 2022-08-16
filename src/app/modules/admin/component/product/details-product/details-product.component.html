@@ -25,18 +25,18 @@
         <a (click)="back()" class="btn btn-outline-success btn-rounded mt-2">Back</a> <br>
         <div class="row">
 
-          <h3 class="my-3">Mã sản phẩm: {{product.code}}</h3>
+          <h3 class="my-3">Mã sản phẩm: {{product?.code}}</h3>
         </div>
         <div class="row">
           <div class="col-12 col-sm-6">
 
-            <h3 class="d-inline-block d-sm-none">{{product.name}}</h3>
+            <h3 class="d-inline-block d-sm-none">{{product?.name}}</h3>
             <div class="col-12">
-              <div class="d-flex sale" *ngIf="product.saleEntity">
+              <div class="d-flex sale" *ngIf="product?.saleEntity">
                 <!-- <div class="sale-percent btn text-right">SALE {{product.saleEntity.sale}}%
                   <br>  <p id="countdown">{{days}}:{{hours}}:{{minutes}}:{{seconds}}</p>
                 </div> -->
-                <div class="sale-percent btn">SALE {{product.saleEntity.sale}}% in
+                <div class="sale-percent btn">SALE {{product?.saleEntity.sale}}% in
                   <span class="countdown">{{days}}</span>:<span class="countdown">{{hours}}</span>:<span class="countdown">{{minutes}}</span>:<span class="countdown">{{seconds}}</span>
                  </div>
 
@@ -49,16 +49,16 @@
                   <div class="carousel-inner">
                     <ol class="carousel-indicators">
                       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                      <li data-target="#carouselExampleIndicators" *ngIf="product.listImage.length >=1" data-slide-to="1"></li>
-                      <li data-target="#carouselExampleIndicators" *ngIf="product.listImage.length >=2" data-slide-to="2"></li>
-                      <li data-target="#carouselExampleIndicators" *ngIf="product.listImage.length >=3" data-slide-to="3"></li>
-                      <li data-target="#carouselExampleIndicators" *ngIf="product.listImage.length >=4" data-slide-to="4"></li>
-                      <li data-target="#carouselExampleIndicators" *ngIf="product.listImage.length >=5" data-slide-to="5"></li>
+                      <li data-target="#carouselExampleIndicators" *ngIf="product?.listImage.length >=1" data-slide-to="1"></li>
+                      <li data-target="#carouselExampleIndicators" *ngIf="product?.listImage.length >=2" data-slide-to="2"></li>
+                      <li data-target="#carouselExampleIndicators" *ngIf="product?.listImage.length >=3" data-slide-to="3"></li>
+                      <li data-target="#carouselExampleIndicators" *ngIf="product?.listImage.length >=4" data-slide-to="4"></li>
+                      <li data-target="#carouselExampleIndicators" *ngIf="product?.listImage.length >=5" data-slide-to="5"></li>
                   </ol>
                       <div class="carousel-item active">
-                          <img class="d-block w-100 product-image" src="{{product.avatarUrl}}" alt="First slide">
+                          <img class="d-block w-100 product-image" src="{{product?.avatarUrl}}" alt="First slide">
                       </div>
-                      <div class="carousel-item" *ngFor="let item of product.listImage; index as i">
+                      <div class="carousel-item" *ngFor="let item of product?.listImage; index as i">
                           <img class="d-block w-100 product-image" src="{{item.imageUrl}}" alt="{{i}} slide">
                       </div>
                       <!-- <div class="carousel-item">
@@ -76,16 +76,16 @@
               <!-- end example -->
             </div>
             <div class="col-12 product-image-thumbs" >
-              <div class="product-image-thumb" *ngFor="let item of product.listImage"><img src="{{item.imageUrl}}" alt="Product Image"></div>
+              <div class="product-image-thumb" *ngFor="let item of product?.listImage"><img src="{{item.imageUrl}}" alt="Product Image"></div>
             </div>
 
           </div>
           <div class="col-12 col-sm-6">
 
-            <h3 class="my-3">{{product.name}}</h3>
+            <h3 class="my-3">{{product?.name}}</h3>
             <p class="card-text">
-              <small class="text-muted">Created by: {{product.createdByName}}</small> <br>
-              <small class="text-muted">Last updated {{product.modifiedDate | date :'short'}} By: {{product.modifiedByName}}</small>
+              <small class="text-muted">Created by: {{product?.createdByName}}</small> <br>
+              <small class="text-muted">Last updated {{product?.modifiedDate | date :'short'}} By: {{product?.modifiedByName}}</small>
             </p>
 
             <hr>
@@ -102,29 +102,29 @@
                 <tbody>
                   <tr>
                     <td>Bảo hành</td>
-                    <td>{{product.warranty}} tháng</td>
+                    <td>{{product?.warranty}} tháng</td>
                   </tr>
-                  <tr *ngFor="let item of product.listInformation">
+                  <tr *ngFor="let item of product?.listInformation">
                     <td>{{item.key}}</td>
                     <td>{{item.value}}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <h4><small>Số lượng trong kho: </small> {{product.quantity}}</h4>
+            <h4><small>Số lượng trong kho: </small> {{product?.quantity}}</h4>
             <div class="bg-dark py-2 px-3 mt-4">
-              <h2 class="mb-0" *ngIf="product.saleEntity == null || product.saleEntity == 0">
-                {{product.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+              <h2 class="mb-0" *ngIf="product?.saleEntity == null || product?.saleEntity == 0">
+                {{product?.salePrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                 <!-- {{product.salePrice}} -->
               </h2>
-              <div *ngIf="product.saleEntity">
+              <div *ngIf="product?.saleEntity">
                 <h2 class="mb-0" >
-                  {{(product.salePrice - product.salePrice * product.saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                  {{(product?.salePrice - product?.salePrice * product?.saleEntity.sale / 100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
                   <!-- {{product.salePrice}} -->
                 </h2>
                 <h4 class="mt-0">
                   <!-- <small>Ex Tax: ${{(product.salePrice * 1.2)}} </small> -->
-                  <small>Ex Tax: $<del>{{(product.salePrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del> </small>
+                  <small>Ex Tax: $<del>{{(product?.salePrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</del> </small>
                 </h4>
               </div>
 

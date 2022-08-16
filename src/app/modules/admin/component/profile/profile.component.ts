@@ -24,13 +24,18 @@ export class ProfileComponent implements OnInit {
     this.getAllProfile();
   }
   listProfile: Profile[] = []
-
+  idAdmin: any = localStorage.getItem("adminId")
   getAllProfile(){
-    this.api.getProfile().subscribe((data: any)=>{
+    this.api.getProfile('EMPLOYEE,SUPERADMIN').subscribe((data: any)=>{
       this.listProfile = data
     })
   }
-  blockUser(id: number){
+  getAllUser(){
+    this.api.getProfile('USER').subscribe((data: any)=>{
+      this.listProfile = data
+    })
+  }
+  blockEmployee(id: number){
     if(window.confirm("Bạn đã chắc chắn muốn thực hiện khóa nhân viên này !!!!!")){
       this.api.blockOrUnBlockUser(id).subscribe(res => {
         // window.alert("Khóa tài khoản thành công !!!");
@@ -40,12 +45,32 @@ export class ProfileComponent implements OnInit {
     }
     // console.log("id user:::", id)
   }
-  unBlockUser(id: number){
+  blockUser(id: number){
+    if(window.confirm("Bạn đã chắc chắn muốn thực hiện khóa Tài khoản user này !!!!!")){
+      this.api.blockOrUnBlockUser(id).subscribe(res => {
+        // window.alert("Khóa tài khoản thành công !!!");
+        this.toastsService.alert('Thông báo !!!', 'Khóa tài khoản thành công !!!','bg-success');
+        this.getAllUser()
+      })
+    }
+    // console.log("id user:::", id)
+  }
+  unBlockEmployee(id: number){
     if(window.confirm("Bạn đã chắc chắn muốn thực hiện mở khóa nhân viên này !!!!!")){
       this.api.blockOrUnBlockUser(id).subscribe(res => {
         // window.alert("Mở khóa tài khoản thành công !!!");
         this.toastsService.alert('Thông báo !!!', 'Mở khóa tài khoản thành công !!!','bg-success');
         this.getAllProfile()
+      })
+    }
+    // console.log("id user:::", id)
+  }
+  unBlockUser(id: number){
+    if(window.confirm("Bạn đã chắc chắn muốn thực hiện mở khóa User này !!!!!")){
+      this.api.blockOrUnBlockUser(id).subscribe(res => {
+        // window.alert("Mở khóa tài khoản thành công !!!");
+        this.toastsService.alert('Thông báo !!!', 'Mở khóa tài khoản thành công !!!','bg-success');
+        this.getAllUser()
       })
     }
     // console.log("id user:::", id)

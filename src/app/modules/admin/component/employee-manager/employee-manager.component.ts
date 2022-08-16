@@ -19,12 +19,15 @@ export class EmployeeManagerComponent implements OnInit, AfterViewInit {
     },500)
   }
   ngOnInit(): void {
+    console.log('idAdmin', this.idAdmin);
+
     this.getAllProfile();
   }
   listProfile: Profile[] = []
+  idAdmin: any = localStorage.getItem("adminId")
 
   getAllProfile(){
-    this.api.getProfile().subscribe((data: any)=>{
+    this.api.getProfile('EMPLOYEE,SUPERADMIN').subscribe((data: any)=>{
       this.listProfile = data
     })
   }

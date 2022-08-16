@@ -36,7 +36,7 @@ export class RegisterUserComponent implements OnInit {
                 this.toastsService.alert('Thông báo !!!', 'Email đã được sử dụng !!!','bg-danger');
               } else if(data.responseCode == '200'){
                 this.toastsService.alert('Thông báo !!!', 'Đăng ký tài khoản thành công <br> Vui lòng đăng nhập để tiếp tục !!!','bg-success');
-                this.route.navigate(['user'])
+                this.route.navigate(['user/login'])
               }
             })
           } else {

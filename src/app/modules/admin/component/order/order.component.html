@@ -75,8 +75,13 @@
             </div>
           </div>
           <!-- end tim kiem -->
+
           <div class="card-body">
+
             <div class="card p-3 ">
+              <div class="col-12 p-2" >
+                <button class="btn btn-info" style="float: right;" (click)="exportexcel()">Export</button>
+              </div>
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                   <tr>
@@ -895,6 +900,45 @@
         </div>
       </div>
 
+    </div>
+    <div class="col-lg-12">
+      <table id="table-hidden" class="table table-bordered table-striped d-none">
+        <thead>
+          <tr>
+            <th style="width: 10px">STT</th>
+            <th>Số Hóa đơn</th>
+            <th>Khách hàng</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Tổng chiết khấu</th>
+            <th>Tổng thanh toán</th>
+            <th>Loại đơn hàng</th>
+            <th>Trạng thái đơn hàng</th>
+            <th>Ngày tạo lập </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listBill; index as i">
+            <td class="align-middle"> {{i + 1}} </td>
+            <th class="align-middle"> {{item.code}} </th>
+            <td class="align-middle"><strong>{{item.ownerName}}</strong> <br></td>
+            <td class="align-middle"><strong>{{item.phone}}</strong> <br></td>
+            <td class="align-middle"><strong>{{item.address}}</strong></td>
+            <th class="align-middle">{{item.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}} </th>
+            <th class="align-middle">
+              <p class="text-danger mt-1">{{(item.totalPrice - item.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</p>
+            </th>
+            <td class="align-middle"><span class="badge badge-success px-2">{{item.type}}</span></td>
+            <td class="align-middle">
+
+              <span class="badge badge-success px-2">{{item.status}}</span>
+            </td>
+            <td class="align-middle">{{item.createdDate | date: "medium"}}</td>
+
+          </tr>
+
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

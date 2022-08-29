@@ -1,3 +1,42 @@
 .pd-100{
   padding: 100px;
 }
+.cart-product{
+  display: flex;
+  align-items: center;
+}
+.cart-product-image img{
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+
+}
+.cart-product-image{
+  width: 100px;
+  height: 100px;
+  margin-right: 15px;
+}
+.table-cart{
+  position: absolute;
+  background: none;
+  top: -10px;
+  border: 1px solid rgb(224, 224, 224);
+  width: 100%;
+}
+.cart-product-name{
+  color: #000;
+
+}
+.apply-warranty{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 3px solid #28a745;
+}
+.btn-edit-condition{
+  padding: 5px;
+  background-color: rgb(9, 146, 100);
+  color: white;
+  border-radius: 5px;
+  border: none;
+}

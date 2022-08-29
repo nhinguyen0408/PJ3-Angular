@@ -144,7 +144,6 @@ export class ProductComponent implements OnInit, AfterViewInit {
       this.api.searchProduct(this.productCode.toUpperCase(), categoryId, productionId, this.productName, status).subscribe((res: any)=>{
         this.productList = res;
         if(this.status == 'EARLYEMPTY'){
-          console.log("asfasfasf hẻ ");
 
           this.productList = this.productList.filter((element: any) => element.quantity < 5)
         }

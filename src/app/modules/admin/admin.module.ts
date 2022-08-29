@@ -41,6 +41,7 @@ import { UpdateSaleComponent } from './component/sale/update-sale/update-sale.co
 import { WarrantyComponent } from './component/warranty/warranty.component';
 import { ImportProductComponent } from './component/import-product/import-product.component';
 import { OrderIsProcessingComponent } from './component/order/order-is-processing/order-is-processing.component';
+import { DashboardTurnoverComponent } from './component/dashboard-turnover/dashboard-turnover.component';
 
 
 @NgModule({
@@ -80,6 +81,7 @@ import { OrderIsProcessingComponent } from './component/order/order-is-processin
     WarrantyComponent,
     ImportProductComponent,
     OrderIsProcessingComponent,
+    DashboardTurnoverComponent,
   ],
   imports: [
     CommonModule,

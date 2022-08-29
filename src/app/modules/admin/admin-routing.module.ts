@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CategoryComponent } from './component/category/category.component';
 import { CreateCategoryComponent } from './component/category/create-category/create-category.component';
 import { EditCategoryComponent } from './component/category/edit-category/edit-category.component';
+import { DashboardTurnoverComponent } from './component/dashboard-turnover/dashboard-turnover.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { EmployeeManagerComponent } from './component/employee-manager/employee-manager.component';
 import { HomeComponent } from './component/home/home.component';
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent,
     children: [
       {path: 'home', component: DashboardComponent},
+      {path: 'dashboard-turnover', component: DashboardTurnoverComponent},
       {path: 'warehouse', component: WarehouseComponent},
       {path: 'employee-manager', component: ProfileComponent},
       {path: 'employee-manager/create', component: CreateProfileComponent},

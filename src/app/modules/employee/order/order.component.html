@@ -1,0 +1,946 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="content-body">
+      <div class="row card">
+        <div class="col-12 m-b-30">
+          <div class="d-flex justify-content-between mt-3">
+            <div class="card-header">
+              <h4 class="d-inline ">Danh sách đơn hàng</h4>
+            </div>
+          </div>
+          <!-- Tim kiem -->
+          <div class="card-body">
+            <div class="card">
+              <div class="card-header bg-dark">
+                <h3 class="card-title d-inline">Bộ lọc tìm kiếm:</h3>
+              </div>
+              <div class="row m-3">
+                <!-- <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="category" class=" col-form-label">Nhân viên</label>
+                        <select class=" select2bs4" id="employee" [(ngModel)]="employee" name="employeeId"  style="width: 100%;" required>
+                          <option value="0" >Chọn</option>
+                          <option *ngFor="let item of listEmployee" value="{{item.id}}" >{{item.fistName + " " + item.lastName}}</option>
+                        </select>
+                  </div>
+                </div> -->
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="birthday" class=" col-form-label">Ngày Bắt đầu</label>
+                      <div class="">
+
+                        <input type="date" class="form-control" id="birthday" name="start"
+                        [(ngModel)]="startDate"
+                              min="2022-01-01" max="2025-12-31">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="birthday" class=" col-form-label">Ngày Kết thúc</label>
+                      <div class="">
+
+                        <input type="date" class="form-control" id="birthday" name="end"
+                        [(ngModel)]="endDate"
+                        min="2022-01-01" max="2025-12-31">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="d-flex align-items-center justify-content-between">
+                      <p (click)="filtByType(countBillByType[0]?.type)" class="text-bold text-info" style="cursor: pointer;">Chờ xác nhận ({{countBillByType[0]?.data?.length}})</p>
+                      <p (click)="filtByType(countBillByType[1]?.type)" class="text-bold text-info" style="cursor: pointer;">Chờ lấy hàng ({{countBillByType[1]?.data?.length}})</p>
+                      <p (click)="filtByType(countBillByType[2]?.type)" class="text-bold text-info" style="cursor: pointer;">Đang vận chuyển ({{countBillByType[2]?.data?.length}})</p>
+                      <p (click)="filtByType(countBillByType[3]?.type)" class="text-bold text-info" style="cursor: pointer;">Thành công ({{countBillByType[3]?.data?.length}})</p>
+                      <p (click)="filtByType(countBillByType[4]?.type)" class="text-bold text-info" style="cursor: pointer;">Đã hủy ({{countBillByType[4]?.data?.length}})</p>
+                      <p (click)="filtByType(countBillByType[5]?.type)" class="text-bold text-info" style="cursor: pointer;">Yêu cầu hủy ({{countBillByType[5]?.data?.length}})</p>
+                      <p (click)="filtByType(countBillByType[6]?.type)" class="text-bold text-info" style="cursor: pointer;">Bán online ({{countBillByType[6]?.data?.length}})</p>
+                      <p (click)="filtByType(countBillByType[7]?.type)" class="text-bold text-info" style="cursor: pointer;">Bán tại quầy ({{countBillByType[7]?.data?.length}})</p>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <button type="button" class="btn btn-primary mt-2" (click)="onSearch()">
+                        <i class="fas fa-search"> </i> Tìm kiếm
+                      </button>
+                      <a type="button" class="btn btn-info mt-2" routerLink="/admin/order" (click)="onAbortSearch()" *ngIf="billIdFromNotify && billIdFromNotify != ''">
+                        Tất cả đơn hàng
+                      </a>
+                      <button type="button" class="btn btn-danger ml-2 mt-2" *ngIf="checkSearch === true" (click)="onAbortSearch()">
+                        <i class="fas fa-ban"> </i> Hủy
+                      </button>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <!-- end tim kiem -->
+
+          <div class="card-body">
+
+            <div class="card p-3 ">
+              <div class="col-12 p-2" >
+                <!-- <button class="btn btn-info" style="float: right;" (click)="exportexcel()">Export</button> -->
+              </div>
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Số Hóa đơn</th>
+                    <th>Khách hàng</th>
+                    <th>Tổng chiết khấu</th>
+                    <th>Tổng thanh toán</th>
+                    <th>Trạng thái đơn hàng</th>
+                    <th>Ngày tạo lập </th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of listBill; index as i">
+                    <td class="align-middle"> {{i + 1}} </td>
+                    <th class="align-middle"> {{item.code}} </th>
+                    <td class="align-middle">
+                      Tên khách hàng: <strong>{{item.ownerName}}</strong> <br>
+                      Số điện thoại: <strong>{{item.phone}}</strong> <br>
+                      Địa chỉ: <strong>{{item.address}}</strong>
+                      <p *ngIf="item.createBy.role != 'USER'">Nhân viên bán hàng: <strong>{{item.createBy.fistName +' ' + item.createBy.lastName}}</strong> </p>
+                    </td>
+                    <th class="align-middle">{{item.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}} </th>
+                    <th class="align-middle">
+                      <p class="text-danger mt-1">{{(item.totalPrice - item.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</p>
+                    </th>
+                    <td class="align-middle">
+                      <span class="badge badge-success px-2">{{item.type}}</span> &nbsp;
+                      <span class="badge badge-success px-2" *ngIf="item.status == 'COMPLETED'">{{item.status}}</span>
+                      <span class="badge badge-warning px-2" *ngIf="item.status == 'VERIFYING'">{{item.status}}</span>
+                      <span class="badge badge-danger px-2" *ngIf="item.status == 'CANCELED'">{{item.status}}</span>
+                      <span class="badge badge-warning px-2" *ngIf="item.status == 'VERIFIED'">{{item.status}}</span>
+                      <span class="badge badge-info px-2" *ngIf="item.status == 'INPROGRESS'">{{item.status}}</span>
+                      <span class="badge badge-danger px-2" *ngIf="item.status == 'CANCELED_REQUEST'">{{item.status}}</span>
+                    </td>
+                    <td class="align-middle">{{item.createdDate | date: "medium"}}</td>
+                    <td class="align-middle" *ngIf="item.status == 'COMPLETED'">
+                      <a  class="btn mr-2 shadow text-primary" data-toggle="modal" data-target="#modal-xl-inprocessing" (click)="getDataDetail(item.id)"><i class="far fa-eye"></i></a>
+                    </td>
+                    <td class="align-middle" *ngIf="item.status == 'VERIFYING'">
+                      <small class="btn mr-2 shadow btn-success text-white" *ngIf="item.status != 'CANCELED_REQUEST'" data-toggle="modal" data-target="#modal-xl" (click)="getDataDetail(item.id)">Xác nhận</small>
+                      <small class="btn shadow btn-warning text-white" *ngIf="item.status != 'CANCELED_REQUEST'" data-toggle="modal" data-target="#modal-default" (click)="getDataDetail(item.id)">Hủy đơn hàng</small>
+                    </td>
+                    <td class="align-middle" *ngIf="item.status == 'CANCELED_REQUEST'">
+                      <small class="btn shadow btn-warning text-white" *ngIf="item.status == 'CANCELED_REQUEST'" data-toggle="modal" data-target="#modal-default" (click)="getDataDetail(item.id)">Xác nhận hủy đơn</small>
+                    </td>
+                    <td class="align-middle" *ngIf="item.status == 'VERIFIED'">
+                      <small class="btn mr-2 shadow btn-success text-white" data-toggle="modal" data-target="#modal-xl-confirmed" (click)="getDataDetail(item.id)">Xác nhận gửi hàng</small>
+                    </td>
+                    <td class="align-middle" *ngIf="item.status == 'CANCELED'">
+                      <a  class="btn mr-2 shadow text-primary" data-toggle="modal" data-target="#modal-lg" (click)="getDataDetail(item.id)"><i class="far fa-eye"></i></a>
+                    </td>
+                    <td class="align-middle" *ngIf="item.status == 'INPROGRESS'">
+                      <a  class="btn mr-2 shadow text-primary" data-toggle="modal" data-target="#modal-xl-inprocessing" (click)="getDataDetail(item.id)"><i class="far fa-eye"></i></a>
+                    </td>
+                  </tr>
+
+                </tbody>
+                <tfoot>
+                   <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Số Hóa đơn</th>
+                    <th>Khách hàng</th>
+                    <th>Tổng chiết khấu</th>
+                    <th>Tổng thanh toán</th>
+                    <th>Trạng thái đơn hàng</th>
+                    <th>Ngày tạo lập </th>
+                    <th>Thao tác</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+          </div>
+
+        </div>
+        <!-- Pagination -->
+        <div class="col-lg-12" >
+          <div class="modal fade" id="modal-lg" *ngIf="bill">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header position-relative">
+                  <h4 class="modal-title">Hóa đơn thanh toán</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onClose()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <span class="badge badge-danger position-absolute px-3" style="top: 20px; right: 55px;">{{bill.status}}</span>
+                </div>
+                <div class="modal-body" id="bill">
+                  <div class="d-flex justify-content-between">
+                    <strong>Số hóa đơn: {{bill.code}}</strong> <br>
+                    <small *ngIf="bill.createBy.role != 'USER'">Nhân viên bán hàng: {{bill.createBy.fistName +' ' + bill.createBy.lastName}}</small>
+
+                  </div>
+                  <br>
+                  <h5 class="mb-3">Thông tin Khách hàng:</h5>
+                  <div class="tab-pane" id="activity">
+                    <form class="form-horizontal">
+                      <div class="form-group row">
+                        <label for="firstName" class="col-sm-2 col-form-label">Họ tên</label>
+                        <div class="col-sm-10">
+                          <p type="text" class="form-control" id="firstName"> {{bill.ownerName}}</p>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="lastName" class="col-sm-2 col-form-label">Số điện thoại</label>
+                        <div class="col-sm-10">
+
+                          <p type="text" class="form-control" id="firstName"> {{bill.phone}}</p>
+                        </div>
+                      </div>
+                      <!-- <div class="form-group row">
+                        <label for="lastName" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="lastName" [(ngModel)]="bill.phone" name="phone" placeholder="Phone number">
+                        </div>
+                      </div> -->
+                      <!-- <div class="form-group row">
+                        <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
+                        <div class="col-sm-10">
+                          <input type="email" class="form-control" id="phone" placeholder="Name">
+                        </div>
+                      </div> -->
+                      <div class="form-group row">
+                        <label for="inputName2" class="col-sm-2 col-form-label">Địa chỉ</label>
+                        <div class="col-sm-10">
+                          <!-- <input type="text" class="form-control" id="inputName2"
+                          value="{{bill.address}}" name="address"
+                          disabled> -->
+                          <p type="text" class="form-control" id="firstName"> {{bill.address}}</p>
+                        </div>
+                      </div>
+                      <!-- Thông tin sản phẩm -->
+                      <div class="card-title">
+                        <h5 class="mb-3">Thông tin sản phẩm:</h5>
+
+                      </div>
+                      <div class="btn-group btn-group-toggle w-100"  data-toggle="buttons">
+                        <table class="table" width="100%">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th>STT</th>
+                              <th>Tên sản phẩm</th>
+                              <th>Mã</th>
+                              <th>SL</th>
+                              <th>Thành tiền</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of bill.billDetail; index as i">
+                              <td>{{i + 1}}</td>
+                              <td>
+                                  <figure class="itemside align-items-center">
+                                      <figcaption class="info product-name"> <a href="#" class="title text-dark" data-abc="true">{{item.productName}}</a>
+
+                                      </figcaption>
+                                  </figure>
+                              </td>
+                              <td>{{item.productCode}}</td>
+                              <td>
+                               {{item.quantity}}
+                              </td>
+                              <td>
+                                  <div class="price-wrap"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
+                              </td>
+                              <!-- <td class="text-right d-none d-md-block"> <a class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> <i class="fas fa-trash"></i></a> </td> -->
+                          </tr>
+                          <tr>
+                            <th colspan="4">Tổng tiền hàng: </th>
+                            <td><strong>{{bill.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                          </tr>
+                          <tr>
+                            <th colspan="4">Chiết khấu: </th>
+                            <td>{{bill.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
+                          </tr>
+                          <tr>
+                            <th colspan="4">Tổng Thanh toán: </th>
+                            <td><strong class="text-danger">{{(bill.totalPrice - bill.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!-- End thông tin sản phẩm -->
+
+                    </form>
+                  </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Close</button>
+                  <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onPrint()" ><i class="fas fa-print"></i></button>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- <div class="card-body">
+              <div class="bootstrap-pagination">
+                  <nav>
+                      <ul class="pagination justify-content-center">
+                          <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">1</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">2</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">3</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">Next</a>
+                          </li>
+                      </ul>
+                  </nav>
+              </div>
+          </div> -->
+        </div>
+        <div class="col-lg-12" >
+          <div class="modal fade" id="modal-xl" *ngIf="bill">
+            <div class="modal-dialog modal-xl" style="max-width: 90vw !important; width: 85vw !important;">
+              <div class="row col-12">
+                <div class="modal-content">
+                  <div class="modal-header position-relative">
+                    <h4 class="modal-title">Hóa đơn thanh toán</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onClose()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <span class="badge badge-danger position-absolute px-3" *ngIf="bill.status == 'CANCELED_REQUEST'" style="top: 20px; right: 55px;">{{bill.status}}</span>
+                    <span class="badge badge-warning position-absolute px-3" *ngIf="bill.status == 'VERIFYING'" style="top: 20px; right: 55px;">{{bill.status}}</span>
+                  </div>
+                  <div class="modal-body row">
+                    <div class="col-md-7" id="bill">
+                      <div class="d-flex justify-content-between">
+                        <strong>Số hóa đơn: {{bill.code}}</strong> <br>
+                        <small *ngIf="bill.createBy.role != 'USER'">Nhân viên bán hàng: {{bill.createBy.fistName +' ' + bill.createBy.lastName}}</small>
+
+                      </div>
+                      <br>
+                      <h5 class="mb-3">Thông tin Khách hàng:</h5>
+                      <div class="tab-pane" id="activity">
+                        <form class="form-horizontal">
+                          <div class="form-group row">
+                            <label for="firstName" class="col-sm-2 col-form-label">Họ tên</label>
+                            <div class="col-sm-10">
+                              <p type="text" class="form-control" id="firstName"> {{bill.ownerName}}</p>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="lastName" class="col-sm-2 col-form-label">Số điện thoại</label>
+                            <div class="col-sm-10">
+
+                              <p type="text" class="form-control" id="firstName"> {{bill.phone}}</p>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="inputName2" class="col-sm-2 col-form-label">Địa chỉ</label>
+                            <div class="col-sm-10">
+                              <p type="text" class="form-control" id="firstName"> {{bill.address}}</p>
+                            </div>
+                          </div>
+                          <!-- Thông tin sản phẩm -->
+                          <div class="card-title">
+                            <h5 class="mb-3">Thông tin sản phẩm:</h5>
+
+                          </div>
+                          <div class="btn-group btn-group-toggle w-100"  data-toggle="buttons">
+                            <table class="table" width="100%">
+                              <thead class="thead-dark">
+                                <tr>
+                                  <th>STT</th>
+                                  <th>Tên sản phẩm</th>
+                                  <th>Mã</th>
+                                  <th>SL</th>
+                                  <th>Thành tiền</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of bill.billDetail; index as i">
+                                  <td>{{i + 1}}</td>
+                                  <td>
+                                      <figure class="itemside align-items-center">
+                                          <figcaption class="info product-name"> <a href="#" class="title text-dark" data-abc="true">{{item.productName}}</a>
+
+                                          </figcaption>
+                                      </figure>
+                                  </td>
+                                  <td>{{item.productCode}}</td>
+                                  <td>
+                                   {{item.quantity}}
+                                  </td>
+                                  <td>
+                                      <div class="price-wrap text-bold"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
+                                  </td>
+                                  <!-- <td class="text-right d-none d-md-block"> <a class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> <i class="fas fa-trash"></i></a> </td> -->
+                              </tr>
+                              <tr>
+                                <th colspan="4">Tổng tiền hàng: </th>
+                                <td><strong>{{bill.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                              </tr>
+                              <tr>
+                                <th colspan="4">Chiết khấu: </th>
+                                <td>{{bill.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
+                              </tr>
+                              <tr>
+                                <th colspan="4">Tổng Thanh toán: </th>
+                                <td><strong class="text-danger">{{(bill.totalPrice - bill.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <!-- End thông tin sản phẩm -->
+
+                        </form>
+                      </div>
+                    </div>
+                    <div class="col-md-4 imei__container">
+                      <h5 class="mb-3">Nhập IMEI sản phẩm</h5>
+                      <small class="text-danger">
+                        (Lưu ý: Sản phẩm bắt buộc có imei để nhận được bảo hành !!!)*
+                      </small>
+                      <div>
+                        <div *ngFor="let item of bill.billDetail; let idx = index">
+                          <div *ngIf="item.warrantyEndDate != null">
+                            <strong>{{idx + 1}}. Sản phẩm {{idx + 1}}:</strong>
+                            <div class="ml-2">
+                              <div class="d-flex align-items-center justify-content-center" >
+                                <img src="{{item.productAvatar}}" class="img-imei" alt="">
+                                <h6 class="ml-2">{{item.productName}}</h6>
+                              </div>
+                              <div *ngIf="listBillIMEI[idx] && listBillIMEI[idx].imei ">
+                                <div class="mt-2" *ngFor="let itemChild of listBillIMEI[idx].imei; let childIdx = index;">
+                                  IMEI {{childIdx + 1}}:
+                                  <input
+                                    type="text"
+                                    placeholder="Nhập IMEI"
+                                    class="form-control {{itemChild.isError == true && 'error-imei'}}"
+                                    value="{{listBillIMEI[idx].imei[childIdx].data}}"
+                                    (blur)="onBlurIMEI(idx, childIdx, $event)"
+                                    name="key-{{idx}}-{{childIdx}}"
+                                  >
+                                  <span class="text-small text-danger" *ngIf="itemChild.isError == true">{{'Imei đã tồn tại vui lòng kiểm tra lại'}}</span>
+                                  <!-- <input type="text" class="form-control" id="firstName"
+                                    [(ngModel)]="listBillIMEI[idx].imei[childIdx]"
+                                    #lastName="ngModel"
+                                    value="{{itemChild}}"
+                                    (blur)="onBlurIMEI(idx, childIdx, $event)"
+                                    name="key-[{{idx}}]-[{{childIdx}}]"> -->
+                                  <!-- [(ngModel)]="listBillIMEI[idx].imei[childIdx]"
+                                  name="key-[{{idx}}]-[{{childIdx}}]" -->
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Close</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fas fa-print"></i></button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" (click)="verifyBill(bill.id)">Xác nhận đơn hàng</button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="modal fade" id="modal-default" *ngIf="bill">
+            <div class="modal-dialog modal-xl" style="max-width: 90vw !important; width: 85vw !important;">
+              <div class="modal-content">
+                <div class="modal-header position-relative">
+                  <h4 class="modal-title">Hóa đơn thanh toán</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onClose()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <span class="badge badge-danger position-absolute px-3" *ngIf="bill.status == 'CANCELED_REQUEST'" style="top: 20px; right: 55px;">{{bill.status}}</span>
+                  <span class="badge badge-warning position-absolute px-3" *ngIf="bill.status == 'VERIFYING'" style="top: 20px; right: 55px;">{{bill.status}}</span>
+                </div>
+                <div class="modal-body row">
+                  <div class="col-md-7" id="bill">
+                    <div class="d-flex justify-content-between">
+                      <strong>Số hóa đơn: {{bill.code}}</strong> <br>
+                      <small *ngIf="bill.createBy.role != 'USER'">Nhân viên bán hàng: {{bill.createBy.fistName +' ' + bill.createBy.lastName}}</small>
+
+                    </div>
+                    <br>
+                    <h5 class="mb-3">Thông tin Khách hàng:</h5>
+                    <div class="tab-pane" id="activity">
+                      <form class="form-horizontal">
+                        <div class="form-group row">
+                          <label for="firstName" class="col-sm-2 col-form-label">Họ tên</label>
+                          <div class="col-sm-10">
+                            <p type="text" class="form-control" id="firstName"> {{bill.ownerName}}</p>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="lastName" class="col-sm-2 col-form-label">Số điện thoại</label>
+                          <div class="col-sm-10">
+
+                            <p type="text" class="form-control" id="firstName"> {{bill.phone}}</p>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputName2" class="col-sm-2 col-form-label">Địa chỉ</label>
+                          <div class="col-sm-10">
+                            <p type="text" class="form-control" id="firstName"> {{bill.address}}</p>
+                          </div>
+                        </div>
+                        <!-- Thông tin sản phẩm -->
+                        <div class="card-title">
+                          <h5 class="mb-3">Thông tin sản phẩm:</h5>
+
+                        </div>
+                        <div class="btn-group btn-group-toggle w-100"  data-toggle="buttons">
+                          <table class="table" width="100%">
+                            <thead class="thead-dark">
+                              <tr>
+                                <th>STT</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Mã</th>
+                                <th>SL</th>
+                                <th>Thành tiền</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let item of bill.billDetail; index as i">
+                                <td>{{i + 1}}</td>
+                                <td>
+                                    <figure class="itemside align-items-center">
+                                        <figcaption class="info product-name"> <a href="#" class="title text-dark" data-abc="true">{{item.productName}}</a>
+
+                                        </figcaption>
+                                    </figure>
+                                </td>
+                                <td>{{item.productCode}}</td>
+                                <td>
+                                 {{item.quantity}}
+                                </td>
+                                <td>
+                                    <div class="price-wrap text-bold"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
+                                </td>
+                                <!-- <td class="text-right d-none d-md-block"> <a class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> <i class="fas fa-trash"></i></a> </td> -->
+                            </tr>
+                            <tr>
+                              <th colspan="4">Tổng tiền hàng: </th>
+                              <td><strong>{{bill.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                            </tr>
+                            <tr>
+                              <th colspan="4">Chiết khấu: </th>
+                              <td>{{bill.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
+                            </tr>
+                            <tr>
+                              <th colspan="4">Tổng Thanh toán: </th>
+                              <td><strong class="text-danger">{{(bill.totalPrice - bill.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- End thông tin sản phẩm -->
+
+                      </form>
+                    </div>
+                  </div>
+                  <div class="col-md-4 imei__container">
+                    <h5 class="mb-3">Xác nhận hủy</h5>
+                    <small class="text-danger">
+                      (Lưu ý: Đơn hàng đã hủy không thể hoàn tác !!!)*
+                    </small>
+                    <div class="" style="width: 100%" *ngIf="bill.reason == null || bill.reason == '' || bill.reason == undefined ">
+                      <p>Lý do hủy đơn</p>
+                      <label class="col-12 col-form-control">
+                        <input type="radio" name="reson" value="1" (change)="onChangeReason($event)"> Khách hàng yêu cầu hủy đơn
+                      </label> <br>
+                      <label class="col-12 col-form-control">
+                        <input type="radio" name="reson" value="2" (change)="onChangeReason($event)"> Sai địa chỉ nhận hàng
+                      </label> <br>
+                      <label class="col-12 col-form-control">
+                        <input type="radio" name="reson" value="3" (change)="onChangeReason($event)"> Đơn hàng bị trùng lặp
+                      </label> <br>
+                      <label class="col-12 col-form-control">
+                        <input type="radio" name="reson" value="4" (change)="onChangeReason($event)"> Đơn hàng không đạt yêu cầu
+                      </label> <br>
+                      <label class="col-12 col-form-control">
+                        <input type="radio" name="reson" value="5" (change)="onChangeReason($event)"> Không có đơn vị vận chuyển phù hợp
+                      </label> <br>
+                      <label class="col-12 col-form-control">
+                        <input type="radio" name="reson" value="6" (change)="onChangeReason($event)"> Hết hàng
+                      </label> <br>
+                      <label class="col-12 col-form-control">
+                        <input type="radio" name="reson" value="7" (change)="onChangeReason($event)"> Bộ phận giao hàng không nhận giao đơn
+                      </label> <br>
+                      <label class="col-12 col-form-control">
+                        <input type="radio" name="reson" value="8" (change)="onChangeReason($event)"> Khác
+                        <div *ngIf="isOtherReason == true">
+                          Lý do khác: <input type="text" class="form-control" [(ngModel)]="reason" name="reason">
+                        </div>
+                      </label>
+                    </div>
+                    <div class="my-3" style="width: 100%" *ngIf="reason && isUserRequest == true">
+                      Lý do người dùng hủy đơn:
+                      <input type="text" class="form-control" disabled value="{{reason}}">
+                      <div style="float: right;" class="mt-3">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="AbortBill(bill.id)">Xác nhận hủy đơn</button>
+                      </div>
+                    </div>
+                    <div style="float: right;" *ngIf="reason && reason.trim() != '' && isUserRequest == false">
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="AbortBill(bill.id)">Xác nhận hủy đơn</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onCloseModalAbort()">Close</button>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+        </div>
+        <div class="col-lg-12" >
+          <div class="modal fade" id="modal-xl-confirmed" *ngIf="bill">
+            <div class="modal-dialog modal-xl" style="max-width: 90vw !important; width: 85vw !important;">
+              <div class="row col-12">
+                <div class="modal-content">
+                  <div class="modal-header position-relative">
+                    <h4 class="modal-title">Hóa đơn thanh toán</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onClose()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <span class="badge badge-warning position-absolute px-3" style="top: 20px; right: 55px;">{{bill.status}}</span>
+                  </div>
+                  <div class="modal-body row">
+                    <div class="col-md-7" id="bill">
+                      <div class="d-flex justify-content-between">
+                        <strong>Số hóa đơn: {{bill.code}}</strong> <br>
+                        <small *ngIf="bill.createBy.role != 'USER'">Nhân viên bán hàng: {{bill.createBy.fistName +' ' + bill.createBy.lastName}}</small>
+
+                      </div>
+                      <br>
+                      <h5 class="mb-3">Thông tin Khách hàng:</h5>
+                      <div class="tab-pane" id="activity">
+                        <form class="form-horizontal">
+                          <div class="form-group row">
+                            <label for="firstName" class="col-sm-2 col-form-label">Họ tên</label>
+                            <div class="col-sm-10">
+                              <p type="text" class="form-control" id="firstName"> {{bill.ownerName}}</p>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="lastName" class="col-sm-2 col-form-label">Số điện thoại</label>
+                            <div class="col-sm-10">
+
+                              <p type="text" class="form-control" id="firstName"> {{bill.phone}}</p>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="inputName2" class="col-sm-2 col-form-label">Địa chỉ</label>
+                            <div class="col-sm-10">
+                              <p type="text" class="form-control" id="firstName"> {{bill.address}}</p>
+                            </div>
+                          </div>
+                          <!-- Thông tin sản phẩm -->
+                          <div class="card-title">
+                            <h5 class="mb-3">Thông tin sản phẩm:</h5>
+
+                          </div>
+                          <div class="btn-group btn-group-toggle w-100"  data-toggle="buttons">
+                            <table class="table" width="100%">
+                              <thead class="thead-dark">
+                                <tr>
+                                  <th>STT</th>
+                                  <th>Tên sản phẩm</th>
+                                  <th>Mã</th>
+                                  <th>SL</th>
+                                  <th>Thành tiền</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of bill.billDetail; index as i">
+                                  <td>{{i + 1}}</td>
+                                  <td>
+                                      <figure class="itemside align-items-center">
+                                          <figcaption class="info product-name"> <a href="#" class="title text-dark" data-abc="true">{{item.productName}}</a>
+
+                                          </figcaption>
+                                      </figure>
+                                  </td>
+                                  <td>{{item.productCode}}</td>
+                                  <td>
+                                   {{item.quantity}}
+                                  </td>
+                                  <td>
+                                      <div class="price-wrap text-bold"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
+                                  </td>
+                                  <!-- <td class="text-right d-none d-md-block"> <a class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> <i class="fas fa-trash"></i></a> </td> -->
+                              </tr>
+                              <tr>
+                                <th colspan="4">Tổng tiền hàng: </th>
+                                <td><strong>{{bill.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                              </tr>
+                              <tr>
+                                <th colspan="4">Chiết khấu: </th>
+                                <td>{{bill.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
+                              </tr>
+                              <tr>
+                                <th colspan="4">Tổng Thanh toán: </th>
+                                <td><strong class="text-danger">{{(bill.totalPrice - bill.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <!-- End thông tin sản phẩm -->
+
+                        </form>
+                      </div>
+                    </div>
+                    <div class="col-md-4 imei__container">
+                      <h5 class="mb-3">Xem lại IMEI sản phẩm</h5>
+                      <small class="text-danger">
+                        (Lưu ý: Hãy chuyển hàng cho bộ phận vận chuyển trước khi xác nhận !!!)*
+                      </small>
+                      <div>
+                        <div *ngFor="let item of bill.billDetail; let idx = index">
+                          <div *ngIf="item.warrantyEndDate != null">
+                            <strong>{{idx + 1}}. Sản phẩm {{idx + 1}}:</strong>
+                            <div class="ml-2">
+                              <div class="d-flex align-items-center justify-content-center" >
+                                <img src="{{item.productAvatar}}" class="img-imei" alt="">
+                                <h6 class="ml-2">{{item.productName}}</h6>
+                              </div>
+                              <div *ngIf="item.imei">
+                                <div class="mt-2" *ngFor="let itemChild of item.imei; let childIdx = index;">
+                                  IMEI {{childIdx + 1}}:
+                                  <input
+                                    type="text"
+                                    placeholder="Nhập IMEI-{{idx}}-{{childIdx}}"
+                                    class="form-control"
+                                    value="{{itemChild}}"
+                                    disabled
+                                    name="key-{{idx}}-{{childIdx}}"
+                                  >
+                                </div>
+                              </div>
+                              <div *ngIf="item.imei == null || item.imei == undefined || (item.imei && item.imei.length == 0)">
+                                <small class="text-danger">Sản phẩm không được nhập imei vì vậy không có bảo hành</small>
+                              </div>
+
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Close</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fas fa-print"></i></button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" (click)="updateStatusBill(bill.id)">Xác nhận đơn hàng</button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12" >
+          <div class="modal fade" id="modal-xl-inprocessing" *ngIf="bill">
+            <div class="modal-dialog modal-xl" style="max-width: 90vw !important; width: 85vw !important;">
+              <div class="row col-12">
+                <div class="modal-content">
+                  <div class="modal-header position-relative">
+                    <h4 class="modal-title">Hóa đơn thanh toán</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onClose()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <span class="badge badge-success position-absolute px-3" *ngIf="bill.status == 'COMPLETED'" style="top: 20px; right: 55px;">{{bill.status}}</span>
+                    <span class="badge badge-info position-absolute px-3" *ngIf="bill.status == 'INPROGRESS'" style="top: 20px; right: 55px;">{{bill.status}}</span>
+                  </div>
+                  <div class="modal-body row">
+                    <div class="col-md-7" id="bill">
+                      <div class="d-flex justify-content-between">
+                        <strong>Số hóa đơn: {{bill.code}}</strong> <br>
+                        <small *ngIf="bill.createBy.role != 'USER'">Nhân viên bán hàng: {{bill.createBy.fistName +' ' + bill.createBy.lastName}}</small>
+
+                      </div>
+                      <br>
+                      <h5 class="mb-3">Thông tin Khách hàng:</h5>
+                      <div class="tab-pane" id="activity">
+                        <form class="form-horizontal">
+                          <div class="form-group row">
+                            <label for="firstName" class="col-sm-2 col-form-label">Họ tên</label>
+                            <div class="col-sm-10">
+                              <p type="text" class="form-control" id="firstName"> {{bill.ownerName}}</p>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="lastName" class="col-sm-2 col-form-label">Số điện thoại</label>
+                            <div class="col-sm-10">
+
+                              <p type="text" class="form-control" id="firstName"> {{bill.phone}}</p>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="inputName2" class="col-sm-2 col-form-label">Địa chỉ</label>
+                            <div class="col-sm-10">
+                              <p type="text" class="form-control" id="firstName"> {{bill.address}}</p>
+                            </div>
+                          </div>
+                          <!-- Thông tin sản phẩm -->
+                          <div class="card-title">
+                            <h5 class="mb-3">Thông tin sản phẩm:</h5>
+
+                          </div>
+                          <div class="btn-group btn-group-toggle w-100"  data-toggle="buttons">
+                            <table class="table" width="100%">
+                              <thead class="thead-dark">
+                                <tr>
+                                  <th>STT</th>
+                                  <th>Tên sản phẩm</th>
+                                  <th>Mã</th>
+                                  <th>SL</th>
+                                  <th>Thành tiền</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of bill.billDetail; index as i">
+                                  <td>{{i + 1}}</td>
+                                  <td>
+                                      <figure class="itemside align-items-center">
+                                          <figcaption class="info product-name"> <a href="#" class="title text-dark" data-abc="true">{{item.productName}}</a>
+
+                                          </figcaption>
+                                      </figure>
+                                  </td>
+                                  <td>{{item.productCode}}</td>
+                                  <td>
+                                   {{item.quantity}}
+                                  </td>
+                                  <td>
+                                      <div class="price-wrap text-bold"> <var class="price">{{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</var> </div>
+                                  </td>
+                                  <!-- <td class="text-right d-none d-md-block"> <a class="btn btn-light" data-abc="true" (click)="removeProduct(item.product.id)"> <i class="fas fa-trash"></i></a> </td> -->
+                              </tr>
+                              <tr>
+                                <th colspan="4">Tổng tiền hàng: </th>
+                                <td><strong>{{bill.totalPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                              </tr>
+                              <tr>
+                                <th colspan="4">Chiết khấu: </th>
+                                <td>{{bill.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</td>
+                              </tr>
+                              <tr>
+                                <th colspan="4">Tổng Thanh toán: </th>
+                                <td><strong class="text-danger">{{(bill.totalPrice - bill.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</strong></td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <!-- End thông tin sản phẩm -->
+
+                        </form>
+                      </div>
+                    </div>
+                    <div class="col-md-4 imei__container">
+                      <h5 class="mb-3">Nhập IMEI sản phẩm</h5>
+                      <div>
+                        <div *ngFor="let item of bill.billDetail; let idx = index">
+                          <div *ngIf="item.warrantyEndDate != null">
+                            <strong>{{idx + 1}}. Sản phẩm {{idx + 1}}:</strong>
+                            <div class="ml-2">
+                              <div class="d-flex align-items-center justify-content-center" >
+                                <img src="{{item.productAvatar}}" class="img-imei" alt="">
+                                <h6 class="ml-2">{{item.productName}}</h6>
+                              </div>
+                              <div *ngIf="item.imei">
+                                <div class="mt-2" *ngFor="let itemChild of item.imei; let childIdx = index;">
+                                  IMEI {{childIdx + 1}}:
+                                  <input
+                                    type="text"
+                                    placeholder="Nhập IMEI-{{idx}}-{{childIdx}}"
+                                    class="form-control"
+                                    value="{{itemChild}}"
+                                    disabled
+                                    name="key-{{idx}}-{{childIdx}}"
+                                  >
+                                </div>
+                              </div>
+                              <div *ngIf="item.imei == null || item.imei == undefined || (item.imei && item.imei.length == 0)">
+                                <small class="text-danger">Sản phẩm không được nhập imei vì vậy không có bảo hành</small>
+                              </div>
+
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Close</button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-lg-12">
+      <table id="table-hidden" class="table table-bordered table-striped d-none">
+        <thead>
+          <tr>
+            <th style="width: 10px">STT</th>
+            <th>Số Hóa đơn</th>
+            <th>Khách hàng</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Tổng chiết khấu</th>
+            <th>Tổng thanh toán</th>
+            <th>Loại đơn hàng</th>
+            <th>Trạng thái đơn hàng</th>
+            <th>Ngày tạo lập </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listBill; index as i">
+            <td class="align-middle"> {{i + 1}} </td>
+            <th class="align-middle"> {{item.code}} </th>
+            <td class="align-middle"><strong>{{item.ownerName}}</strong> <br></td>
+            <td class="align-middle"><strong>{{item.phone}}</strong> <br></td>
+            <td class="align-middle"><strong>{{item.address}}</strong></td>
+            <th class="align-middle">{{item.discountPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}} </th>
+            <th class="align-middle">
+              <p class="text-danger mt-1">{{(item.totalPrice - item.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</p>
+            </th>
+            <td class="align-middle"><span class="badge badge-success px-2">{{item.type}}</span></td>
+            <td class="align-middle">
+
+              <span class="badge badge-success px-2">{{item.status}}</span>
+            </td>
+            <td class="align-middle">{{item.createdDate | date: "medium"}}</td>
+
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+

@@ -15,6 +15,7 @@ import { FormsModule }   from '@angular/forms';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { WarrantyComponent } from './warranty/warranty.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { OrderComponent } from './order/order.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ShoppingCartComponent,
     MyProfileComponent,
     WarrantyComponent,
+    OrderComponent,
   ],
   imports: [
     CommonModule,

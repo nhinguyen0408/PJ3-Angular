@@ -5,8 +5,6 @@ import { Profile } from 'src/app/models/Profile.model';
 import { ApiBillService } from 'src/app/services/admin/bill/api-bill.service';
 import { ApiProfileService } from 'src/app/services/admin/profile/api-profile.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
-import * as XLSX from 'xlsx';
-
 declare var jQuery: any;
 
 interface CreateImeiType{}
@@ -45,7 +43,6 @@ const AbortType = [
     reason: 'Khác'
   },
 ]
-
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -293,13 +290,6 @@ export class OrderComponent implements OnInit {
           this.checkSearch = true;
           this.listBill = res;
           this.countDataBillsType()
-          let fns = (function ($) {
-            var table = $("#example1").DataTable()
-            table.clear().destroy();
-          })(jQuery);
-          setTimeout(()=>{
-            this.setDataTable()
-          },500)
         })
       }else {
         this.toastsService.alert('Thông báo !!!', "Ngày bắt đầu không được lớn hơn ngày kết thúc !!!",'bg-warning');
@@ -313,13 +303,6 @@ export class OrderComponent implements OnInit {
         this.checkSearch = true;
         this.listBill = res;
         this.countDataBillsType()
-        let fns = (function ($) {
-          var table = $("#example1").DataTable()
-          table.clear().destroy();
-        })(jQuery);
-        setTimeout(()=>{
-          this.setDataTable()
-        },500)
       })
     } else {
       let employeeId = (function ($) {
@@ -332,13 +315,6 @@ export class OrderComponent implements OnInit {
           this.checkSearch = true;
           this.listBill = res;
           this.countDataBillsType()
-          let fns = (function ($) {
-            var table = $("#example1").DataTable()
-            table.clear().destroy();
-          })(jQuery);
-          setTimeout(()=>{
-            this.setDataTable()
-          },500)
         })
       }
     }
@@ -370,15 +346,15 @@ export class OrderComponent implements OnInit {
   }
 
 
-  exportexcel(): void
-  {
-    const fileName= 'Danhsachdonhang' + this.typeBillSearch + '_' + (new Date().toISOString()) +'.xlsx';
-    let element = document.getElementById('table-hidden');
-    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, fileName);
+  // exportexcel(): void
+  // {
+  //   const fileName= 'Danhsachdonhang' + this.typeBillSearch + '_' + (new Date().toISOString()) +'.xlsx';
+  //   let element = document.getElementById('table-hidden');
+  //   const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  //   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  //   XLSX.writeFile(wb, fileName);
 
-  }
+  // }
 
 }

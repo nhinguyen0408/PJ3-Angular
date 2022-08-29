@@ -41,7 +41,7 @@ export class ApiBillService {
       errorMessage = err.error.message;
     }
     else {
-      errorMessage = `Message : ${err.error.responseMessage}`
+      errorMessage = `Message : ${err.error}`
     }
     window.alert(errorMessage);
     return throwError(err);
@@ -97,5 +97,26 @@ export class ApiBillService {
     return this.http.post<any>(this.url+"/imei/isExist?imei=" + imei,data ,this.httpOptions).pipe(
       catchError(this.handleError)
     )
+  }
+  getTurnOver(month: string): Observable<any>{
+    return this.http.get<any>(this.url+"/bill/getTurnover?status=COMPLETED&month=" + month ,this.httpOptions).pipe(
+      catchError(this.handleError)
+    )
+  }
+  getTurnOverAll(month: string): Observable<any>{
+    return this.http.get<any>(this.url+"/bill/getTurnover?month=" + month ,this.httpOptions).pipe(
+      catchError(this.handleError)
+    )
+  }
+  getTurnOverByType(month: string, type: string, status: string): Observable<any>{
+    if(type != '' && status == ''){
+      return this.http.get<any>(this.url+"/bill/getTurnover?type="+type+"&status=COMPLETED&month=" + month ,this.httpOptions).pipe(
+        catchError(this.handleError)
+      )
+    } else {
+      return this.http.get<any>(this.url+"/bill/getTurnover?status="+status+"&month=" + month ,this.httpOptions).pipe(
+        catchError(this.handleError)
+      )
+    }
   }
 }

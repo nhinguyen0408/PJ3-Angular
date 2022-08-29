@@ -46,7 +46,7 @@ export class ApiDashboardService {
     )
   }
   getTurnOver():Observable<any>{
-    return this.http.get<any>(this.url+"/bill/getTurnover", this.httpOptions).pipe(
+    return this.http.get<any>(this.url+"/bill/getTurnover?status=COMPLETED", this.httpOptions).pipe(
       catchError(this.handleError)
     )
   }

@@ -83,7 +83,7 @@ export class ProductComponent implements OnInit {
           const dataImei: any[] = []
           for(let i = 0; i < elm.quantity ; i++)
           {
-            const imei = ' '
+            const imei = ''
             dataImei[i] = {data: imei}
           }
           this.listBillIMEI[index] = {imei: dataImei}

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Bill } from 'src/app/models/Bill.model';
 import { ShoppingCart } from 'src/app/models/ShoppingCart.model';
+import { ApiBillService } from 'src/app/services/admin/bill/api-bill.service';
 import { ToastService } from 'src/app/services/toasts-alert/toast.service';
 import { ApiVoucherService } from 'src/app/services/voucher/api-voucher.service';
 
@@ -24,6 +25,7 @@ export class ShoppingCartComponent implements OnInit {
   @Output()onUpdateQuantity = new EventEmitter();
   constructor(
     private api: ApiVoucherService,
+    private apiBill: ApiBillService,
     private toastsService: ToastService
 
     ) {
@@ -55,28 +57,40 @@ export class ShoppingCartComponent implements OnInit {
     if(this.voucherName != null && this.shopping_Cart.length > 0){
       this.api.getVoucherByKey(this.voucherName).subscribe(res =>{
           this.voucherData = res;
-          this.isVoucher = true;
-          this.toastsService.alert('Thông báo !!!', "Áp dụng mã Voucher: " + this.voucherData.name,'bg-info');
-          let now = new Date();
-          let startDate = new Date(this.voucherData.startDate);
-          let endDate = new Date( this.voucherData.endDate);
-          if(now.getTime() > startDate.getTime() && now.getTime() < endDate.getTime()){
-            this.bill.voucherId = this.voucherData.id
-            if(this.voucherData.isPercent){
-              this.discount = this.totalPrice * (this.voucherData.percentage/100);
-            } else {
-              if(this.voucherData.discountPrice > this.totalPrice/3){
-                this.toastsService.alert('Thông báo !!!', "Không thể áp dụng mã Voucher: " + this.voucherData.name + "\n Do giá trị đơn hàng chưa đạt tới giá trị áp dụng voucher !!!",'bg-warning');
+          if(this.voucherData && this.voucherData.quantity > 0){
+            if(this.totalPrice > this.voucherData.minPrice){
+              this.isVoucher = true;
+              this.toastsService.alert('Thông báo !!!', "Áp dụng mã Voucher: " + this.voucherData.name,'bg-info');
+              let now = new Date();
+              let startDate = new Date(this.voucherData.startDate);
+              let endDate = new Date( this.voucherData.endDate);
+              if(now.getTime() > startDate.getTime() && now.getTime() < endDate.getTime()){
+                this.bill.voucherId = this.voucherData.id
+                if(this.voucherData.isPercent){
+                  this.discount = this.totalPrice * (this.voucherData.percentage/100);
+                } else {
+                  if(this.voucherData.discountPrice > this.totalPrice/3){
+                    this.toastsService.alert('Thông báo !!!', "Không thể áp dụng mã Voucher: " + this.voucherData.name + "\n Do giá trị đơn hàng chưa đạt tới giá trị áp dụng voucher !!!",'bg-warning');
+                  } else {
+                    this.discount = this.voucherData.discountPrice;
+                  }
+                }
+                this.totalPay = this.totalPrice - this.discount;
+                this.bill.discountPrice = this.discount;
               } else {
-                this.discount = this.voucherData.discountPrice;
+                this.toastsService.alert('Thông báo !!!', "Voucher đã hết hoặc chưa đến hạn áp dụng !!!!",'bg-warning');
+                this.voucherData = null;
               }
+            } else {
+              this.toastsService.alert('Thông báo !!!', "Đơn hàng chưa đạt tới giá trị tối thiểu là "+ this.voucherData.minPrice.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) + " để áp dụng voucher này !!!!",'bg-warning');
+              this.voucherData = null;
             }
-            this.totalPay = this.totalPrice - this.discount;
-            this.bill.discountPrice = this.discount;
+
           } else {
-            this.toastsService.alert('Thông báo !!!', "Voucher đã hết hoặc chưa đến hạn áp dụng !!!!",'bg-warning');
-            this.voucherData = null;
+            this.toastsService.alert('Thông báo !!!', "Voucher đã hết số lượng áp dụng !!!!",'bg-warning');
+              this.voucherData = null;
           }
+
       },(err:ErrorEvent) =>{
         this.toastsService.alert('Thông báo !!!', "Không tồn tại Mã giảm giá này !!!!!",'bg-warning');
         this.voucherData = null;
@@ -151,7 +165,26 @@ export class ShoppingCartComponent implements OnInit {
 
     })(jQuery);
   }
+  checkImei = "^[0-9]*$"
   onBlurIMEI= (idxParent: number, idxChild: number, e: any) => {
-    this.listBillIMEI[idxParent].imei[idxChild].data = e.target.value;
+    // this.listBillIMEI[idxParent].imei[idxChild].data = e.target.value;
+    const data = e.target.value.trim()
+    if(data.match(this.checkImei) && data.length == 15){
+      this.apiBill.checkImei(data).subscribe((res: any) => {
+        if(res == false){
+          this.listBillIMEI[idxParent].imei[idxChild].isError = false;
+          this.listBillIMEI[idxParent].imei[idxChild].data = e.target.value;
+          this.listBillIMEI[idxParent].imei[idxChild].isNotImei = false;
+        } else {
+          this.listBillIMEI[idxParent].imei[idxChild].isError = true;
+          // this.isErrorImei = true
+          this.toastsService.alert('Thông báo !!!', "Imei đã tồn tại, vui lòng kiểm tra lại !!!!",'bg-warning');
+        }
+      })
+    } else {
+      this.listBillIMEI[idxParent].imei[idxChild].isNotImei = true;
+      this.toastsService.alert('Thông báo !!!', "Sai định dạng IMEI !!!!",'bg-warning');
+    }
+
   }
 }

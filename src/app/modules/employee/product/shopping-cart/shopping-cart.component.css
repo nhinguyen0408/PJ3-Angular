@@ -150,3 +150,9 @@ a {
       height: 50px;
       object-fit: cover;
     }
+    .error-imei{
+      border-color: #be1717;
+    }
+    .succ-imei{
+      border-color: #17be33;
+    }

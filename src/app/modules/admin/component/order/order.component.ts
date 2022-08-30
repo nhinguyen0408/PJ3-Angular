@@ -133,7 +133,7 @@ export class OrderComponent implements OnInit {
       }
     })
   }
-  listBillIMEI : {billDetailId: number, imei: any[], isError: boolean}[] = []
+  listBillIMEI : {billDetailId: number, imei: any[], isError: boolean, isNotImei: boolean}[] = []
   reason: string = ''
   isUserRequest: boolean = false
   resonValue: any
@@ -148,10 +148,10 @@ export class OrderComponent implements OnInit {
               const dataImei: any[] = []
               for(let i = 0; i < e.quantity ; i++)
               {
-                const imei = ' '
+                const imei = ''
                 dataImei[i] = {data: imei}
               }
-              this.listBillIMEI[index] = {billDetailId: e.id, imei: dataImei, isError: false}
+              this.listBillIMEI[index] = {billDetailId: e.id, imei: dataImei, isError: false, isNotImei: false}
             }
           })
         }
@@ -164,19 +164,26 @@ export class OrderComponent implements OnInit {
     })
   }
   isErrorImei: boolean = false;
+  checkImei = "^[0-9]*$"
   onBlurIMEI= (idxParent: number, idxChild: number, e: any) => {
     const data = e.target.value.trim()
-    this.api.checkImei(data).subscribe((res: any) => {
-      console.log("deraefefe============================",res);
-      if(res == false){
-        this.listBillIMEI[idxParent].imei[idxChild].isError = false;
-        this.listBillIMEI[idxParent].imei[idxChild].data = e.target.value;
-      } else {
-        this.listBillIMEI[idxParent].imei[idxChild].isError = true;
-        this.isErrorImei = true
-        this.toastsService.alert('Thông báo !!!', "Imei đã tồn tại, vui lòng kiểm tra lại !!!!",'bg-warning');
-      }
-    })
+    if(data.match(this.checkImei) && data.length == 15){
+      this.api.checkImei(data).subscribe((res: any) => {
+        if(res == false){
+          this.listBillIMEI[idxParent].imei[idxChild].isError = false;
+          this.listBillIMEI[idxParent].imei[idxChild].isNotImei = false;
+          this.listBillIMEI[idxParent].imei[idxChild].data = e.target.value;
+        } else {
+          this.listBillIMEI[idxParent].imei[idxChild].isError = true;
+          this.isErrorImei = true
+          this.toastsService.alert('Thông báo !!!', "Imei đã tồn tại, vui lòng kiểm tra lại !!!!",'bg-warning');
+        }
+      })
+    } else {
+      this.listBillIMEI[idxParent].imei[idxChild].isNotImei = true;
+      this.toastsService.alert('Thông báo !!!', "Sai định dạng IMEI !!!!",'bg-warning');
+    }
+
   }
   verifyBill = (id: number) => {
     if(window.confirm('Xác nhận đơn hàng này ???')){

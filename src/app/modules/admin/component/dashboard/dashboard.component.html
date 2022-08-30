@@ -653,7 +653,8 @@
                         <p class="text-danger mt-1">{{(item.totalPrice - item.discountPrice).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</p>
                       </th>
                       <td class="align-middle" *ngIf="i<7">
-                        <span class="badge badge-success px-2">{{item.type}}</span> &nbsp;
+                        <span *ngIf="item.type =='OFFLINE'" class="badge badge-success px-2">{{item.type}}</span> &nbsp;
+                        <span *ngIf="item.type =='COD'" class="badge badge-warning px-2">{{item.type}}</span> &nbsp;
                         <span class="badge badge-success px-2">{{item.status}}</span>
                       </td>
                       <td class="align-middle" *ngIf="i<7"> {{item.createdDate | date: "medium"}}</td>

@@ -415,12 +415,14 @@
                                   IMEI {{childIdx + 1}}:
                                   <input
                                     type="text"
-                                    placeholder="Nhập IMEI-{{idx}}-{{childIdx}}"
-                                    class="form-control {{itemChild.isError == true && 'error-imei'}}"
+                                    placeholder="Nhập IMEI"
+                                    class="form-control {{(itemChild.isError == true || itemChild?.isNotImei == true) ? 'error-imei': ''}}"
                                     value="{{listBillIMEI[idx].imei[childIdx].data}}"
+                                    maxlength="15"
                                     (blur)="onBlurIMEI(idx, childIdx, $event)"
                                     name="key-{{idx}}-{{childIdx}}"
                                   >
+                                  <span class="text-small text-danger" *ngIf="itemChild?.isNotImei == true">{{'Không dúng định dạng Imei'}}</span>
                                   <span class="text-small text-danger" *ngIf="itemChild.isError == true">{{'Imei đã tồn tại vui lòng kiểm tra lại'}}</span>
                                   <!-- <input type="text" class="form-control" id="firstName"
                                     [(ngModel)]="listBillIMEI[idx].imei[childIdx]"

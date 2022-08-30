@@ -17,8 +17,9 @@
                   <th>Mã giảm giá</th>
                   <th>Hình thức giảm</th>
                   <th>Giảm giá</th>
-                  <th>Ngày bắt đầu</th>
-                  <th>Ngày Kết thúc</th>
+                  <th>Thời gian áp dụng</th>
+                  <th>Số lượng</th>
+                  <th>Giá trị đơn hàng tối thiểu</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
@@ -43,9 +44,12 @@
                       <span class="badge badge-success px-2">{{item.discountPrice?.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</span>
                     </div>
                   </td>
-                  <td>{{item.startDate | date:"dd/MM/yyyy"}}</td>
-                  <!-- <td>{{category.sortName}}</td> -->
-                  <td>{{item.endDate | date:"dd/MM/yyyy"}}</td>
+                  <td>{{item.startDate | date:"dd/MM/yyyy"}} ~ {{item.endDate | date:"dd/MM/yyyy"}}</td>
+                  <td>{{item.quantity}}</td>
+                  <td>
+                    {{item.minPrice?.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}
+                  </td>
+
                   <td>
                     <button class="btn mb-1 btn-warning mr-2" routerLink="/admin/voucher/edit/{{item.id}}"><i class="fas fa-pen"></i></button>
                     <!-- <button class="btn mb-1 btn-danger" (click)="onDelete(item.id)"><i class="fas fa-eraser"></i></button> -->

@@ -18,7 +18,7 @@ export class VoucherEditComponent implements OnInit {
     private toastsService: ToastService
     ) { }
   id = this.actRoute.snapshot.params['id']
-  voucher: any;
+  voucher = new Voucher();
   numberValidate = "^[0-9]*$";
   onshow: boolean | null = null;
   startDate: Date | null = null
@@ -29,7 +29,7 @@ export class VoucherEditComponent implements OnInit {
     this.getdata(this.id)
   }
   getdata(id: number){
-    this.api.getVoucherById(id).subscribe( (res:Voucher) =>{
+    this.api.getVoucherById(id).subscribe( (res:any) =>{
       this.voucher = res;
       this.stringStart = this.formatDate(res.startDate);
       this.stringEnd = this.formatDate(res.endDate);

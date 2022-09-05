@@ -51,6 +51,11 @@ export class ApiBillService {
       catchError(this.handleError)
     )
   }
+  getBillByStatus( status: string):Observable<Bill>{
+    return this.http.get<Bill>(this.url+"/bill/getall?status=" + status).pipe(
+      catchError(this.handleError)
+    )
+  }
   getBillById(id: number):Observable<Bill>{
     return this.http.get<Bill>(this.url+"/bill/getById?billId=" + id, this.httpOptions).pipe(
       catchError(this.handleError)

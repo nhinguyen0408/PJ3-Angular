@@ -181,15 +181,30 @@ export class OrderComponent implements OnInit {
         this.toastsService.alert('Thông báo !!!', "Có lỗi đã xảy ra trong quá trình nhập imei !!!!",'bg-warning');
       } else {
         const data = {billId: id, status: 'VERIFIED'}
-        this.api.updateStatus(data).subscribe((res: any) =>{
-          if(res){
-            this.createIMEI()
-            this.getAllBill()
-            this.listBillIMEI = []
-            this.bill = null
-            this.toastsService.alert('Thông báo !!!', "Xác nhận đơn hàng thành công !!!!",'bg-success');
-          }
-        })
+        let flagCheckImeiNull = true
+        if(this.listBillIMEI && this.listBillIMEI.length > 0 ){
+          this.listBillIMEI.map((e: any, idxParent: number) => {
+            if(e.imei && e.imei.length > 0){
+              e.imei.map((element: any, idxChild: number) => {
+                if(element.data.trim() == ''){
+                  flagCheckImeiNull = false
+                  this.listBillIMEI[idxParent].imei[idxChild].isNotImei = true;
+                }
+              })
+            }
+          })
+        }
+        if(flagCheckImeiNull){
+          this.api.updateStatus(data).subscribe((res: any) =>{
+            if(res){
+              this.createIMEI()
+              this.getAllBill()
+              this.listBillIMEI = []
+              this.bill = null
+              this.toastsService.alert('Thông báo !!!', "Xác nhận đơn hàng thành công !!!!",'bg-success');
+            }
+          })
+        }
       }
     }
   }

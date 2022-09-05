@@ -111,24 +111,38 @@ export class ShoppingCartComponent implements OnInit {
     // localStorage.removeItem("shopping-cart")
     if(this.bill.ownerName != "" && this.bill.phone != "" && this.bill.address != ""){
       this.billDetail = []
+      let flagCheckImeiNull = true
       this.shopping_Cart.map((x: any, index: number) => {
         const dataImei : string[] = []
         if(this.listBillIMEI[index] && this.listBillIMEI[index].imei && this.listBillIMEI[index].imei.length > 0){
-          this.listBillIMEI[index].imei.map((e: any) => {
+          this.listBillIMEI[index].imei.map((e: any, idxChild: number) => {
+            if(e.data.trim() == ''){
+              flagCheckImeiNull = false
+              this.listBillIMEI[index].imei[idxChild].isNotImei = true;
+            }
             dataImei.push(e.data)
           })
         }
         const data =  {'productId': x.product.id, 'quantity': x.quantity, 'price': x.price, imei: dataImei}
         this.billDetail.push(data)
       })
-      this.bill.billDetail = this.billDetail;
-      this.bill.totalPrice = this.totalPrice;
-      this.bill.profileId = Number(localStorage.getItem('employeeId'));
-      this.payment.emit(this.bill);
-      this.discount = 0;
-      this.voucherData = null;
-      this.voucherName = "";
-      this.bill = new Bill()
+      if(flagCheckImeiNull){
+        this.showModal = false
+        document.getElementsByClassName('modal-backdrop')[0].classList.remove("show")
+        this.bill.billDetail = this.billDetail;
+        this.bill.totalPrice = this.totalPrice;
+        this.bill.profileId = Number(localStorage.getItem('employeeId'));
+        this.billClone = this.bill
+        this.shoppingCartClone = this.shopping_Cart
+        console.log('this.billClone',this.billClone);
+
+        this.payment.emit(this.bill);
+        this.orderSuccess = true;
+        this.discount = 0;
+        this.voucherData = null;
+        this.voucherName = "";
+        this.bill = new Bill()
+      }
     } else {
       // alert("Vui lòng điền đầy đủ thông tin khách hàng !!!!")
       this.toastsService.alert('Thông báo !!!', "Vui lòng điền đầy đủ thông tin khách hàng !!!!",'bg-warning');
@@ -137,6 +151,7 @@ export class ShoppingCartComponent implements OnInit {
   }
   checkPaymentCart(){
     // localStorage.removeItem("shopping-cart")
+    this.showModal = true;
     this.onCheckPayment.emit()
   }
   onChangeQuantity(e: any, quantityOld: number, index: number, productId: number){
@@ -149,9 +164,9 @@ export class ShoppingCartComponent implements OnInit {
     }
 
   }
-  onPrint(){
+  onPrint(id: string){
     var x = (function ($) {
-      var divContents = document.getElementById("bill")?.innerHTML;
+      var divContents = document.getElementById(id)?.innerHTML;
             var a = window.open('', '', 'height=1000, width=1000');
             a?.document.write('<html>');
             a?.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" type="text/css" />');
@@ -166,6 +181,7 @@ export class ShoppingCartComponent implements OnInit {
     })(jQuery);
   }
   checkImei = "^[0-9]*$"
+  showModal: boolean = false
   onBlurIMEI= (idxParent: number, idxChild: number, e: any) => {
     // this.listBillIMEI[idxParent].imei[idxChild].data = e.target.value;
     const data = e.target.value.trim()
@@ -186,5 +202,18 @@ export class ShoppingCartComponent implements OnInit {
       this.toastsService.alert('Thông báo !!!', "Sai định dạng IMEI !!!!",'bg-warning');
     }
 
+  }
+  orderSuccess: boolean = false
+  billClone: any;
+  shoppingCartClone: any;
+  closeModalOrderSuccess = () => {
+    document.getElementsByClassName('modal-backdrop')[0].classList.remove("show", "modal-backdrop")
+    this.orderSuccess = false;
+    this.billClone = undefined
+    this.shoppingCartClone = undefined
+  }
+  closeModalSuccess = () => {
+    document.getElementsByClassName('modal-backdrop')[0].classList.remove("show", "modal-backdrop")
+    this.orderSuccess = false;
   }
 }

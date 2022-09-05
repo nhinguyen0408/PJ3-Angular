@@ -121,6 +121,14 @@ export class WarrantyComponent implements OnInit {
   setDataWarranty = (idx: number) => {
     this.dataWarrantyHistory = this.listWarranty[idx];
   }
+
+  getDataWarrantyByImei = (phone: string, imei: string) => {
+    this.apiWarranty.getWarrantyByPhone(phone).subscribe((data: any) => {
+      console.log("data", data);
+      this.dataWarrantyHistory = data.find((e: any) => e.imei == imei)
+      console.log("dataWarrantyHistory", this.dataWarrantyHistory);
+    })
+  }
   onEditProductCondition = (idx: number) => {
     this.dataWarrantyHistory.data[idx].isEdit = true
   }

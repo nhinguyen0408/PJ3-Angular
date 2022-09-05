@@ -75,7 +75,7 @@ export class OrderComponent implements OnInit {
   listBill: any
   bill:  any | null;
   listEmployee: Profile[] = [];
-  employee: number = 0;
+  employee: number| string = "0";
   onShow: boolean = false;
   startDate: Date | null = null;
   endDate: Date | null = null;
@@ -107,19 +107,25 @@ export class OrderComponent implements OnInit {
   typeBillSearch: string = ''
   filtByType = (type: string) => {
     this.typeBillSearch = type
-    this.api.getBill().subscribe((res: Bill) =>{
-      this.listBill = res;
-      if(type == 'COD' || type == 'OFFLINE'){
-        const data = this.listBill.filter((e: any) => e.type == type)
-        this.listBill = data
+    if(type == 'VERIFYING'){
+      this.api.getBillByStatus(type).subscribe((res: Bill) =>{
+        this.listBill = res;
         this.checkSearch = true;
-      } else {
-        const data = this.listBill.filter((e: any) => e.status == type)
-        this.listBill = data
-        this.checkSearch = true;
-      }
-    })
-
+      })
+    } else {
+      this.api.getBill().subscribe((res: Bill) =>{
+        this.listBill = res;
+        if(type == 'COD' || type == 'OFFLINE'){
+          const data = this.listBill.filter((e: any) => e.type == type)
+          this.listBill = data
+          this.checkSearch = true;
+        } else {
+          const data = this.listBill.filter((e: any) => e.status == type)
+          this.listBill = data
+          this.checkSearch = true;
+        }
+      })
+    }
   }
 
   getAllProfile(){
@@ -138,13 +144,15 @@ export class OrderComponent implements OnInit {
   isUserRequest: boolean = false
   resonValue: any
   isOtherReason: boolean = false;
+  showModal: boolean = false;
   getDataDetail = (billId: number) => {
     this.api.getBillById(billId).subscribe((res: any) =>{
       if(res){
         this.bill = res
+        this.showModal = true
         if(this.bill.billDetail && this.bill.status == "VERIFYING"){
           this.bill.billDetail.map((e: any, index: number) => {
-            if(e.warrantyEndDate != null){
+            // if(e.warrantyEndDate != null){
               const dataImei: any[] = []
               for(let i = 0; i < e.quantity ; i++)
               {
@@ -152,7 +160,7 @@ export class OrderComponent implements OnInit {
                 dataImei[i] = {data: imei}
               }
               this.listBillIMEI[index] = {billDetailId: e.id, imei: dataImei, isError: false, isNotImei: false}
-            }
+            // }
           })
         }
         if(this.bill.reason != null && this.bill.reason != '' && this.bill.reason != undefined ){
@@ -173,6 +181,7 @@ export class OrderComponent implements OnInit {
           this.listBillIMEI[idxParent].imei[idxChild].isError = false;
           this.listBillIMEI[idxParent].imei[idxChild].isNotImei = false;
           this.listBillIMEI[idxParent].imei[idxChild].data = e.target.value;
+          this.isErrorImei = false
         } else {
           this.listBillIMEI[idxParent].imei[idxChild].isError = true;
           this.isErrorImei = true
@@ -183,25 +192,46 @@ export class OrderComponent implements OnInit {
       this.listBillIMEI[idxParent].imei[idxChild].isNotImei = true;
       this.toastsService.alert('Thông báo !!!', "Sai định dạng IMEI !!!!",'bg-warning');
     }
-
   }
+  confirmVerify: boolean = false;
   verifyBill = (id: number) => {
-    if(window.confirm('Xác nhận đơn hàng này ???')){
-      if(this.isErrorImei == true){
-        this.toastsService.alert('Thông báo !!!', "Có lỗi đã xảy ra trong quá trình nhập imei !!!!",'bg-warning');
-      } else {
-        const data = {billId: id, status: 'VERIFIED'}
-        this.api.updateStatus(data).subscribe((res: any) =>{
-          if(res){
-            this.createIMEI()
-            this.getAllBill()
-            this.listBillIMEI = []
-            this.bill = null
-            this.toastsService.alert('Thông báo !!!', "Xác nhận đơn hàng thành công !!!!",'bg-success');
+      if(window.confirm('Xác nhận đơn hàng này ???')){
+        if(this.isErrorImei == true){
+          this.toastsService.alert('Thông báo !!!', "Có lỗi đã xảy ra trong quá trình nhập imei !!!!",'bg-warning');
+        } else {
+          const data = {billId: id, status: 'VERIFIED'}
+          let flagCheckImeiNull = true
+          if(this.listBillIMEI && this.listBillIMEI.length > 0 ){
+            this.listBillIMEI.map((e: any, idxParent: number) => {
+              if(e.imei && e.imei.length > 0){
+                e.imei.map((element: any, idxChild: number) => {
+                  if(element.data.trim() == ''){
+                    flagCheckImeiNull = false
+                    this.listBillIMEI[idxParent].imei[idxChild].isNotImei = true;
+                  }
+                })
+              }
+            })
           }
-        })
+          if(flagCheckImeiNull){
+            console.log("flagCheckImeiNull", flagCheckImeiNull);
+            this.showModal = false
+            document.getElementsByClassName('modal-backdrop')[0].classList.remove("show", "modal-backdrop")
+            this.api.updateStatus(data).subscribe((res: any) =>{
+              if(res){
+                this.createIMEI()
+                this.getAllBill()
+                this.listBillIMEI = []
+                this.bill = null
+                this.toastsService.alert('Thông báo !!!', "Xác nhận đơn hàng thành công !!!!",'bg-success');
+                this.confirmVerify = false
+              }
+            })
+          }
+
+        }
       }
-    }
+
   }
   createIMEI = () => {
     if(this.listBillIMEI && this.listBillIMEI.length > 0 ){
@@ -215,10 +245,6 @@ export class OrderComponent implements OnInit {
         const data = {billDetailId: e.billDetailId, imei: dataImei}
         this.api.createImei(data).subscribe(res => {})
       })
-
-      // this.listBillIMEI.map((e: any) => {
-      //   this.apiBill.createImei(e).subscribe(res => {})
-      // })
     }
   }
   onChangeReason = (e: any) => {
@@ -355,7 +381,7 @@ export class OrderComponent implements OnInit {
     this.checkSearch = null;
     this.startDate = null;
     this.endDate = null;
-    this.employee = 0;
+    this.employee = "0";
     this.getAllBill();
   }
 

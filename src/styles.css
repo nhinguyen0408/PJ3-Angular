@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 #toastsContainerTopRight{
   top: 57px !important;
+  z-index: 1200;
 }

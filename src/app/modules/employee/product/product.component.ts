@@ -79,7 +79,7 @@ export class ProductComponent implements OnInit {
   setListIMEI = () => {
     if(this.shoppingCart && this.shoppingCart.length > 0){
       this.shoppingCart.map((elm: any, index: number) => {
-        if(elm.product.warranty != null && elm.product.warranty > 0){
+        // if(elm.product.warranty != null && elm.product.warranty > 0){
           const dataImei: any[] = []
           for(let i = 0; i < elm.quantity ; i++)
           {
@@ -87,7 +87,7 @@ export class ProductComponent implements OnInit {
             dataImei[i] = {data: imei}
           }
           this.listBillIMEI[index] = {imei: dataImei}
-        }
+        // }
       })
       console.log('listBillIMEI',this.listBillIMEI);
 
@@ -279,12 +279,17 @@ export class ProductComponent implements OnInit {
 
     } else{
       this.api.searchProduct(this.productCode.toUpperCase(), categoryId, productionId, this.productName, 'ACTIVE').subscribe((res: any)=>{
-        this.productList = res;
+        if(this.isSale){
+          this.productList = res.filter((e: any) => e.saleEntity != null);
+        } else {
+          this.productList = res;
+        }
         this.getCountDown();
         this.checkSearch = true;
       })
     }
   }
+  isSale: boolean = false
   onAbortSearch(){
     this.checkSearch = false;
     this.productCode = '';

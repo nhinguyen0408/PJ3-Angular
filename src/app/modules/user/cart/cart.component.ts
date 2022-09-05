@@ -34,7 +34,7 @@ export class CartComponent implements OnInit {
   voucherName: string = ''
   bill = new Bill();
   userProfile: any
-
+  orderSuccess: boolean = false
   getDataUSer = () => {
     const userId = localStorage.getItem('userId');
     this.apiProfile.getProfileById(Number(userId)).subscribe((res: any) => {
@@ -166,6 +166,7 @@ export class CartComponent implements OnInit {
         this.apiCart.createBillByUser(this.bill).subscribe(res => {
           this.toastService.alert('Thông báo !!!', "Đặt hàng thành công !!!!!!",'bg-success');
           this.shopping_Cart = undefined
+          this.orderSuccess = true
           this.totalItem = 0;
           this.totalPay = 0;
           this.totalCart = 0;
@@ -179,7 +180,12 @@ export class CartComponent implements OnInit {
 
     } else {
       this.toastService.alert('Thông báo !!!', "Vui lòng điền đầy đủ thông tin khách hàng !!!!",'bg-warning');
+      this.orderSuccess = false
     }
-
+  }
+  closeModalOrderSuccess = () => {
+    this.orderSuccess = false
+    // document.getElementsByClassName('modal-backdrop')[0].classList.remove("show", "modal-backdrop")
   }
 }
+

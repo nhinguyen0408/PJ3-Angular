@@ -403,10 +403,10 @@
                       </small>
                       <div>
                         <div *ngFor="let item of bill.billDetail; let idx = index">
-                          <div *ngIf="item.warrantyEndDate != null">
+                          <div>
                             <strong>{{idx + 1}}. Sản phẩm {{idx + 1}}:</strong>
                             <div class="ml-2">
-                              <div class="d-flex align-items-center justify-content-center" >
+                              <div class="d-flex align-items-center" >
                                 <img src="{{item.productAvatar}}" class="img-imei" alt="">
                                 <h6 class="ml-2">{{item.productName}}</h6>
                               </div>
@@ -443,7 +443,7 @@
 
                   <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Close</button>
-                    <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fas fa-print"></i></button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onPrint()"><i class="fas fa-print"></i></button>
                     <button type="button" class="btn btn-success" data-dismiss="modal" (click)="verifyBill(bill.id)">Xác nhận đơn hàng</button>
                   </div>
                 </div>
@@ -710,10 +710,10 @@
                       </small>
                       <div>
                         <div *ngFor="let item of bill.billDetail; let idx = index">
-                          <div *ngIf="item.warrantyEndDate != null">
+                          <div>
                             <strong>{{idx + 1}}. Sản phẩm {{idx + 1}}:</strong>
                             <div class="ml-2">
-                              <div class="d-flex align-items-center justify-content-center" >
+                              <div class="d-flex align-items-center" >
                                 <img src="{{item.productAvatar}}" class="img-imei" alt="">
                                 <h6 class="ml-2">{{item.productName}}</h6>
                               </div>
@@ -856,10 +856,10 @@
                       <h5 class="mb-3">Nhập IMEI sản phẩm</h5>
                       <div>
                         <div *ngFor="let item of bill.billDetail; let idx = index">
-                          <div *ngIf="item.warrantyEndDate != null">
+                          <div>
                             <strong>{{idx + 1}}. Sản phẩm {{idx + 1}}:</strong>
                             <div class="ml-2">
-                              <div class="d-flex align-items-center justify-content-center" >
+                              <div class="d-flex align-items-center" >
                                 <img src="{{item.productAvatar}}" class="img-imei" alt="">
                                 <h6 class="ml-2">{{item.productName}}</h6>
                               </div>

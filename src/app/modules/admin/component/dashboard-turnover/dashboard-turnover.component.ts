@@ -85,8 +85,9 @@ export class DashboardTurnoverComponent implements OnInit {
         this.turnOverCanceled = res
       })
     }
-    this.apiBill.getTurnOver(monthChose).subscribe((data: any) => {
-      this.turnOver = data;
+    this.apiDashboard.getTurnOver().subscribe((data: any) => {
+      // this.turnOver = data;
+      this.turnOverAll = data;
     })
     this.apiBill.getTurnOverByType(monthChose,'',"VERIFYING").subscribe((res: any) => {
       this.turnOverExpected = res
@@ -94,13 +95,13 @@ export class DashboardTurnoverComponent implements OnInit {
     this.apiBill.getTurnOver(this.month).subscribe((data: any) => {
       this.turnOverLastMonth = data;
     })
-    this.apiBill.getTurnOverByType(this.month, "COD", '').subscribe((res: any) => {
+    this.apiBill.getTurnOverByType(monthChose, "COD", '').subscribe((res: any) => {
       this.turnOverOnline = res
     })
-    this.apiBill.getTurnOverByType(this.month, "OFFLINE", '').subscribe((res: any) => {
+    this.apiBill.getTurnOverByType(monthChose, "OFFLINE", '').subscribe((res: any) => {
       this.turnOverOffline = res
     })
-    this.apiBill.getTurnOverByType(this.month, '',"CANCELED").subscribe((res: any) => {
+    this.apiBill.getTurnOverByType(monthChose, '',"CANCELED").subscribe((res: any) => {
       this.turnOverCanceled = res
     })
   }

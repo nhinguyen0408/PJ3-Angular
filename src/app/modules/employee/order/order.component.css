@@ -11,3 +11,13 @@
 .error-imei{
   border-color: #be1717;
 }
+.btn-reviced{
+  width: 170px;
+  height: 35px;
+  margin: auto;
+  border-radius: 3px;
+  background: rgb(42, 195, 141);
+  color: white;
+  border: none;
+  margin-top: 10px;
+}

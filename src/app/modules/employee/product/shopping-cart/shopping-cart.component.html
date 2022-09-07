@@ -258,7 +258,7 @@
                         (blur)="onBlurIMEI(idx, childIdx, $event)"
                         name="key-{{idx}}-{{childIdx}}"
                       >
-                      <span class="text-small text-danger" *ngIf="itemChild?.isNotImei == true">{{'Không dúng định dạng Imei'}}</span>
+                      <span class="text-small text-danger" *ngIf="itemChild?.isNotImei == true">{{'Không dúng định dạng Imei'}}</span> <br>
                       <span class="text-small text-danger" *ngIf="itemChild.isError == true">{{'Imei đã tồn tại vui lòng kiểm tra lại'}}</span>
                       <!-- <input type="text" class="form-control" id="firstName"
                         [(ngModel)]="listBillIMEI[idx].imei[childIdx]"

@@ -26,12 +26,20 @@ export class VoucherCreateComponent implements OnInit {
   onshow: boolean | null = null;
   onSubmit(){
     if(this.voucher.isPercent == true){
-      if(this.voucher.name != "" && this.voucher.key != "" && this.voucher.percentage!= null ){
+      if(this.voucher.name != "" && this.voucher.key != "" && this.voucher.percentage!= null && this.voucher.quantity!= null && this.voucher.minPrice!= null){
         this.voucher.key.toUpperCase();
         if(this.voucher.startDate > this.voucher.endDate){
           // alert("Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!")
           this.toastsService.alert('Thông báo !!!', 'Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!','bg-warning');
-        } else {
+        }
+        // else if(!(this.voucher.quantity +'').match(this.numberValidate) || this.voucher.quantity < 0){
+        //   // alert("Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!")
+        //   this.toastsService.alert('Thông báo !!!', 'Số lượng không hợp lệ !!!!','bg-warning');
+        // } else if(!(this.voucher.minPrice +'').match(this.numberValidate) || this.voucher.minPrice < 0){
+        //   // alert("Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!")
+        //   this.toastsService.alert('Thông báo !!!', 'Giá trị áp dụng không hợp lệ không hợp lệ !!!!','bg-warning');
+        // }
+        else {
           this.api.createVoucher(this.voucher).subscribe(res => {
             this.route.navigate(["admin/voucher"])
           },

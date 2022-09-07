@@ -5,8 +5,8 @@ export class Voucher{
   percentage: number | null = null;
   discountPrice: number | null = null;
   isPercent: boolean = false;
-  minPrice: number | null = null;
-  quantity: number | null = null;
+  minPrice: number | string | null = null;
+  quantity: number | string | null = null;
   startDate: Date = new Date();
   endDate: Date = new Date();
 }

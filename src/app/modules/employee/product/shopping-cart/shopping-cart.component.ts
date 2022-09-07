@@ -119,6 +119,8 @@ export class ShoppingCartComponent implements OnInit {
             if(e.data.trim() == ''){
               flagCheckImeiNull = false
               this.listBillIMEI[index].imei[idxChild].isNotImei = true;
+            } else if(this.listBillIMEI[index].imei[idxChild].isNotImei = true) {
+              flagCheckImeiNull = false
             }
             dataImei.push(e.data)
           })
@@ -184,6 +186,8 @@ export class ShoppingCartComponent implements OnInit {
   showModal: boolean = false
   onBlurIMEI= (idxParent: number, idxChild: number, e: any) => {
     // this.listBillIMEI[idxParent].imei[idxChild].data = e.target.value;
+    console.log("e", e.target.value);
+
     const data = e.target.value.trim()
     if(data.match(this.checkImei) && data.length == 15){
       this.apiBill.checkImei(data).subscribe((res: any) => {

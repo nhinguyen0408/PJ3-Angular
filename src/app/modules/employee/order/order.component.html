@@ -879,7 +879,11 @@
                               <div *ngIf="item.imei == null || item.imei == undefined || (item.imei && item.imei.length == 0)">
                                 <small class="text-danger">Sản phẩm không được nhập imei vì vậy không có bảo hành</small>
                               </div>
-
+                              <div *ngIf="bill.status == 'INPROGRESS'">
+                                <div>
+                                  <button class="btn-reviced" data-dismiss="modal" style="float: right;" (click)="revicedOrder(bill.id)">Khách hàng đã nhận</button>
+                                </div>
+                              </div>
                             </div>
                           </div>
 

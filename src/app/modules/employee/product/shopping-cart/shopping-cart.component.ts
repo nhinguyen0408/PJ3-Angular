@@ -176,7 +176,7 @@ export class ShoppingCartComponent implements OnInit {
             a?.document.close();
             setTimeout(()=>{
               a?.print();
-            },200)
+            },500)
 
     })(jQuery);
   }

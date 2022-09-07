@@ -877,7 +877,7 @@
                       </div>
                     </div>
                     <div class="col-md-4 imei__container">
-                      <h5 class="mb-3">Nhập IMEI sản phẩm</h5>
+                      <h5 class="mb-3">IMEI sản phẩm</h5>
                       <div>
                         <div *ngFor="let item of bill.billDetail; let idx = index">
                           <div>
@@ -892,7 +892,7 @@
                                   IMEI {{childIdx + 1}}:
                                   <input
                                     type="text"
-                                    placeholder="Nhập IMEI-{{idx}}-{{childIdx}}"
+                                    placeholder="IMEI"
                                     class="form-control"
                                     value="{{itemChild}}"
                                     disabled
@@ -903,7 +903,11 @@
                               <div *ngIf="item.imei == null || item.imei == undefined || (item.imei && item.imei.length == 0)">
                                 <small class="text-danger">Sản phẩm không được nhập imei vì vậy không có bảo hành</small>
                               </div>
-
+                              <div *ngIf="bill.status == 'INPROGRESS'">
+                                <div>
+                                  <button class="btn-reviced" data-dismiss="modal" style="float: right;" (click)="revicedOrder(bill.id)">Khách hàng đã nhận</button>
+                                </div>
+                              </div>
                             </div>
                           </div>
 

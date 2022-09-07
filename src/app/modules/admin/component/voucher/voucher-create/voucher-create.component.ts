@@ -34,6 +34,9 @@ export class VoucherCreateComponent implements OnInit {
         } else {
           this.api.createVoucher(this.voucher).subscribe(res => {
             this.route.navigate(["admin/voucher"])
+          },
+          (err:ErrorEvent) => {
+            this.toastsService.alert('Thông báo !!!', 'Mã giảm giá đã được sử dụng !!!!','bg-warning');
           })
         }
       }else {
@@ -51,6 +54,9 @@ export class VoucherCreateComponent implements OnInit {
           this.api.createVoucher(this.voucher).subscribe(res => {
             this.toastsService.alert('Thông báo !!!', 'Tạo Voucher thành công !!!!','bg-success');
             this.route.navigate(["admin/voucher"])
+          },
+          (err:ErrorEvent) => {
+            this.toastsService.alert('Thông báo !!!', 'Mã giảm giá đã được sử dụng !!!!','bg-warning');
           })
         }
       }else {

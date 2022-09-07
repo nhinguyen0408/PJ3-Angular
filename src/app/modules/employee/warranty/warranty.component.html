@@ -42,77 +42,16 @@
                                   <img src="{{item.product.avatarUrl}}" alt="">
                                 </div>
                                 <a class="cart-product-name" style="cursor: pointer;">
-                                  {{item.product.name}}
+                                  {{item.product.name}} <br>
+                                  <strong class="cart-product-name" style="cursor: pointer;">
+                                    IMEI: {{item.imei}}
+                                  </strong>
                                 </a>
+
                               </div>
                             </div>
                           </div>
-                          <div class="modal fade" id="modal-lg" *ngIf="dataWarrantyHistory">
-                            <div class="modal-dialog modal-lg">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h4 class="modal-title">Lịch sử bảo hành</h4>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                  <section class="content">
-                                    <div class="container-fluid">
-                                      <div class="row">
-                                        <div class="col-md-12">
-                                          <div class="timeline">
-                                              <div class="time-label">
-                                                <span class="bg-info">Lịch sử bảo hành: {{dataWarrantyHistory.imei}}</span>
-                                              </div>
-                                              <div *ngFor="let item of dataWarrantyHistory.data; index as i">
-                                                <i class="fa bg-warning" *ngIf="item.status == 'INPROGRESS'"></i>
-                                                <i class="fa bg-success" *ngIf="item.status == 'RESOLVED'"></i>
-                                                <div class="timeline-item">
-                                                  <span class="time text-bold"><i class="fas fa-clock"></i> {{item.createdDate | date: 'dd/MM/yyyy'}}</span>
-                                                  <h3 class="timeline-header">
-                                                    <span class="badge badge-warning p-2" *ngIf="item.status == 'INPROGRESS'">Khách hàng mang tới bảo hành</span>
-                                                    <span class="badge badge-success p-2" *ngIf="item.status == 'RESOLVED'">Đã trả lại khách</span>
-                                                  </h3>
 
-                                                  <!-- <h3 class="timeline-header">{{item.status == 'INPROGRESS' ? 'Khách hàng mang tới bảo hành' : 'Đã trả lại khách'}}</h3> -->
-                                                  <div class="timeline-body position-relative">
-                                                    <label class="col-4" for="productCondition">Tình trạng thiết bị:</label>
-                                                    <div *ngIf="item.isEdit == undefined || item.isEdit == false">
-                                                      <span class="col-8">{{item.productCondition}} </span><br>
-                                                      <a class="position-absolute" style="top: 10px; right: 10px; cursor: pointer;" (click)="onEditProductCondition(i)"><i class="fas fa-pen text-warning"></i></a>
-                                                    </div>
-
-                                                    <div *ngIf="item.isEdit == true">
-                                                      <a class="position-absolute" style="top: 10px; right: 10px; cursor: pointer;" (click)="onAbortEditProductCondition(i)"><i class="fas fa-times text-danger"></i></a>
-                                                      <textarea name="" value="{{item.productCondition}}" (input)="onInputEditCondition($event)" id="productCondition" class="col-12" rows="2" ></textarea>
-                                                      <button class="btn-edit-condition" (click)="onSubmitEditProductCondition(item.id, i)">Xác nhận</button>
-                                                    </div>
-
-                                                  </div>
-                                                </div>
-                                              </div>
-
-
-                                            <!-- END timeline item -->
-                                            <div>
-                                              <i class="fas fa-clock bg-gray"></i>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                  </section>
-                                </div>
-                                <div class="modal-footer justify-content-between">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                              </div>
-                              <!-- /.modal-content -->
-                            </div>
-                            <!-- /.modal-dialog -->
-                          </div>
                         </div>
                       </div>
                       <div class="" *ngIf="listBill && isPhone == false">
@@ -122,11 +61,14 @@
                         <div class=" px-3 " *ngIf="listBill && listBill.length > 0 ">
                           <h6 class="my-3">Thông tin sản phẩm và đơn hàng</h6>
                           <div *ngIf="product" >
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center"
+                            style="cursor: pointer;" data-toggle="modal" data-target="#modal-lg"
+                              (click)="getDataWarrantyByImei(listBill[0].phone,product[0].imei)"
+                            >
                               <div class="cart-product-image">
                                 <img src="{{product[0].productAvatar}}" alt="">
                               </div>
-                              <a class="cart-product-name" style="cursor: pointer;" href="/admin/product/details/{{product[0].productId}}">
+                              <a class="cart-product-name">
                                 {{product[0].productName}}
                               </a>
                             </div>
@@ -147,7 +89,7 @@
                               <p>Số điện thoại: <strong>{{listBill[0].phone}}</strong></p>
                               <p>Địa chỉ: <strong>{{listBill[0].address}}</strong></p>
                               <p>Thời gian mua: <strong>{{listBill[0].createdDate | date: 'dd/MM/yyyy'}}</strong>  </p>
-                              <p>Thời gian còn hạn bảo hành: <strong>{{product[0].warrantyEndDate | date: 'dd/MM/yyyy'}}</strong>  </p>
+                              <p>Thời gian hết hạn bảo hành: <strong>{{product[0].warrantyEndDate | date: 'dd/MM/yyyy'}}</strong>  </p>
                               <div *ngIf="testWarranty == true">
                                 <button class="btn btn-success" data-toggle="modal" data-target="#modal-default">Thêm lịch sử bảo hành</button>
                               </div>
@@ -316,6 +258,87 @@
                 <div class="modal-footer justify-content-between">
                   <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Close</button>
                   <!-- <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onPrint()" ><i class="fas fa-print"></i></button> -->
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <div class="modal fade" id="modal-lg" *ngIf="dataWarrantyHistory">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Lịch sử bảo hành</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <section class="content">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="timeline">
+                            <div class="">
+                              <div class="d-flex align-items-center "
+                              >
+                                <div class="cart-product-image">
+                                  <img src="{{dataWarrantyHistory.product.avatarUrl}}" alt="">
+                                </div>
+                                <a class="cart-product-name" style="cursor: pointer;">
+                                  {{dataWarrantyHistory.product.name}} <br>
+                                  <strong class="cart-product-name" style="cursor: pointer;">
+                                    IMEI: {{dataWarrantyHistory.imei}}
+                                  </strong>
+                                </a>
+
+                              </div>
+                            </div>
+                              <div class="time-label">
+                                <span class="bg-info">Lịch sử bảo hành</span>
+                              </div>
+                              <div *ngFor="let item of dataWarrantyHistory.data; index as i">
+                                <i class="fa bg-warning" *ngIf="item.status == 'INPROGRESS'"></i>
+                                <i class="fa bg-success" *ngIf="item.status == 'RESOLVED'"></i>
+                                <div class="timeline-item">
+                                  <span class="time text-bold"><i class="fas fa-clock"></i> {{item.createdDate | date: 'dd/MM/yyyy'}}</span>
+                                  <h3 class="timeline-header">
+                                    <span class="badge badge-warning p-2" *ngIf="item.status == 'INPROGRESS'">Khách hàng mang tới bảo hành</span>
+                                    <span class="badge badge-success p-2" *ngIf="item.status == 'RESOLVED'">Đã trả lại khách</span>
+                                  </h3>
+
+                                  <!-- <h3 class="timeline-header">{{item.status == 'INPROGRESS' ? 'Khách hàng mang tới bảo hành' : 'Đã trả lại khách'}}</h3> -->
+                                  <div class="timeline-body position-relative">
+                                    <label class="col-4" for="productCondition">Tình trạng thiết bị:</label>
+                                    <div *ngIf="item.isEdit == undefined || item.isEdit == false">
+                                      <span class="col-8">{{item.productCondition}} </span><br>
+                                      <!-- <a class="position-absolute" style="top: 10px; right: 10px; cursor: pointer;" (click)="onEditProductCondition(i)"><i class="fas fa-pen text-warning"></i></a> -->
+                                    </div>
+
+                                    <div *ngIf="item.isEdit == true">
+                                      <a class="position-absolute" style="top: 10px; right: 10px; cursor: pointer;" (click)="onAbortEditProductCondition(i)"><i class="fas fa-times text-danger"></i></a>
+                                      <textarea name="" value="{{item.productCondition}}" (input)="onInputEditCondition($event)" id="productCondition" class="col-12" rows="2" ></textarea>
+                                      <button class="btn-edit-condition" (click)="onSubmitEditProductCondition(item.id, i)">Xác nhận</button>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+
+
+                            <!-- END timeline item -->
+                            <div>
+                              <i class="fas fa-clock bg-gray"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </section>
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
               </div>
               <!-- /.modal-content -->

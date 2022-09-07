@@ -97,7 +97,8 @@ export class WarrantyComponent implements OnInit {
     if(window.confirm("Xác nhận lưu lịch sử bảo hành ???")){
       this.apiWarranty.createWarranty(this.owner).subscribe((res: any) => {
         if(res){
-          this.owner = undefined;
+          this.owner.productCondition = "";
+          this.owner.status = "";
         }
       })
     }

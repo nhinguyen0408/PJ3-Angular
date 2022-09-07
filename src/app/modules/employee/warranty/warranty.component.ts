@@ -97,7 +97,8 @@ export class WarrantyComponent implements OnInit {
     if(window.confirm("Xác nhận lưu lịch sử bảo hành ???")){
       this.apiWarranty.createWarranty(this.owner).subscribe((res: any) => {
         if(res){
-          this.owner = undefined;
+          this.owner.productCondition = "";
+          this.owner.status = "";
         }
       })
     }
@@ -120,6 +121,14 @@ export class WarrantyComponent implements OnInit {
   dataWarrantyHistory: any
   setDataWarranty = (idx: number) => {
     this.dataWarrantyHistory = this.listWarranty[idx];
+  }
+
+  getDataWarrantyByImei = (phone: string, imei: string) => {
+    this.apiWarranty.getWarrantyByPhone(phone).subscribe((data: any) => {
+      console.log("data", data);
+      this.dataWarrantyHistory = data.find((e: any) => e.imei == imei)
+      console.log("dataWarrantyHistory", this.dataWarrantyHistory);
+    })
   }
   onEditProductCondition = (idx: number) => {
     this.dataWarrantyHistory.data[idx].isEdit = true

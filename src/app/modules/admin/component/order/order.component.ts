@@ -95,7 +95,7 @@ export class OrderComponent implements OnInit {
     if(this.listBill && this.listBill.length > 0){
       this.countBillByType[0] = {type: 'VERIFYING', data: this.listBill.filter((e: any) => e.status == 'VERIFYING')}
       this.countBillByType[1] = {type: 'VERIFIED', data: this.listBill.filter((e: any) => e.status == 'VERIFIED')}
-      this.countBillByType[2] = {type: 'INPROGRESS ', data: this.listBill.filter((e: any) => e.status == 'INPROGRESS ')}
+      this.countBillByType[2] = {type: 'INPROGRESS', data: this.listBill.filter((e: any) => e.status == 'INPROGRESS')}
       this.countBillByType[3] = {type: 'COMPLETED', data: this.listBill.filter((e: any) => e.status == 'COMPLETED')}
       this.countBillByType[4] = {type: 'CANCELED', data: this.listBill.filter((e: any) => e.status == 'CANCELED')}
       this.countBillByType[5] = {type: 'CANCELED_REQUEST', data: this.listBill.filter((e: any) => e.status == 'CANCELED_REQUEST')}
@@ -286,6 +286,18 @@ export class OrderComponent implements OnInit {
         }
       })
 
+    }
+  }
+  revicedOrder = (id: number) => {
+    if(window.confirm('Xác nhận là khách hàng đã nhận hàng tận tay ???')){
+      const data = {billId: id, status: 'COMPLETED'}
+      this.api.updateStatus(data).subscribe((res: any) =>{
+        if(res){
+          this.getAllBill()
+          this.bill = null
+          this.toastsService.alert('Thông báo !!!', "Xác nhận khách hàng đã nhận hàng thành công !!!!",'bg-success');
+        }
+      })
     }
   }
   onCloseModalAbort = () => {

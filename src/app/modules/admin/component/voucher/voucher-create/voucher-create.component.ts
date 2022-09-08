@@ -32,13 +32,13 @@ export class VoucherCreateComponent implements OnInit {
           // alert("Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!")
           this.toastsService.alert('Thông báo !!!', 'Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!','bg-warning');
         }
-        // else if(!(this.voucher.quantity +'').match(this.numberValidate) || this.voucher.quantity < 0){
-        //   // alert("Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!")
-        //   this.toastsService.alert('Thông báo !!!', 'Số lượng không hợp lệ !!!!','bg-warning');
-        // } else if(!(this.voucher.minPrice +'').match(this.numberValidate) || this.voucher.minPrice < 0){
-        //   // alert("Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!")
-        //   this.toastsService.alert('Thông báo !!!', 'Giá trị áp dụng không hợp lệ không hợp lệ !!!!','bg-warning');
-        // }
+        else if(!(this.voucher.quantity +'').match(this.numberValidate) || this.voucher.quantity < 0){
+          // alert("Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!")
+          this.toastsService.alert('Thông báo !!!', 'Số lượng không hợp lệ !!!!','bg-warning');
+        } else if(!(this.voucher.minPrice +'').match(this.numberValidate) || this.voucher.minPrice < 0){
+          // alert("Ngày kết thúc không thể sớm hơn ngày bắt đầu !!!!")
+          this.toastsService.alert('Thông báo !!!', 'Giá trị áp dụng không hợp lệ không hợp lệ !!!!','bg-warning');
+        }
         else {
           this.api.createVoucher(this.voucher).subscribe(res => {
             this.route.navigate(["admin/voucher"])
